@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.how2java</groupId>
-    <artifactId>springboot</artifactId>
+    <groupId>com.jdlink</groupId>
+    <artifactId>luckdraw</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springboot</name>
-    <description>springboot</description>
+    <name>luckdraw</name>
+    <description>luckdraw</description>
     <packaging>war</packaging>
 
     <parent>
@@ -88,6 +88,20 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.vaadin.external.google</groupId>
+            <artifactId>android-json</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <!--对json的依赖-->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>1.1</version>
+            <classifier>jdk13</classifier>
+        </dependency>
+
     </dependencies>
 
     <build>
