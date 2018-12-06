@@ -49,42 +49,40 @@ function updateRndNum() {
     }
 }
 
+/**
+ * 设置时间延迟
+ * */
 function beginTimer() {
     g_Timer = setTimeout(beat, g_Interval);
 }
 
+/**
+ * 时间延迟时间，并执行数字滚动
+ * */
 function beat() {
     g_Timer = setTimeout(beat, g_Interval);
     updateRndNum();
 }
 
 /**
- * 根据抽奖人数加载抽奖框
+ * 保存中奖数据并跳转到中奖名单
  */
-function loadNumber() {
-    // 获取所有参与抽奖的员工数据
-    var url = "luckDraw";
-    // $.ajax({
-    //     type:"GET",
-    //     url: url,
-    //     dataType:"json",
-    //     success: function(result){
-    //        console.log("data");
-    //        console.log(result);
-    //     }
-    // });
-    $("#class1").nextAll().remove();  // 删除旧数据
+function saveWinner() {
     for (var i = 0; i < winnerNumber; i++) {
-        if (i % 2 === 0) {
-            var tr = "<tr>\n" +
-                "</tr>";
-            $("#table").append(tr);
-        }
-        var td = "<td class=\"text-center\">\n" +
-            "            <span>桌号：</span>&nbsp<span title=\"\" id='tableId" + i + "' style='width: 50px'>--</span>\n" +
-            "            <span>座号：</span>&nbsp<span title=\"\" id='locationId" + i + "' style='width: 50px'>--</span>\n" +
-            " </td>";
-        $("#table").find("tr:last").append(td);   // 将td 插入到最新的tr中
-    }
+        var $i = i;
+        var seat = {};
+        seat.tableId = parseInt($("#tableId" + $i).text());
+        seat.locationId = parseInt($("#locationId" + $i).text());
+        console.log(seat);
+        $.ajax({
+            type: "put",
+            url: "luckDraw",
+            data: JSON.stringify(seat),
+            dataType: "json",
+            contentType: "application/json;charset=UTF-8",
+            success: function (result) {
 
+            }
+        });
+    }
 }
