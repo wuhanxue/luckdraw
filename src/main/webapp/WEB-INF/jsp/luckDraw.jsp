@@ -34,7 +34,6 @@
         <!--几等奖，动态-->
         <td class="text-center" colspan="4"><span id="class">一</span>等奖 幸运号码</td>
     </tr>
-
 </table>
 <div class="text-center">
     <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px"
@@ -131,7 +130,7 @@
      */
     function loadNumber() {
         // 获取所有参与抽奖的员工数据
-        var url = "luckDraw";
+        // var url = "luckDraw";
         // $.ajax({
         //     type:"GET",
         //     url: url,
@@ -141,6 +140,11 @@
         //        console.log(result);
         //     }
         // });
+       <%--var array = new Array();--%>
+       <%--<c:forEach items="${seatList}" var="a">--%>
+            <%--array.push(${a});--%>
+        <%--</c:forEach>--%>
+        <%--console.log(array);--%>
         $("#class1").nextAll().remove();  // 删除旧数据
         for (var i = 0; i < winnerNumber; i++) {
             if (i % 2 === 0) {
