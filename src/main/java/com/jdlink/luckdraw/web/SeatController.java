@@ -31,6 +31,6 @@ public class SeatController {
     public String listSeat(Model m) throws Exception {
         List<Seat> seatList = seatDAO.findAll();
         m.addAttribute("seatList", seatList);
-        return "";
+        return "configSeat";
     }
 }
