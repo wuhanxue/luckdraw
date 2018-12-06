@@ -34,14 +34,12 @@
         <!--几等奖，动态-->
         <td class="text-center" colspan="4"><span id="class">一</span>等奖 幸运号码</td>
     </tr>
-
 </table>
 <div class="text-center">
     <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px"
        onclick="beginRndNum(this)">开始</a>
     <a class="btn btn-danger" id="list" style="width: 100px;height: 55px;font-size: 30px">名单</a>
 </div>
-
 <%--<table align='center' border='1' cellspacing='0'>--%>
 <%--<tr>--%>
 <%--<td>id</td>--%>
@@ -117,10 +115,16 @@
         }
     }
 
+    /**
+     * 设置时间延迟
+     * */
     function beginTimer() {
         g_Timer = setTimeout(beat, g_Interval);
     }
 
+    /**
+     * 时间延迟时间，并执行数字滚动
+     * */
     function beat() {
         g_Timer = setTimeout(beat, g_Interval);
         updateRndNum();
@@ -131,16 +135,13 @@
      */
     function loadNumber() {
         // 获取所有参与抽奖的员工数据
-        var url = "luckDraw";
-        // $.ajax({
-        //     type:"GET",
-        //     url: url,
-        //     dataType:"json",
-        //     success: function(result){
-        //        console.log("data");
-        //        console.log(result);
-        //     }
-        // });
+        list = [];  // 清零
+        <c:forEach items="${seatList}" var="a">
+        var tableId = ${a.tableId};
+        var locationId = ${a.locationId};
+        list.push([tableId, locationId]);
+        </c:forEach>
+        console.log(list);
         $("#class1").nextAll().remove();  // 删除旧数据
         for (var i = 0; i < winnerNumber; i++) {
             if (i % 2 === 0) {
