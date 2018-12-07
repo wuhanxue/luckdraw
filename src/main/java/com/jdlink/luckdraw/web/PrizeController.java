@@ -1,13 +1,10 @@
 package com.jdlink.luckdraw.web;
 
 import com.jdlink.luckdraw.dao.PrizeDAO;
-import com.jdlink.luckdraw.pojo.Seat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 /**
  * 奖品控制器
@@ -22,6 +19,8 @@ public class PrizeController {
     public String listEmployee(Model m) throws Exception {
 //        List<Seat> seatList= luckDrawDAO.findAll();
 //        m.addAttribute("seatList" ,seatList);
-        return "drawSetting";  // 地址栏不会变
+        return "configPrize";  // 地址栏不会变
     }
+
+
 }
