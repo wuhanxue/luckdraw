@@ -1,6 +1,7 @@
 package com.jdlink.luckdraw.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -58,6 +59,33 @@ public class Prize {
     @Column(name = "gmt_modify_time")
     private Date modifyTime;
 
+    /**
+     * 中奖方式==》用作显示
+     * @return
+     */
+    private String modeName;
+
+//    /**
+//     * 图片文件
+//     * @return
+//     */
+//    private MultipartFile imageFile;
+//
+//    public MultipartFile getImageFile() {
+//        return imageFile;
+//    }
+//
+//    public void setImageFile(MultipartFile imageFile) {
+//        this.imageFile = imageFile;
+//    }
+
+    public String getModeName() {
+        return modeName;
+    }
+
+    public void setModeName(String modeName) {
+        this.modeName = modeName;
+    }
 
     public int getId() {
         return id;
