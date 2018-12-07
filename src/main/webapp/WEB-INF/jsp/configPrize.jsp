@@ -76,7 +76,7 @@
                     <tr>
                         <td>${p.name}</td>
                         <td>${p.number}</td>
-                        <td>${p.imgUrl}</td>
+                        <td><img src="/image/${p.imgUrl}" style="width: 150px;height: 150px;"></td>
                         <td>${p.modeName} </td>
                         <td class="hidden">${p.id} </td>
                         <td> <a onclick="" href="#" title="编辑"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
@@ -112,10 +112,13 @@
                 <tr id="clone" class="myclass" >
                     <td><input type="text"></td>
                     <td><input type="number"></td>
-                    <td><form action="upload" method="post" enctype="multipart/form-data">
-                        选择图片:<input type="file" name="file" accept="image/*" />
-                        <br>
-                    </form></td>
+                    <td>
+                        <form action="saveImg" method="post" enctype="multipart/form-data">
+                            选择图片:<input type="file" name="file" accept="image/*" />
+                            <br>
+                            <input type="submit" value="上传" >
+                        </form>
+                    </td>
                     <td>
                         <label>
                        <input type="checkbox"> 随机抽取</label>
@@ -133,6 +136,7 @@
                 </tr>
                 </tbody>
             </table>
+
         </div>
     </div>
     <div class="panel-footer">
