@@ -51,41 +51,43 @@ public class LuckDrawController {
     public String listEmployee(Model m) throws Exception {
         List<Seat> seatList = new ArrayList<>();
         List<Seat> seatList1= seatDAO.findAll(); // 获取所有人
-        for(Seat seat : seatList1){// 将不参加的人数过滤
+        for(Seat seat : seatList1){              // 将不参加的人数过滤
             if(seat.isJoin())seatList.add(seat);
         }
         m.addAttribute("seatList" ,seatList);
         return "luckDraw";  // 地址栏不会变
     }
 
-    /**
-     * 更新中奖名单数据
-     * @param
-     * @throws Exception
-     */
-    @PutMapping("/updateWinner")
-    public void updateWinner(String seats) throws Exception {
-        JSONArray ary = JSONArray.fromObject(seats);  // 字符串转化为array数组
-        List<Seat> seatList = (List<Seat>) JSONArray.toCollection(ary, Seat.class);  // 再转化为seat数组
-        int maxNumber = winnerMapper.maxNumber() + 1;                 // 获取这是第几次抽奖
-        for(Seat seat : seatList){
-            seatMapper.updateIsJoin(seat);                             // 更新是否参加下一次抽奖状态为0
-            Winner winner = new Winner();
-            winner.setSeatId(seatMapper.getSeatByLocation(seat).getId()); // 设置位置表ID
-            winner.setPrizeId(1);                                         // 设置奖品表ID
-            winner.setReceive(false);                                     // 设置
-            winner.setNumber(maxNumber);
-            winnerMapper.addWinner(winner);                                // 插入新中奖者
-        }
+    @GetMapping("/luckDrawSetting")
+    public String luckDrawSetting(){
+        return "luckDrawSetting";
     }
 
     /**
-     * 重定向到中奖名单页面
-     * @return
+     * 更新中奖名单数据
+     * @param
      */
-    @GetMapping("/showWinner")
-    public String showWinnerList(){
-        return "showWinnerList";
+    @PutMapping("/updateWinner")
+    public void updateWinner(String seats) throws Exception{
+            JSONArray ary = JSONArray.fromObject(seats);  // 字符串转化为array数组
+            List<Seat> seatList = (List<Seat>) JSONArray.toCollection(ary, Seat.class);  // array转化为seat数组
+            int maxNumber = winnerMapper.maxNumber() + 1;                 // 获取这是第几次抽奖
+            for (Seat seat : seatList) {
+                seatMapper.updateIsJoin(seat);                             // 更新是否参加下一次抽奖状态为0
+                Winner winner = new Winner();
+                winner.setSeatId(seatMapper.getSeatByLocation(seat).getId()); // 设置位置表ID
+                winner.setPrizeId(1);                                         // 设置奖品表ID
+                winner.setReceive(false);                                     // 设置
+                winner.setNumber(maxNumber);
+                winnerMapper.addWinner(winner);                                // 插入新中奖者
+            }
+//      //  List<Integer> winnerIdList= winnerMapper.findLastWinnerIdList(); // 获取最近一次中奖者ID
+//        List<Integer> winnerSeatIdList= winnerMapper.findLastWinnerSeatIdList();   //获取最近一次中奖者的seatID
+////        List<Winner> winnerList = winnerDAO.findAllById(winnerIdList);       // 根据winnerId获取winner数据
+//        List<Seat> seatList1 = seatDAO.findAllById(winnerSeatIdList);    // 根据seatId获取seat数据
+//        m.addAttribute("seatList" ,seatList1);
+            //   return "showWinnerList";              // 重定向：跳转中奖名单页面
+
     }
 
     /**
@@ -96,11 +98,11 @@ public class LuckDrawController {
      */
     @GetMapping("/showWinnerList")
     public String loadWinnerList(Model m) throws Exception {
-        List<Integer> winnerIdList= winnerMapper.findLastWinnerIdList();
-        List<Winner> winnerList = winnerDAO.findAllById(winnerIdList);
-        System.out.println("数据");
-        System.out.println(winnerList);
-        m.addAttribute("winnerList" ,winnerList);
+        //  List<Integer> winnerIdList= winnerMapper.findLastWinnerIdList(); // 获取最近一次中奖者ID
+        List<Integer> winnerSeatIdList= winnerMapper.findLastWinnerSeatIdList();   //获取最近一次中奖者的seatID
+//        List<Winner> winnerList = winnerDAO.findAllById(winnerIdList);       // 根据winnerId获取winner数据
+        List<Seat> seatList1 = seatDAO.findAllById(winnerSeatIdList);    // 根据seatId获取seat数据
+        m.addAttribute("seatList" ,seatList1);
         return "showWinnerList";  // 地址栏不会变
     }
 

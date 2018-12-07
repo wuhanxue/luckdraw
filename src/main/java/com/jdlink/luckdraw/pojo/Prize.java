@@ -48,6 +48,12 @@ public class Prize {
     private Boolean mode;
 
     /**
+     * 奖品-中奖者一对一绑定
+     */
+    @OneToOne(mappedBy = "prize",cascade = CascadeType.ALL)
+    private Winner winners;
+
+    /**
      *创建时间
      */
     @Column(name = "gmt_create_time")
@@ -141,6 +147,14 @@ public class Prize {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Winner getWinners() {
+        return winners;
+    }
+
+    public void setWinners(Winner winners) {
+        this.winners = winners;
     }
 
     @Override

@@ -23,7 +23,8 @@ public class UploadController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public String upload(HttpServletRequest req, @RequestParam("file")MultipartFile file, Model m) {
         try{
-            String fileName = System.currentTimeMillis()+file.getOriginalFilename(); // 文件名设置为当前时间加上传的文件名
+          //  String fileName = System.currentTimeMillis()+file.getOriginalFilename(); // 文件名设置为当前时间加上传的文件名
+            String fileName =file.getOriginalFilename();
             // 获取文件的真实路径然后拼接前面的文件名，uploaded是存放文件的目录名
             String destFileName = req.getServletContext().getRealPath("")+"image"+ File.separator+fileName;
             // 初始化目录(第一次上传目录不存在需要初始化)

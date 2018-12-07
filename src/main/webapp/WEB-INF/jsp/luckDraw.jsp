@@ -21,29 +21,18 @@
         }
     </style>
 </head>
-<body onload="loadNumber()" >
-
-<%--<h1 style="color:#40AA53">抽奖结果</h1>--%>
-
-<%--<div id="Result" style="color:#40AA53">--%>
-<%--<span id="ResultNum">0</span>--%>
-<%--<span id="num">0</span>--%>
-<%--</div>--%>
-
-<%--&lt;%&ndash;<div id="Button">&ndash;%&gt;--%>
-<%--&lt;%&ndash;<input type='button' id="btn" value='开始' onclick='beginRndNum(this)'/>&ndash;%&gt;--%>
-<%--&lt;%&ndash;</div>&ndash;%&gt;--%>
-
+<body onload="loadNumber()">
 <table id="table" style="width: 80%;height: 450px;border: 0;" align="center">
     <tr id="class1">
         <!--几等奖，动态-->
-        <td class="text-center" colspan="4"><p style="font-size: 80px;color: #ff3f4b"><span id="class" style="color: #8909ff">一</span>等奖 幸运号码</p></td>
+        <td class="text-center" colspan="4"><p style="font-size: 80px;color: #ff3f4b"><span id="class" >一</span>等奖
+            </p></td>
     </tr>
 </table>
 <div class="text-center">
     <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px"
        onclick="beginRndNum(this)">开始</a>
-    <a class="btn btn-danger" id="list" onclick="saveWinner()" style="width: 100px;height: 55px;font-size: 30px">名单</a>
+    <a class="btn btn-danger" id="list" onclick="saveWinner()" style="display:none;width: 100px;height: 55px;font-size: 30px">名单</a>
 </div>
 </body>
 <script>
@@ -63,6 +52,7 @@
             $(trigger).text("开始");
             $("span[id^='tableId']").css('color', 'red');
             $("span[id^='locationId']").css('color', 'red');
+            $("#list").show();        // 名单按钮显示
             // setTimeout(saveWinner(),3000); // 抽奖结束不点击三秒后自动执行
         } else {
             running = true;
@@ -71,6 +61,7 @@
             $(trigger).text("停止");
             listWinner = [];   // 中奖人清空
             beginTimer();
+            $("#list").hide();    // 名单按钮隐藏
         }
     }
 
@@ -127,7 +118,6 @@
         var locationId = ${a.locationId};
         list.push([tableId, locationId]);
         </c:forEach>
-        console.log(list);
         if (winnerNumber > list.length) { // 当抽奖人数大于参加人数时自动赋值为参加人数
             console.log("中奖人数大于参加人数");
             winnerNumber = list.length;
@@ -160,24 +150,19 @@
             seatList.push(seat);
         }
         $.ajax({   // 将中奖者信息更新到数据库
-                type: "PUT",
-                url: "updateWinner",
-                data: {
-                    "seats":JSON.stringify(seatList)
-                } ,
-                dataType: "json",
-            //    contentType: "application/json;charset=UTF-8",
-                success: function (result) {
-                    add = true;  //将新增状态设置为成功
-                }
-            });
-        if(add){ // 如果更新中奖名单数据成功则执行延时跳转
-            // localStorage.setItem("seatList",JSON.stringify(seatList));  // 存储中奖名单
-            // console.log("中奖名单");
-            // console.log(JSON.parse(localStorage.getItem('seatList')));
-          // $.get("showWinnerList");                                   // 跳转至中奖者名单页面
-        //    window.location.href="showWinnerList.jsp";
-        }
+            type: "PUT",
+            url: "updateWinner",
+            data: {
+                "seats": JSON.stringify(seatList)
+            },
+            dataType: "json",
+            //contentType: "application/json;charset=UTF-8",
+            success: function (result) {
+                add = true;  //将新增状态设置为成功
+              //  window.location.href = "showWinnerList";
+            }
+        });
+
     }
 </script>
 </html>
