@@ -4,6 +4,7 @@ var running = false; // 是否抽奖
 var list = [[1, 2], [2, 1], [1, 3], [1, 4], [1, 1], [2, 2]];  // 参与抽奖的桌号和座位号
 var winnerNumber = 3;  // 设置中奖人数
 var listWinner = [];  // 中奖的人的桌号和座位号数据
+var add = false;   // 新增是否成功
 
 function beginRndNum(trigger) {
     if (running) {
@@ -13,6 +14,8 @@ function beginRndNum(trigger) {
         $(trigger).text("开始");
         $("span[id^='tableId']").css('color', 'red');
         $("span[id^='locationId']").css('color', 'red');
+        $("#list").show();        // 名单按钮显示
+        // setTimeout(saveWinner(),3000); // 抽奖结束不点击三秒后自动执行
     } else {
         running = true;
         $("span[id^='tableId']").css('color', 'black');
@@ -20,6 +23,7 @@ function beginRndNum(trigger) {
         $(trigger).text("停止");
         listWinner = [];   // 中奖人清空
         beginTimer();
+        $("#list").hide();    // 名单按钮隐藏
     }
 }
 
@@ -68,21 +72,26 @@ function beat() {
  * 保存中奖数据并跳转到中奖名单
  */
 function saveWinner() {
+    var seatList = [];     // 初始化
     for (var i = 0; i < winnerNumber; i++) {
         var $i = i;
         var seat = {};
         seat.tableId = parseInt($("#tableId" + $i).text());
         seat.locationId = parseInt($("#locationId" + $i).text());
-        console.log(seat);
-        $.ajax({
-            type: "put",
-            url: "luckDraw",
-            data: JSON.stringify(seat),
-            dataType: "json",
-            contentType: "application/json;charset=UTF-8",
-            success: function (result) {
-
-            }
-        });
+        seatList.push(seat);
     }
+    $.ajax({   // 将中奖者信息更新到数据库
+        type: "PUT",
+        url: "updateWinner",
+        data: {
+            "seats": JSON.stringify(seatList)
+        },
+        dataType: "json",
+        //contentType: "application/json;charset=UTF-8",
+        success: function (result) {
+            add = true;  //将新增状态设置为成功
+            //  window.location.href = "showWinnerList";
+        }
+    });
+
 }

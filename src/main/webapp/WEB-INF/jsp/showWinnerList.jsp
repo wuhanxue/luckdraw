@@ -33,7 +33,7 @@
 <div class="text-center">
     <a class="btn btn-success" id="begin" style="width: 150px;height: 55px;font-size: 30px"
        href="luckDraw">再抽一次</a>
-    <a class="btn btn-danger" id="list" href="drawSetting" style="width: 150px;height: 55px;font-size: 30px">下一奖项</a>
+    <a class="btn btn-danger" id="list" href="luckDrawSetting" style="width: 150px;height: 55px;font-size: 30px">下一奖项</a>
 </div>
 </body>
 <script>
@@ -57,21 +57,6 @@
             "            </td>";
         $("#tBody").find("tr:last").append(td);   // 将td 插入到最新的tr中
         </c:forEach>
-        // var winnerList = JSON.parse(localStorage.getItem('seatList'));
-        // if(winnerList != null){
-        //     for(i in winnerList){
-        //         if(i%2 === 0){
-        //             var tr = "<tr>\n" +
-        //                 "</tr>";
-        //             $("#tBody").append(tr);
-        //         }
-        //         var td = " <td style=\"height: 100px\">\n" +
-        //             "            <p><span class=\"number\"></span>&nbsp;&nbsp;桌号【<span id='tableId"+winnerList[i].tableId+"'>" +
-        //             "</span>】&nbsp;&nbsp;座位号【<span class='locationId"+winnerList[i].locationId+"'></span>】</p>\n" +
-        //             "        </td>";
-        //         $("#tBody").find("tr:last").append(td);   // 将td 插入到最新的tr中
-        //     }
-        // }
     }
 
 </script>

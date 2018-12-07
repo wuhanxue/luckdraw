@@ -28,5 +28,4 @@ public interface SeatMapper {
     @Select("select * from main_seat where seat_table_id=#{tableId} and seat_location_id=#{locationId}")
     Seat getSeatByLocation(Seat seat);
 
-
 }

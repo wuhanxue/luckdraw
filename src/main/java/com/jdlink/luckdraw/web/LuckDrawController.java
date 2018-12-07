@@ -1,10 +1,12 @@
 package com.jdlink.luckdraw.web;
 
 //import com.google.gson.Gson;
+import com.jdlink.luckdraw.dao.PrizeDAO;
 import com.jdlink.luckdraw.dao.SeatDAO;
 import com.jdlink.luckdraw.dao.WinnerDAO;
 import com.jdlink.luckdraw.mapper.SeatMapper;
 import com.jdlink.luckdraw.mapper.WinnerMapper;
+import com.jdlink.luckdraw.pojo.Prize;
 import com.jdlink.luckdraw.pojo.Seat;
 
 
@@ -37,9 +39,12 @@ public class LuckDrawController {
     @Autowired
     WinnerDAO winnerDAO;
     @Autowired
+    PrizeDAO prizeDAO;
+    @Autowired
     SeatMapper seatMapper;
     @Autowired
     WinnerMapper winnerMapper;
+
 
     /**
      * 获取所有未中奖过的人的数据列表
@@ -59,7 +64,9 @@ public class LuckDrawController {
     }
 
     @GetMapping("/luckDrawSetting")
-    public String luckDrawSetting(){
+    public String luckDrawSetting(Model m){
+        List<Prize> prizes = prizeDAO.findAll();   // 获取所有奖品数据
+        m.addAttribute("prizeList",prizes);
         return "luckDrawSetting";
     }
 

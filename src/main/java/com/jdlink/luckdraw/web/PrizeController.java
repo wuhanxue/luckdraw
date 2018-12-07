@@ -60,12 +60,8 @@ public class PrizeController {
          }
          catch (Exception e){
              e.printStackTrace();
-
              res.put("status", "fail");
-
              res.put("message", "添加失败");
-
-
          }
 //        m.addAttribute("seatList" ,seatList);
             return res.toString();  // 地址栏不会变
