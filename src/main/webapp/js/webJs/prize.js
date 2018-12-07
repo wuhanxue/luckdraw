@@ -50,6 +50,11 @@ function save() {
         if($(this).children('td').eq(3).find('label').children('input').eq(1).prop('checked')==true){
             mode=0
         }
+        // if ($(this).children('td').eq(2).find('input').prop('type') != 'text') {
+        //     var formFile = new FormData();
+        //     var imageFile = $(this).children('td').eq(2).find("input[name='file']")[0].files[0];
+        //     formFile.append("imageFile",imageFile);
+        // }
         var data={
             name:$(this).children('td').eq(0).find('input').val(),
             number:$(this).children('td').eq(1).find('input').val(),
@@ -74,45 +79,10 @@ function save() {
             }
         });
         //添加图片路径
-
-        if ($(this).children('td').eq(2).find('input').prop('type') != 'text') {
-            var formFile = new FormData();
-            var imageFile = $(this).children('td').eq(2).find('input')[0].files[0];
-             formFile.append("imageFile",imageFile);
-            console.log(formFile)
-            if(formFile!=undefined){
-                $.ajax({
-                    type: "POST",                            // 方法类型
-                    url: "saveImg",                     // url
-                    cache: false,
-                    async: false,                           // 同步：意思是当有返回值以后才会进行后面的js程序
-                    data: formFile,
-                    dataType: "json",
-                    processData: false,
-                    contentType: false,
-                    success: function (result) {
-                        if (result != undefined && result.status == "success") {
-
-                        }
-                        else {
-
-                        }
-                    },
-                    error: function (result) {
-                        console.log("error: " + result);
-                        alert("服务器异常!");
-                    }
-                });
+            var imageFile = $(this).children('td').eq(2).find("input[name='file']")[0].files[0];
+            if(imageFile!=undefined){
+                $(this).children('td').eq(2).find('form').submit();
             }
-        }
-        // $.ajax({
-        //     type: "POST",                       // 方法类型
-        //     url: "prizeUrl", // url
-        //     data:JSON.stringify(data),
-        //     async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
-        //     dataType: "json",
-        //     contentType: 'application/json;charset=utf-8',
-        // })
     })
 }
 

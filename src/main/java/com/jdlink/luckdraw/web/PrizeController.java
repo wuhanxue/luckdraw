@@ -87,18 +87,18 @@ public class PrizeController {
         return res.toString();  // 地址栏不会变
     }
 
-    @PostMapping("saveImg")
-    @ResponseBody
-    public String saveImg(HttpServletRequest req, @RequestParam("formFile")MultipartFile formFile, Model m) {
+    @PostMapping(value = "/saveImg")
+    public String saveImg(HttpServletRequest req, @RequestParam("file")MultipartFile file, Model m) {
         JSONObject res=new JSONObject();
         try{
-            String fileName = System.currentTimeMillis()+formFile.getOriginalFilename(); // 文件名设置为当前时间加上传的文件名
+            String fileName = System.currentTimeMillis()+file.getOriginalFilename(); // 文件名设置为当前时间加上传的文件名
             // 获取文件的真实路径然后拼接前面的文件名，uploaded是存放文件的目录名
             String destFileName = req.getServletContext().getRealPath("")+"image"+ File.separator+fileName;
             // 初始化目录(第一次上传目录不存在需要初始化)
+
             File destFile = new File(destFileName);
             destFile.getParentFile().mkdirs(); // 调用父目录实例并创建目录
-            formFile.transferTo(destFile); // 将file复制给destFile
+            file.transferTo(destFile); // 将file复制给destFile
 
             //将路径进行保存
             //1获取刚刚添加进去的编号
@@ -116,6 +116,6 @@ public class PrizeController {
             e.printStackTrace();
             return "上传失败，"+e.getMessage();
         }
-        return res.toString();
+        return "redirect:drawSetting";
     }
 }
