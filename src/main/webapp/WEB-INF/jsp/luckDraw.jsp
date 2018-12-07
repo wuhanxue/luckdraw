@@ -21,7 +21,7 @@
         }
     </style>
 </head>
-<body onload="loadNumber()" >
+<body onload="loadNumber()">
 
 <%--<h1 style="color:#40AA53">抽奖结果</h1>--%>
 
@@ -37,7 +37,9 @@
 <table id="table" style="width: 80%;height: 450px;border: 0;" align="center">
     <tr id="class1">
         <!--几等奖，动态-->
-        <td class="text-center" colspan="4"><p style="font-size: 80px;color: #ff3f4b"><span id="class" style="color: #8909ff">一</span>等奖 幸运号码</p></td>
+        <td class="text-center" colspan="4"><p style="font-size: 80px;color: #ff3f4b"><span id="class"
+                                                                                            style="color: #8909ff">一</span>等奖
+            幸运号码</p></td>
     </tr>
 </table>
 <div class="text-center">
@@ -127,7 +129,6 @@
         var locationId = ${a.locationId};
         list.push([tableId, locationId]);
         </c:forEach>
-        console.log(list);
         if (winnerNumber > list.length) { // 当抽奖人数大于参加人数时自动赋值为参加人数
             console.log("中奖人数大于参加人数");
             winnerNumber = list.length;
@@ -160,24 +161,19 @@
             seatList.push(seat);
         }
         $.ajax({   // 将中奖者信息更新到数据库
-                type: "PUT",
-                url: "updateWinner",
-                data: {
-                    "seats":JSON.stringify(seatList)
-                } ,
-                dataType: "json",
-            //    contentType: "application/json;charset=UTF-8",
-                success: function (result) {
-                    add = true;  //将新增状态设置为成功
-                }
-            });
-        if(add){ // 如果更新中奖名单数据成功则执行延时跳转
-            // localStorage.setItem("seatList",JSON.stringify(seatList));  // 存储中奖名单
-            // console.log("中奖名单");
-            // console.log(JSON.parse(localStorage.getItem('seatList')));
-          // $.get("showWinnerList");                                   // 跳转至中奖者名单页面
-        //    window.location.href="showWinnerList.jsp";
-        }
+            type: "PUT",
+            url: "updateWinner",
+            data: {
+                "seats": JSON.stringify(seatList)
+            },
+            dataType: "json",
+            //contentType: "application/json;charset=UTF-8",
+            success: function (result) {
+                add = true;  //将新增状态设置为成功
+              //  window.location.href = "showWinnerList";
+            }
+        });
+
     }
 </script>
 </html>

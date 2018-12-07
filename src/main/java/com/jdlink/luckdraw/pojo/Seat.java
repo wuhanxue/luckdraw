@@ -49,6 +49,13 @@ public class Seat {
      */
     @Column(name = "is_join")
     private boolean join;
+
+    /**
+     * 奖品-中奖者一对一绑定
+     */
+    @OneToOne(mappedBy = "seat",cascade = CascadeType.ALL)
+    private Winner winners;
+
     /**
      * 创建时间
      */
@@ -130,6 +137,14 @@ public class Seat {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Winner getWinners() {
+        return winners;
+    }
+
+    public void setWinners(Winner winners) {
+        this.winners = winners;
     }
 
     @Override
