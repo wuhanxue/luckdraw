@@ -9,20 +9,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>抽奖设置</title>
-    <script src="js/jquery/2.0.0/jquery.min.js"></script>
-    <script src="js/jquery/2.0.0/jquery.serializejson.js"></script>
-    <link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
-    <script src="js/bootstrap/3.3.6/bootstrap.min.js"></script>
-    <link href="css/dashboard.css" rel="stylesheet">
-    <link href="css/dropdown-submenu.css" rel="stylesheet">
-    <script src="js/time.js"></script>
-    <script src="js/util.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <link href="../../css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <script src="../../js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <script src="../../js/webJs/prize.js"></script>
+    <title>佳利达抽奖系统</title>
+    <%--<script src="../js/prize.js" ></script>--%>
+
 </head>
 <style>
     body {
-        font-size: 40px;
+        font-size: 10px;
     }
     .middle {
         margin-top: 10%;
@@ -43,10 +41,10 @@
         margin: 15px;
     }
 </style>
-<body onload="getCurrentSalesmanId();">
-<div class="container-fluid">
+<body onload="loadPrizeLIst()">
+<div >
 
-    <div class="sidebar">
+    <div >
         <div>
             <ol class="breadcrumb">
                 <li><a href="#">系统配置</a></li>
@@ -59,11 +57,29 @@
             <li><a class="btn btn-primary" href="drawSetting3.html">中奖重置</a></li>
         </ul>
     </div>
-    <div class="col-sm-9 col-sm-offset-3 col-md-offset-2 col-md-9 col-md-offset-2 main">
-        <div style="margin-left: 25%">
-            <a class="btn btn-primary new">新增</a>
+    <div class="col-sm-9 col-sm-offset-3 col-md-offset-2 col-md-9 col-md-offset-2">
+        <div class="panel panel-default" id="addPanel">
+            <div class="panel-heading" >
+                <h3 class="panel-title">
+                    奖品添加
+                </h3>
+            </div>
+            <div class="panel-body">
+
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+                    保存
+                </button>
+                <button type="button" class="btn btn-danger"  aria-pressed="false" autocomplete="off">
+                 关闭
+                </button>
+            </div>
         </div>
-        <div style="overflow-y: scroll;margin-left: 25%">
+        <div style="margin-left: 25%">
+            <a class="btn btn-primary new" onclick="addData()">新增</a>
+        </div>
+        <div>
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -87,22 +103,22 @@
                         <a onclick="" href="#" title="作废"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                     </td>
                 </tr>
-                <tr class="CloneTr">
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                </tr>
+                <%--<tr class="CloneTr">--%>
+                    <%--<td class="text-center"></td>--%>
+                    <%--<td class="text-center"></td>--%>
+                    <%--<td class="text-center"></td>--%>
+                    <%--<td class="text-center"></td>--%>
+                    <%--<td class="text-center"></td>--%>
+                <%--</tr>--%>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<div id="embed"></div>
+
+
+
+
 </body>
-<script>
-    $('#embed').load('embed/loginLogModal.html');
-    $("#name").get(0).selectedIndex = -1;
-</script>
+
 </html>
