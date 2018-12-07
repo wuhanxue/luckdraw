@@ -16,7 +16,6 @@
     <script src="../../js/webJs/prize.js"></script>
     <title>佳利达抽奖系统</title>
     <%--<script src="../js/prize.js" ></script>--%>
-
 </head>
 <style>
     body {

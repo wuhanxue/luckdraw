@@ -2,12 +2,16 @@ package com.jdlink.luckdraw.web;
 
 //import com.google.gson.Gson;
 import com.jdlink.luckdraw.dao.SeatDAO;
+import com.jdlink.luckdraw.dao.WinnerDAO;
 import com.jdlink.luckdraw.mapper.SeatMapper;
 import com.jdlink.luckdraw.mapper.WinnerMapper;
 import com.jdlink.luckdraw.pojo.Seat;
 
 
 import com.jdlink.luckdraw.pojo.Winner;
+import net.sf.json.JSON;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +32,12 @@ public class LuckDrawController {
     /**
      * 操作seat类的接口
      */
-    @Autowired SeatDAO seatDAO;
-    @Autowired SeatMapper seatMapper;
+    @Autowired
+    SeatDAO seatDAO;
+    @Autowired
+    WinnerDAO winnerDAO;
+    @Autowired
+    SeatMapper seatMapper;
     @Autowired
     WinnerMapper winnerMapper;
 
@@ -41,7 +50,7 @@ public class LuckDrawController {
     @GetMapping("/luckDraw")
     public String listEmployee(Model m) throws Exception {
         List<Seat> seatList = new ArrayList<>();
-        List<Seat> seatList1= seatDAO.findAll();
+        List<Seat> seatList1= seatDAO.findAll(); // 获取所有人
         for(Seat seat : seatList1){// 将不参加的人数过滤
             if(seat.isJoin())seatList.add(seat);
         }
@@ -51,22 +60,48 @@ public class LuckDrawController {
 
     /**
      * 更新中奖名单数据
-     * @param seat
+     * @param
      * @throws Exception
      */
-    @PutMapping("/luckDraw")
-    public void updateCategory(@RequestBody Seat seat) throws Exception {
-        seatMapper.updateIsJoin(seat); // 更新是否参加下一次抽奖状态为0
-        Winner winner = new Winner();
-        winner.setSeatId(seatMapper.getSeatByLocation(seat).getId()); // 设置位置表ID
-        winner.setPrizeId(1);                                         // 设置奖品表ID
-        winner.setReceive(false);                                     // 设置
-        winnerMapper.addWinner(winner);                                 // 插入新中奖者
+    @PutMapping("/updateWinner")
+    public void updateWinner(String seats) throws Exception {
+        JSONArray ary = JSONArray.fromObject(seats);  // 字符串转化为array数组
+        List<Seat> seatList = (List<Seat>) JSONArray.toCollection(ary, Seat.class);  // 再转化为seat数组
+        int maxNumber = winnerMapper.maxNumber() + 1;                 // 获取这是第几次抽奖
+        for(Seat seat : seatList){
+            seatMapper.updateIsJoin(seat);                             // 更新是否参加下一次抽奖状态为0
+            Winner winner = new Winner();
+            winner.setSeatId(seatMapper.getSeatByLocation(seat).getId()); // 设置位置表ID
+            winner.setPrizeId(1);                                         // 设置奖品表ID
+            winner.setReceive(false);                                     // 设置
+            winner.setNumber(maxNumber);
+            winnerMapper.addWinner(winner);                                // 插入新中奖者
+        }
     }
 
-    @GetMapping("/showWinnerList")
+    /**
+     * 重定向到中奖名单页面
+     * @return
+     */
+    @GetMapping("/showWinner")
     public String showWinnerList(){
         return "showWinnerList";
+    }
+
+    /**
+     * 获取中奖名单数据
+     * @param m
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/showWinnerList")
+    public String loadWinnerList(Model m) throws Exception {
+        List<Integer> winnerIdList= winnerMapper.findLastWinnerIdList();
+        List<Winner> winnerList = winnerDAO.findAllById(winnerIdList);
+        System.out.println("数据");
+        System.out.println(winnerList);
+        m.addAttribute("winnerList" ,winnerList);
+        return "showWinnerList";  // 地址栏不会变
     }
 
 }
