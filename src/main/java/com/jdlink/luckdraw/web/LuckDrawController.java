@@ -58,13 +58,17 @@ public class LuckDrawController {
         return "luckDraw";  // 地址栏不会变
     }
 
+    @GetMapping("/luckDrawSetting")
+    public String luckDrawSetting(){
+        return "luckDrawSetting";
+    }
+
     /**
      * 更新中奖名单数据
      * @param
      */
     @PutMapping("/updateWinner")
-    public void updateWinner(String seats,Model m){
-        try {
+    public void updateWinner(String seats) throws Exception{
             JSONArray ary = JSONArray.fromObject(seats);  // 字符串转化为array数组
             List<Seat> seatList = (List<Seat>) JSONArray.toCollection(ary, Seat.class);  // array转化为seat数组
             int maxNumber = winnerMapper.maxNumber() + 1;                 // 获取这是第几次抽奖
@@ -83,9 +87,7 @@ public class LuckDrawController {
 //        List<Seat> seatList1 = seatDAO.findAllById(winnerSeatIdList);    // 根据seatId获取seat数据
 //        m.addAttribute("seatList" ,seatList1);
             //   return "showWinnerList";              // 重定向：跳转中奖名单页面
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+
     }
 
     /**

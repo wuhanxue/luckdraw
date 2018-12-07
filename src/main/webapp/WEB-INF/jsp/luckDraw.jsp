@@ -22,30 +22,17 @@
     </style>
 </head>
 <body onload="loadNumber()">
-
-<%--<h1 style="color:#40AA53">抽奖结果</h1>--%>
-
-<%--<div id="Result" style="color:#40AA53">--%>
-<%--<span id="ResultNum">0</span>--%>
-<%--<span id="num">0</span>--%>
-<%--</div>--%>
-
-<%--&lt;%&ndash;<div id="Button">&ndash;%&gt;--%>
-<%--&lt;%&ndash;<input type='button' id="btn" value='开始' onclick='beginRndNum(this)'/>&ndash;%&gt;--%>
-<%--&lt;%&ndash;</div>&ndash;%&gt;--%>
-
 <table id="table" style="width: 80%;height: 450px;border: 0;" align="center">
     <tr id="class1">
         <!--几等奖，动态-->
-        <td class="text-center" colspan="4"><p style="font-size: 80px;color: #ff3f4b"><span id="class"
-                                                                                            style="color: #8909ff">一</span>等奖
-            幸运号码</p></td>
+        <td class="text-center" colspan="4"><p style="font-size: 80px;color: #ff3f4b"><span id="class" >一</span>等奖
+            </p></td>
     </tr>
 </table>
 <div class="text-center">
     <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px"
        onclick="beginRndNum(this)">开始</a>
-    <a class="btn btn-danger" id="list" onclick="saveWinner()" style="width: 100px;height: 55px;font-size: 30px">名单</a>
+    <a class="btn btn-danger" id="list" onclick="saveWinner()" style="display:none;width: 100px;height: 55px;font-size: 30px">名单</a>
 </div>
 </body>
 <script>
@@ -65,6 +52,7 @@
             $(trigger).text("开始");
             $("span[id^='tableId']").css('color', 'red');
             $("span[id^='locationId']").css('color', 'red');
+            $("#list").show();        // 名单按钮显示
             // setTimeout(saveWinner(),3000); // 抽奖结束不点击三秒后自动执行
         } else {
             running = true;
@@ -73,6 +61,7 @@
             $(trigger).text("停止");
             listWinner = [];   // 中奖人清空
             beginTimer();
+            $("#list").hide();    // 名单按钮隐藏
         }
     }
 

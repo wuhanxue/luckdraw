@@ -21,7 +21,9 @@
     <thead>
     <!--几等奖，动态-->
     <tr>
-        <td class="text-center" colspan="2" style="height: 85px"><span></span>等奖 中奖名单</td>
+        <td class="text-center" colspan="2" style="height: 85px"><p style="font-size: 80px;color: #ff3f4b"><span id="class"
+                                                        style="color: #ff3f4b">一</span>等奖
+            中奖名单</p></td>
     </tr>
     </thead>
     <tbody id="tBody">
