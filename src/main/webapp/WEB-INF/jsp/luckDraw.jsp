@@ -53,6 +53,7 @@
     var list = [[1, 2], [2, 1], [1, 3], [1, 4], [1, 1], [2, 2]];  // 参与抽奖的桌号和座位号
     var winnerNumber = 3;  // 设置中奖人数
     var listWinner = [];  // 中奖的人的桌号和座位号数据
+    var add = false;   // 新增是否成功
 
     function beginRndNum(trigger) {
         if (running) {
@@ -62,6 +63,7 @@
             $(trigger).text("开始");
             $("span[id^='tableId']").css('color', 'red');
             $("span[id^='locationId']").css('color', 'red');
+            // setTimeout(saveWinner(),3000); // 抽奖结束不点击三秒后自动执行
         } else {
             running = true;
             $("span[id^='tableId']").css('color', 'black');
@@ -117,6 +119,7 @@
      * 根据抽奖人数加载抽奖框
      */
     function loadNumber() {
+        add = false;  // 将新增状态设置为未新增
         // 获取所有参与抽奖的员工数据
         list = [];  // 清零
         <c:forEach items="${seatList}" var="a">
@@ -142,31 +145,39 @@
                 "</td>";
             $("#table").find("tr:last").append(td);   // 将td 插入到最新的tr中
         }
-
     }
 
     /**
      * 保存中奖数据并跳转到中奖名单
      */
     function saveWinner() {
+        var seatList = [];     // 初始化
         for (var i = 0; i < winnerNumber; i++) {
             var $i = i;
             var seat = {};
             seat.tableId = parseInt($("#tableId" + $i).text());
             seat.locationId = parseInt($("#locationId" + $i).text());
-            console.log(seat);
-            $.ajax({
-                type: "put",
-                url: "luckDraw",
-                data: JSON.stringify(seat),
+            seatList.push(seat);
+        }
+        $.ajax({   // 将中奖者信息更新到数据库
+                type: "PUT",
+                url: "updateWinner",
+                data: {
+                    "seats":JSON.stringify(seatList)
+                } ,
                 dataType: "json",
-                contentType: "application/json;charset=UTF-8",
+            //    contentType: "application/json;charset=UTF-8",
                 success: function (result) {
-
+                    add = true;  //将新增状态设置为成功
                 }
             });
+        if(add){ // 如果更新中奖名单数据成功则执行延时跳转
+            // localStorage.setItem("seatList",JSON.stringify(seatList));  // 存储中奖名单
+            // console.log("中奖名单");
+            // console.log(JSON.parse(localStorage.getItem('seatList')));
+          // $.get("showWinnerList");                                   // 跳转至中奖者名单页面
+        //    window.location.href="showWinnerList.jsp";
         }
-
     }
 </script>
 </html>
