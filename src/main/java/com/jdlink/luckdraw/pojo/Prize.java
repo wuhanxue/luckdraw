@@ -20,6 +20,7 @@ public class Prize {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     /**
@@ -32,7 +33,7 @@ public class Prize {
      * 奖品数量
      */
     @Column(name = "prize_number")
-    int number;
+    private int number;
 
     /**
      * 图片路径

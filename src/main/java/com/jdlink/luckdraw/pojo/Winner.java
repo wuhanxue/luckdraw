@@ -28,16 +28,35 @@ public class Winner {
     private int seatId;
 
     /**
+     * 一对一绑定seat
+     */
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Seat seat;
+
+    /**
      * 奖品表外键
      */
     @Column(name = "prize_id")
     private int prizeId;
 
     /**
-     *
+     * 一对一绑定奖品
+     */
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Prize prize;
+    /**
+     * 是否领奖
      */
     @Column(name = "is_receive")
     private boolean receive;
+
+    /**
+     * 第几次中奖
+     */
+    @Column(name = "win_number")
+    private int number;
 
     /**
      * 创建时间
@@ -97,6 +116,30 @@ public class Winner {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public Seat getSeat() {
+        return seat;
+    }
+
+    public void setSeat(Seat seat) {
+        this.seat = seat;
+    }
+
+    public Prize getPrize() {
+        return prize;
+    }
+
+    public void setPrize(Prize prize) {
+        this.prize = prize;
     }
 
     @Override
