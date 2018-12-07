@@ -24,6 +24,4 @@ public class PrizeController {
 //        m.addAttribute("seatList" ,seatList);
         return "drawSetting";  // 地址栏不会变
     }
-
-
 }

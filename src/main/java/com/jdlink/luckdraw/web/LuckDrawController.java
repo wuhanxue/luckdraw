@@ -3,9 +3,11 @@ package com.jdlink.luckdraw.web;
 //import com.google.gson.Gson;
 import com.jdlink.luckdraw.dao.SeatDAO;
 import com.jdlink.luckdraw.mapper.SeatMapper;
+import com.jdlink.luckdraw.mapper.WinnerMapper;
 import com.jdlink.luckdraw.pojo.Seat;
 
 
+import com.jdlink.luckdraw.pojo.Winner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +28,9 @@ public class LuckDrawController {
      * 操作seat类的接口
      */
     @Autowired SeatDAO seatDAO;
-//    @Autowired SeatMapper seatMapper;
+    @Autowired SeatMapper seatMapper;
+    @Autowired
+    WinnerMapper winnerMapper;
 
     /**
      * 获取所有未中奖过的人的数据列表
@@ -52,10 +56,17 @@ public class LuckDrawController {
      */
     @PutMapping("/luckDraw")
     public void updateCategory(@RequestBody Seat seat) throws Exception {
-        System.out.println(seat);
-//        seatDAO.updateIsJoin(seat.getTableId(),seat.getLocationId()); // 更新是否参加下一次抽奖状态为0
+        seatMapper.updateIsJoin(seat); // 更新是否参加下一次抽奖状态为0
+        Winner winner = new Winner();
+        winner.setSeatId(seatMapper.getSeatByLocation(seat).getId()); // 设置位置表ID
+        winner.setPrizeId(1);                                         // 设置奖品表ID
+        winner.setReceive(false);                                     // 设置
+        winnerMapper.addWinner(winner);                                 // 插入新中奖者
     }
 
-
+    @GetMapping("/showWinnerList")
+    public String showWinnerList(){
+        return "showWinnerList";
+    }
 
 }
