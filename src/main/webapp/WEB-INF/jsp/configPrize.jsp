@@ -11,7 +11,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>抽奖设置</title>
+    <title>佳利达抽奖系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script type="text/javascript" src="../../js/jquery.min.js"></script>
     <link href="../../css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
@@ -57,9 +57,9 @@
                 </thead>
                 <tbody>
                 <tr id="clone" class="myclass" >
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="number"></td>
+                    <td><input type="text" class="form-control"></td>
+                    <td><input type="text" class="form-control"></td>
+                    <td><input type="number" class="form-control"></td>
                     <td>
                         <form action="saveImg" method="post" enctype="multipart/form-data">
                             选择图片:<input type="file" name="file" accept="image/*" />
@@ -107,9 +107,10 @@
                 </ol>
             </div>
             <ul class="setting">
-                <li><a class="btn btn-primary" href="drawSetting.html">奖项设置</a></li>
-                <li><a class="btn btn-primary" href="drawSetting2.html">座位设置</a></li>
-                <li><a class="btn btn-primary" href="drawSetting3.html">中奖重置</a></li>
+                <li><a class="btn btn-primary" href="/drawSetting">奖项设置</a></li>
+                <li><a class="btn btn-primary" href="/seat">座位设置</a></li>
+                <li><a class="btn btn-primary" href="#">中奖名单</a></li>
+                <li><a class="btn btn-primary" href="#">中奖重置</a></li>
             </ul>
         </div>
     </div>

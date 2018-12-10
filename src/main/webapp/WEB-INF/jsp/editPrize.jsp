@@ -13,7 +13,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>抽奖设置</title>
+    <title>佳利达抽奖系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script type="text/javascript" src="../../js/jquery.min.js"></script>
     <link href="../../css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
@@ -53,9 +53,9 @@
         </thead>-
         <tbody>
         <tr id="clone" class="myclass" >
-            <td><input type="text" value="${data.level}"></td>
-            <td><input type="text" value="${data.name}"></td>
-            <td><input type="number" value="${data.number}"></td>
+            <td><input class="form-control" type="text" value="${data.level}"></td>
+            <td><input class="form-control" type="text" value="${data.name}"></td>
+            <td><input class="form-control" type="number" value="${data.number}"></td>
             <td style="width: 101px;height: 101px;">
                 <%--${data.imgUrl.length()}--%>
                 <div style="display: inline" id="img">
@@ -86,7 +86,7 @@
                     <c:when test="${data.mode==true}">    <!--如果 -->
             <td>
                         <label>
-                            <input type="radio" name="mode" checked=${data.mode}> 随机抽取</label>
+                            <input type="radio" name="mode" checked=${data.mode} > 随机抽取</label>
                         <label>
                             <input type="radio"  name="mode" >   按桌抽取
                         </label>

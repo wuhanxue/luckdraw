@@ -59,11 +59,11 @@
         </tr>
         </tbody>
     </table>
-    <div class="panel-footer">
+    <div>
         <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="adjustConfirm()">
             修改
         </button>
-        <button type="button" class="btn btn-danger" href="/seat">
+        <button type="button" class="btn btn-danger" onclick="window.location.href='/seat';">
             返回
         </button>
     </div>

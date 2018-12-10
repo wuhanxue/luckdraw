@@ -1,10 +1,11 @@
 package com.jdlink.luckdraw.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
-
+@Data // update 2018年12月10日 by ljc 去除getset
 @Entity
 @Table(name = "main_seat")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
@@ -66,86 +67,6 @@ public class Seat {
      */
     @Column(name = "gmt_modify_time")
     private Date modifyTime;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getTableId() {
-        return tableId;
-    }
-
-    public void setTableId(int tableId) {
-        this.tableId = tableId;
-    }
-
-    public int getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public boolean isJoin() {
-        return join;
-    }
-
-    public void setJoin(boolean join) {
-        this.join = join;
-    }
-
-    public Date getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
-    public Winner getWinners() {
-        return winners;
-    }
-
-    public void setWinners(Winner winners) {
-        this.winners = winners;
-    }
 
     @Override
     public String toString() {
