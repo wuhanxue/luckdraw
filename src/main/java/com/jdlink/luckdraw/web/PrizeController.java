@@ -3,8 +3,6 @@ package com.jdlink.luckdraw.web;
 import com.jdlink.luckdraw.dao.PrizeDAO;
 import com.jdlink.luckdraw.mapper.PrizeMapper;
 import com.jdlink.luckdraw.pojo.Prize;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,9 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 奖品控制器
@@ -203,7 +199,7 @@ public class PrizeController {
             e.printStackTrace();
         }
 
-        return "editPrize";
+        return "ConfigPrizeEdit";
 
    }
 }
