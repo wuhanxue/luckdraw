@@ -17,7 +17,7 @@
     <script src="../../js/bootstrap/3.3.6/bootstrap.min.js"></script>
 </head>
 <body onload="loadWinnerList()">
-<table style="width: 80%;height: 600px;border: 0" cellpadding="0" cellspacing="0" align="center">
+<table style="width: 80%;height: 450px;border: 0" cellpadding="0" cellspacing="0" align="center">
     <thead>
     <!--几等奖，动态-->
     <tr>

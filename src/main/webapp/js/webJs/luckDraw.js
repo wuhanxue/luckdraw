@@ -88,14 +88,17 @@ function saveWinner() {
         seatList.push(seat);
     }
     $.ajax({   // 将中奖者信息更新到数据库
-        type: "PUT",
+        type: "POST",
         url: "updateWinner",
         async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
         data: {
             "seats": JSON.stringify(seatList)
         },
-        dataType: "json"
+        dataType: "json",
+        success:function(){
+            console.log("成功更新");
+        }
     });
-  //  window.open("showWinnerList");   //跳转中奖名单页面
+   window.open("showWinnerList");   //跳转中奖名单页面
  //  window.location.href="showWinnerList";
 }

@@ -3,6 +3,8 @@ package com.jdlink.luckdraw.web;
 import com.jdlink.luckdraw.dao.PrizeDAO;
 import com.jdlink.luckdraw.mapper.PrizeMapper;
 import com.jdlink.luckdraw.pojo.Prize;
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 奖品控制器
@@ -29,6 +32,13 @@ public class PrizeController {
     @Autowired
     PrizeMapper prizeMapper;
 
+    /**
+     *
+     * @param m
+     * @return
+     * @throws Exception
+     * 奖项页面初始化
+     */
     @GetMapping("/drawSetting")
     public String listEmployee(Model m) throws Exception {
         List<Prize> prizeList= prizeDAO.findAll();
@@ -48,6 +58,14 @@ public class PrizeController {
         return "configPrize";  // 地址栏不会变
     }
 
+    /**
+     *
+     * @param m
+     * @param prize
+     * @return
+     * @throws Exception
+     * 奖项增加方法
+     */
     @PostMapping("prize")
     @ResponseBody
     public String addPrize(Model m,@RequestBody Prize prize) throws Exception {
@@ -67,6 +85,14 @@ public class PrizeController {
             return res.toString();  // 地址栏不会变
     }
 
+    /**
+     *
+     * @param m
+     * @param id
+     * @return
+     * @throws Exception
+     * 奖项删除方法
+     */
     @DeleteMapping("prize")
     @ResponseBody
     public String deletePrize(Model m,int id) throws Exception {
@@ -87,8 +113,39 @@ public class PrizeController {
         return res.toString();  // 地址栏不会变
     }
 
+    /**
+     *
+     * @param
+     * @param
+     * @param m
+     * @return
+     * 奖项修改方法
+     */
+    @PutMapping("prize")
+    @ResponseBody
+    public String savePrize(Model m,@RequestBody Prize prize) throws Exception{
+        JSONObject res=new JSONObject();
+        try{
+           prizeMapper.updateById(prize);
+            res.put("status", "success");
+            res.put("message", "更新成功");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            res.put("status", "fail");
+            res.put("message", "更新失败");
+        }
+
+        return res.toString();
+    }
+
+
+
+    /**
+     * 保存图片方法
+     */
     @PostMapping(value = "/saveImg")
-    public String saveImg(HttpServletRequest req, @RequestParam("file")MultipartFile file, Model m) {
+    public String saveImg(HttpServletRequest req, @RequestParam("file")MultipartFile file,@RequestParam("prizeId")int prizeId, Model m) {
         JSONObject res=new JSONObject();
         try{
             String fileName = System.currentTimeMillis()+file.getOriginalFilename(); // 文件名设置为当前时间加上传的文件名
@@ -102,7 +159,14 @@ public class PrizeController {
 
             //将路径进行保存
             //1获取刚刚添加进去的编号
-          int id=  prizeMapper.getNewestId();
+            int id=0;
+            if(prizeId==0){
+                 id=  prizeMapper.getNewestId();
+            }
+
+            if(prizeId!=0){
+                 id=  prizeId;
+            }
           //2更新路径
             prizeMapper.updateImgUrl(id,fileName);
             res.put("status", "success");
@@ -118,4 +182,27 @@ public class PrizeController {
         }
         return "redirect:drawSetting";
     }
+
+    /**
+     *
+     * @param id
+     * @param m
+     * @return
+     * 点击编辑按钮方法
+     */
+     @RequestMapping("/editPrize")
+     public String adjustPrize(int id, Model m){
+
+        try {
+        Prize prize= prizeDAO.getOne(id);
+
+            m.addAttribute("data",prize);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "editPrize";
+
+   }
 }
