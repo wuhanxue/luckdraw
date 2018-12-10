@@ -5,7 +5,8 @@
   Time: 23:23
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -20,43 +21,44 @@
     <thead>
     <!--几等奖，动态-->
     <tr>
-        <td class="text-center" colspan="2" style="height: 85px"><span></span>等奖 中奖名单</td>
+        <td class="text-center" colspan="2" style="height: 85px"><p style="font-size: 80px;color: #ff3f4b">
+            <span id="prize" style="color: #ff3f4b">一等奖</span><br>
+            中奖名单</p></td>
     </tr>
     </thead>
     <tbody id="tBody">
-    <tr>
-        <td style="height: 100px">
-            <p><span class="number"></span>&nbsp;&nbsp;桌号【<span class="tableNumber"></span>】&nbsp;&nbsp;号码【<span class="personNumber"></span>】</p>
-        </td>
-    </tr>
+
     </tbody>
 </table>
 <div class="text-center">
-    <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px"
-       href="luckDraw.jsp">再抽一次</a>
-    <a class="btn btn-danger" id="list" href="luckDraw.jsp" style="width: 100px;height: 55px;font-size: 30px">下一奖项</a>
+    <a class="btn btn-success" id="begin" style="width: 150px;height: 55px;font-size: 30px"
+       href="luckDraw">再抽一次</a>
+    <a class="btn btn-danger" id="next" href="luckDrawSetting" style="width: 150px;height: 55px;font-size: 30px">下一奖项</a>
 </div>
 </body>
 <script>
     /**
      * 显示中奖者名单
      */
-    function loadWinnerList(){
-        var winnerList = JSON.parse(localStorage.getItem('seatList'));
-        if(winnerList != null){
-            for(i in winnerList){
-                if(i%2 === 0){
-                    var tr = "<tr>\n" +
-                        "</tr>";
-                    $("#tBody").append(tr);
-                }
-                var td = " <td style=\"height: 100px\">\n" +
-                    "            <p><span class=\"number\"></span>&nbsp;&nbsp;桌号【<span id='tableId"+winnerList[i].tableId+"'>" +
-                    "</span>】&nbsp;&nbsp;座位号【<span class='locationId"+winnerList[i].locationId+"'></span>】</p>\n" +
-                    "        </td>";
-                $("#tBody").find("tr:last").append(td);   // 将td 插入到最新的tr中
-            }
+    function loadWinnerList() {
+        $("#prize").text(localStorage.prizeLevel +"："+localStorage.prizeName);  // 设置奖品
+        var i = 0;
+        console.log("${seatList}");
+        <c:forEach items="${seatList}" var="a">
+        if (i % 2 === 0) {
+            var tr = "<tr>\n" +
+                "</tr>";
+            $("#tBody").append(tr);
         }
+        var td = " <td style=\"height: 100px\">\n" +
+            "            <p>               桌号【<span class=\"tableId\">${a.tableId}</span>\n" +
+            "                    】&nbsp;&nbsp;座位号【<span class=\"locationId\">${a.locationId}</span>\n" +
+            "                    】&nbsp;&nbsp;姓名【<span class=\"name\">${a.name}</span>】\n" +
+            "            </p>\n" +
+            "            </td>";
+        $("#tBody").find("tr:last").append(td);   // 将td 插入到最新的tr中
+        i++;
+        </c:forEach>
     }
 
 </script>
