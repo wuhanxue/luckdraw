@@ -46,8 +46,9 @@
                 </ol>
             </div>
             <ul class="setting">
-                <li><a class="btn btn-primary" href="#">奖项设置</a></li>
-                <li><a class="btn btn-primary" href="#">座位设置</a></li>
+                <li><a class="btn btn-primary" href="/drawSetting">奖项设置</a></li>
+                <li><a class="btn btn-primary" href="/seat">座位设置</a></li>
+                <li><a class="btn btn-primary" href="#">中奖名单</a></li>
                 <li><a class="btn btn-primary" href="#">中奖重置</a></li>
             </ul>
         </div>

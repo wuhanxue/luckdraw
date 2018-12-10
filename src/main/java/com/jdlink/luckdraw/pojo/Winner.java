@@ -1,6 +1,7 @@
 package com.jdlink.luckdraw.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.Date;
 /**
  * 中奖者数据结构
  */
+@Data // update 2018年12月10日 by ljc 去除getset
 @Entity
 @Table(name="main_winning")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
@@ -69,78 +71,6 @@ public class Winner {
      */
     @Column(name = "gmt_modify_time")
     private Date modifyTime;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getSeatId() {
-        return seatId;
-    }
-
-    public void setSeatId(int seatId) {
-        this.seatId = seatId;
-    }
-
-    public int getPrizeId() {
-        return prizeId;
-    }
-
-    public void setPrizeId(int prizeId) {
-        this.prizeId = prizeId;
-    }
-
-    public boolean isReceive() {
-        return receive;
-    }
-
-    public void setReceive(boolean receive) {
-        this.receive = receive;
-    }
-
-    public Date getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public Seat getSeat() {
-        return seat;
-    }
-
-    public void setSeat(Seat seat) {
-        this.seat = seat;
-    }
-
-    public Prize getPrize() {
-        return prize;
-    }
-
-    public void setPrize(Prize prize) {
-        this.prize = prize;
-    }
 
     @Override
     public String toString() {
