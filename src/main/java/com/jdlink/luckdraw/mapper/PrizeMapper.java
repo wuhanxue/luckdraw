@@ -40,6 +40,6 @@ public interface PrizeMapper {
     /**
      * 根据编号修改信息
      */
-    @Update("update config_prize set prize_name=#{name},prize_number=#{number},prize_mode=#{mode},gmt_modify_time=NOW() where id=#{id} ")
+    @Update("update config_prize set prize_name=#{name},prize_number=#{number},prize_mode=#{mode},gmt_modify_time=NOW(),prize_level=#{level} where id=#{id} ")
     void  updateById(Prize prize);
 }
