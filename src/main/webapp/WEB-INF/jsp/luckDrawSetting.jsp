@@ -16,10 +16,13 @@
     <script src="../../js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/webJs/luckDrawSetting.js"></script>
 </head>
-<body onload="loadPrize()">
-<table style="width: 80%;height: 350px;border: 0" align="center">
+<body onload="loadPrize()" background="../../image/timg.jpg">
+<div style="width: 100%;">
+    <a class="btn btn-warning" style="background-color: transparent;color: transparent;border: 0;height: 20px" href="/drawSetting">设置</a>
+</div>
+<table style="width: 80%;height: 350px;border: 0;margin-top: 10%" align="center">
     <tr>
-        <td class="text-center" colspan="2" style="color: #ff5048;font-size: 30px">抽奖栏</td>
+        <td class="text-center" colspan="2" style="color: #ff5048;font-size: 30px;vertical-align: center">抽奖栏</td>
     </tr>
     <tr>
         <td class="text-center" style="width: 313px">
@@ -27,15 +30,16 @@
             <p>
                 <select id='prizes' onchange="setPrize(this)" style="height: 30px"></select>
             </p>
-            <img id="img" style="height: 200px;width: 200px" src="../../image/logo.jpg">
+            <img id="img" style="height: 255px;width: 255px" src="../../image/logo.jpg">
         </td>
-        <td class="text-center" style="width: 313px">
+        <td style="width: 313px">
             <!--剩余名额，动态-->
-            <p><span id="level"></span>剩余名额：<span id="number"></span></p>
-            <p id="max" hidden>本次抽奖人数：
+            <p style="margin: 5%" class="text-left"><span id="level" class="hidden"></span>剩余名额：<span id="number"></span></p>
+            <p style="margin: 5%" class="text-left">本次抽奖人数：
                 <!--select选项，动态-->
                 <select id="numberMAX" title="" style="height: 40px;width: 80px;" onchange="setNumber(this)"></select>
             </p>
+            <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px;margin: 5%" href="luckDraw">抽奖</a>
             <p id="table" hidden>每次抽取桌数：
                 <!--select选项，动态-->
                 <select id="tableNumber" title="" style="height: 40px;width: 80px;" onchange="setTableNumber(this)">
