@@ -32,7 +32,7 @@
 <div class="text-center">
     <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px"
        onclick="beginRndNum(this)">开始</a>
-    <a class="btn btn-danger" id="list" onclick="saveWinner()" href="" style="display:none;width: 100px;height: 55px;font-size: 30px">名单</a>
+    <a class="btn btn-danger" id="list" onclick="saveWinner();window.location.href='showWinnerList';"  style="display:none;width: 100px;height: 55px;font-size: 30px">名单</a>
 </div>
 </body>
 <script>

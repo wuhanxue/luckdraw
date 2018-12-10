@@ -67,6 +67,7 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
+                    <th class="text-center">奖项等级</th>
                     <th class="text-center">奖项名称</th>
                     <th class="text-center">中奖人数</th>
                     <th class="text-center">奖品图片</th>
@@ -76,6 +77,7 @@
                 </thead>
                 <tbody>
                 <tr>
+                    <td class="text-center" id="awardLevel"></td>
                     <td class="text-center" id="awardName"></td>
                     <td class="text-center" id="awardNumber"></td>
                     <td class="text-center" id="awardPicture">
