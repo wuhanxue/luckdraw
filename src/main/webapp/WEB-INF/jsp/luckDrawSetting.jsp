@@ -40,6 +40,28 @@
                 <select id="numberMAX" title="" style="height: 40px;width: 80px;" onchange="setNumber(this)"></select>
             </p>
             <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px;margin: 5%" href="luckDraw">抽奖</a>
+            <p id="table" hidden>每次抽取桌数：
+                <!--select选项，动态-->
+                <select id="tableNumber" title="" style="height: 40px;width: 80px;" onchange="setTableNumber(this)">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </p>
+            <p id="everyTable" hidden>每桌抽取人数：
+                <!--select选项，动态-->
+                <select id="everyTableNumber" title="" style="height: 40px;width: 80px;" onchange="setEveryTableNumber(this)">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </p>
+            <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px" href="luckDraw">抽奖</a>
+            <a class="btn btn-warning" style="width: 100px;height: 55px;font-size: 30px" href="drawSetting">设置</a>
         </td>
     </tr>
 </table>
