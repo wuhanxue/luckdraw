@@ -1,5 +1,7 @@
 package com.jdlink.luckdraw.mapper;
 
+import com.jdlink.luckdraw.pojo.Prize;
+import com.jdlink.luckdraw.pojo.Winner;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -21,4 +23,12 @@ public interface PrizeMapper {
      */
     @Update("update config_prize set prize_image_url=#{1} where id=#{0}")
     void updateImgUrl(int id,String fileName);
+
+    /**
+     * 更新奖品数
+     * @param id
+     * @param number
+     */
+    @Update("update config_prize set prize_number=prize_number - #{1} where id=#{0}")
+    void updateNumber(int id, int number);
 }

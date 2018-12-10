@@ -25,14 +25,14 @@
 <table id="table" style="width: 80%;height: 450px;border: 0;" align="center">
     <tr id="class1">
         <!--几等奖，动态-->
-        <td class="text-center" colspan="4"><p style="font-size: 80px;color: #ff3f4b"><span id="class" >一</span>等奖
-            </p></td>
+        <td class="text-center" colspan="4"><p style="font-size: 80px;color: #ff3f4b"><span id="prize" >一等奖</span>
+        </p></td>
     </tr>
 </table>
 <div class="text-center">
     <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px"
        onclick="beginRndNum(this)">开始</a>
-    <a class="btn btn-danger" id="list" onclick="saveWinner()" style="display:none;width: 100px;height: 55px;font-size: 30px">名单</a>
+    <a class="btn btn-danger" id="list" onclick="saveWinner()" href="" style="display:none;width: 100px;height: 55px;font-size: 30px">名单</a>
 </div>
 </body>
 <script>
@@ -40,7 +40,10 @@
      * 根据抽奖人数加载抽奖框
      */
     function loadNumber() {
-       // winnerNumber = localStorage.winnerNumber;
+        console.log("抽奖人数：");
+        console.log(localStorage.winnerNumber);
+        winnerNumber = localStorage.winnerNumber;  // 获取抽奖人数
+        $("#prize").text(localStorage.prizeLevel +"："+localStorage.prizeName); // 设置奖品等级和名称
         add = false;  // 将新增状态设置为未新增
         // 获取所有参与抽奖的员工数据
         list = [];  // 清零
@@ -50,7 +53,7 @@
         list.push([tableId, locationId]);
         </c:forEach>
         if (winnerNumber > list.length) { // 当抽奖人数大于参加人数时自动赋值为参加人数
-            console.log("中奖人数大于参加人数");
+            alert("中奖人数大于参加人数");
             winnerNumber = list.length;
         }
         $("#class1").nextAll().remove();  // 删除旧数据
@@ -69,3 +72,4 @@
     }
 </script>
 </html>
+

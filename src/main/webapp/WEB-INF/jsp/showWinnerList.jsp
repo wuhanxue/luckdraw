@@ -21,8 +21,8 @@
     <thead>
     <!--几等奖，动态-->
     <tr>
-        <td class="text-center" colspan="2" style="height: 85px"><p style="font-size: 80px;color: #ff3f4b"><span id="class"
-                                                        style="color: #ff3f4b">一</span>等奖
+        <td class="text-center" colspan="2" style="height: 85px"><p style="font-size: 80px;color: #ff3f4b">
+            <span id="prize" style="color: #ff3f4b">一等奖</span><br>
             中奖名单</p></td>
     </tr>
     </thead>
@@ -33,7 +33,7 @@
 <div class="text-center">
     <a class="btn btn-success" id="begin" style="width: 150px;height: 55px;font-size: 30px"
        href="luckDraw">再抽一次</a>
-    <a class="btn btn-danger" id="list" href="luckDrawSetting" style="width: 150px;height: 55px;font-size: 30px">下一奖项</a>
+    <a class="btn btn-danger" id="next" href="luckDrawSetting" style="width: 150px;height: 55px;font-size: 30px">下一奖项</a>
 </div>
 </body>
 <script>
@@ -41,9 +41,10 @@
      * 显示中奖者名单
      */
     function loadWinnerList() {
+        $("#prize").text(localStorage.prizeLevel +"："+localStorage.prizeName);  // 设置奖品
         var i = 0;
+        console.log("${seatList}");
         <c:forEach items="${seatList}" var="a">
-        i++;
         if (i % 2 === 0) {
             var tr = "<tr>\n" +
                 "</tr>";
@@ -56,6 +57,7 @@
             "            </p>\n" +
             "            </td>";
         $("#tBody").find("tr:last").append(td);   // 将td 插入到最新的tr中
+        i++;
         </c:forEach>
     }
 

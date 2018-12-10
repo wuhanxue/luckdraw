@@ -4,6 +4,7 @@ package com.jdlink.luckdraw.web;
 import com.jdlink.luckdraw.dao.PrizeDAO;
 import com.jdlink.luckdraw.dao.SeatDAO;
 import com.jdlink.luckdraw.dao.WinnerDAO;
+import com.jdlink.luckdraw.mapper.PrizeMapper;
 import com.jdlink.luckdraw.mapper.SeatMapper;
 import com.jdlink.luckdraw.mapper.WinnerMapper;
 import com.jdlink.luckdraw.pojo.Prize;
@@ -17,9 +18,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -44,6 +43,8 @@ public class LuckDrawController {
     SeatMapper seatMapper;
     @Autowired
     WinnerMapper winnerMapper;
+    @Autowired
+    PrizeMapper prizeMapper;
 
 
     /**
@@ -63,10 +64,36 @@ public class LuckDrawController {
         return "luckDraw";  // 地址栏不会变
     }
 
+    /**
+     * 以json形式获取所有奖品数据返回给页面
+     * @return
+     */
+    @RequestMapping("/luckDrawSetting1")
+    @ResponseBody
+    public String luckDrawSetting1(){
+        JSONObject res = new JSONObject();
+        try {
+            List<Prize> prizes = prizeDAO.findAll();   // 获取所有奖品数据
+            //新建一个对象并给它赋值
+            JSONArray data = JSONArray.fromObject(prizes.toArray(new Prize[prizes.size()]));
+            res.put("data", data);
+            res.put("status", "success");
+            res.put("message", "获取数据成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            res.put("status", "fail");
+            res.put("message", "获取数据失败");
+        }
+        return res.toString();
+    }
+
+    /**
+     * 获取所有奖品数据
+     * @param m
+     * @return
+     */
     @GetMapping("/luckDrawSetting")
     public String luckDrawSetting(Model m){
-        List<Prize> prizes = prizeDAO.findAll();   // 获取所有奖品数据
-        m.addAttribute("prizeList",prizes);
         return "luckDrawSetting";
     }
 
@@ -75,26 +102,26 @@ public class LuckDrawController {
      * @param
      */
     @PutMapping("/updateWinner")
-    public void updateWinner(String seats) throws Exception{
-            JSONArray ary = JSONArray.fromObject(seats);  // 字符串转化为array数组
-            List<Seat> seatList = (List<Seat>) JSONArray.toCollection(ary, Seat.class);  // array转化为seat数组
-            int maxNumber = winnerMapper.maxNumber() + 1;                 // 获取这是第几次抽奖
-            for (Seat seat : seatList) {
-                seatMapper.updateIsJoin(seat);                             // 更新是否参加下一次抽奖状态为0
-                Winner winner = new Winner();
-                winner.setSeatId(seatMapper.getSeatByLocation(seat).getId()); // 设置位置表ID
-                winner.setPrizeId(1);                                         // 设置奖品表ID
-                winner.setReceive(false);                                     // 设置
-                winner.setNumber(maxNumber);
-                winnerMapper.addWinner(winner);                                // 插入新中奖者
-            }
-//      //  List<Integer> winnerIdList= winnerMapper.findLastWinnerIdList(); // 获取最近一次中奖者ID
-//        List<Integer> winnerSeatIdList= winnerMapper.findLastWinnerSeatIdList();   //获取最近一次中奖者的seatID
-////        List<Winner> winnerList = winnerDAO.findAllById(winnerIdList);       // 根据winnerId获取winner数据
-//        List<Seat> seatList1 = seatDAO.findAllById(winnerSeatIdList);    // 根据seatId获取seat数据
-//        m.addAttribute("seatList" ,seatList1);
-            //   return "showWinnerList";              // 重定向：跳转中奖名单页面
-
+    public String updateWinner(String seats)throws Exception{
+        JSONArray ary = JSONArray.fromObject(seats);  // 字符串转化为array数组
+        List<Seat> seatList = (List<Seat>) JSONArray.toCollection(ary, Seat.class);  // array转化为seat数组
+        int maxNumber = winnerMapper.maxNumber() + 1;                 // 获取这是第几次抽奖
+        int prizeId = -1;
+        int number = 0;
+        for (Seat seat : seatList) {
+            seatMapper.updateIsJoin(seat);                             // 更新是否参加下一次抽奖状态为0
+            Winner winner = new Winner();
+            winner.setSeatId(seatMapper.getSeatByLocation(seat).getId()); // 设置位置表ID
+            prizeId = seat.getWinners().getPrizeId();
+            winner.setPrizeId(prizeId);           // 设置奖品表ID
+            winner.setReceive(false);                                     // 设置
+            winner.setNumber(maxNumber);
+            // winnerMapper.addWinner(winner);                                // 插入新中奖者
+            winnerDAO.save(winner);                                     // 插入新中奖者
+            number = seat.getWinners().getPrize().getNumber();         // 更新奖品剩余数
+        }
+        prizeMapper.updateNumber(prizeId,number);                                // 更新奖品剩余数量
+        return "showWinnerList";
     }
 
     /**
@@ -105,12 +132,24 @@ public class LuckDrawController {
      */
     @GetMapping("/showWinnerList")
     public String loadWinnerList(Model m) throws Exception {
-        //  List<Integer> winnerIdList= winnerMapper.findLastWinnerIdList(); // 获取最近一次中奖者ID
         List<Integer> winnerSeatIdList= winnerMapper.findLastWinnerSeatIdList();   //获取最近一次中奖者的seatID
-//        List<Winner> winnerList = winnerDAO.findAllById(winnerIdList);       // 根据winnerId获取winner数据
         List<Seat> seatList1 = seatDAO.findAllById(winnerSeatIdList);    // 根据seatId获取seat数据
         m.addAttribute("seatList" ,seatList1);
         return "showWinnerList";  // 地址栏不会变
+    }
+
+    /**
+     * 设置抽奖数据并跳转抽奖页面
+     * @param prizeId
+     * @param winNumber
+     * @return
+     */
+    @GetMapping("/toLuckDraw")
+    public String toLuckDraw(int prizeId, int winNumber,Model m){
+        Prize prize = prizeDAO.getOne(prizeId);  // 获取奖品数据
+        m.addAttribute("prize" ,prize);          // 设置奖品数据
+        m.addAttribute("winNumber" ,winNumber);   // 设置获奖人数
+        return "redirect:luckDraw";  // 跳转抽奖页面
     }
 
 }
