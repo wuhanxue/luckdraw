@@ -26,10 +26,14 @@
             中奖名单</p></td>
     </tr>
     </thead>
+</table>
+<div id="scroll" style="overflow-y:scroll;height: 400px; ">
+<table style="width: 80%;height: 450px;border: 0" cellpadding="0" cellspacing="0" align="center">
     <tbody id="tBody">
 
     </tbody>
 </table>
+</div>
 <div class="text-center">
     <a class="btn btn-success" id="begin" style="width: 150px;height: 55px;font-size: 30px"
        href="luckDraw">再抽一次</a>
@@ -43,22 +47,52 @@
     function loadWinnerList() {
         $("#prize").text(localStorage.prizeLevel +"："+localStorage.prizeName);  // 设置奖品
         var i = 0;
-        console.log("${seatList}");
         <c:forEach items="${seatList}" var="a">
-        if (i % 2 === 0) {
-            var tr = "<tr>\n" +
-                "</tr>";
-            $("#tBody").append(tr);
-        }
-        var td = " <td style=\"height: 50px\">\n" +
+        // if (i % 2 === 0) {
+        //     var tr = "<tr>\n" +
+        //         "</tr>";
+        //     $("#tBody").append(tr);
+        // }
+        var td = "<tr class='text-center'> <td style=\"height: 50px\">\n" +
             "            <p>               桌号【<span class=\"tableId\">${a.tableId}</span>\n" +
             "                    】&nbsp;&nbsp;座位号【<span class=\"locationId\">${a.locationId}</span>\n" +
             "                    】&nbsp;&nbsp;姓名【<span class=\"name\">${a.name}</span>】\n" +
             "            </p>\n" +
-            "            </td>";
-        $("#tBody").find("tr:last").append(td);   // 将td 插入到最新的tr中
+            "            </td></tr>";
+        $("#tBody").append(td);   // 将td 插入到最新的tr中
         i++;
         </c:forEach>
+        setScrollAuto();   // 滚动条自动滚动
+    }
+
+
+    function setScrollAuto(){
+        setTimeout(function(){   // 延时滚动中奖者名单
+            //鼠标点击结束
+            $('#scroll').click(function(){
+                if(timer){
+                    clearInterval(timer);
+                }
+            });
+            var h=-1;
+            var timer = setInterval(function(){
+                //获取当前滚动条高度
+                var current = $('#scroll')[0].scrollTop;
+                if(current==h){
+                    //滚动到底端，并返回顶端
+                    clearInterval(timer);
+                    // window.location.reload();
+                    $('#scroll')[0].scrollTop=0;  //返回顶部
+                    setScrollAuto();          // 重新开始
+                }
+                else
+                {
+                    //以80ms/3.5px的速度滚动
+                    h=current;
+                    $('#scroll')[0].scrollTop=h+3.5;
+                }
+            },80);
+        },2000)
     }
 
 </script>

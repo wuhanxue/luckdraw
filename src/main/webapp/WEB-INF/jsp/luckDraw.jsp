@@ -29,6 +29,17 @@
         </p></td>
     </tr>
 </table>
+<%--提示面板--%>
+<div class="panel panel-default" id="newPanel" hidden>
+    <div class="panel-body">
+        <span id="message" class="text-center"></span>
+    </div>
+    <div class="panel-footer">
+        <button type="button" class="btn btn-danger" onclick="closed()">
+            关闭
+        </button>
+    </div>
+</div>
 <div class="text-center">
     <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px"
        onclick="beginRndNum(this)">开始</a>
@@ -52,8 +63,15 @@
         var locationId = ${a.locationId};
         list.push([tableId, locationId]);
         </c:forEach>
-        if (winnerNumber > list.length) { // 当抽奖人数大于参加人数时自动赋值为参加人数
-            alert("中奖人数大于参加人数");
+        if(list.length === 0){
+            $("#message").text("请重置中奖人！");
+            $('#newPanel').show(1000);
+            setTimeout(function(){  // 三秒后自动跳转至抽奖设置页面
+                window.location.href="luckDrawSetting";
+            },3000);
+        }else if (winnerNumber > list.length) { // 当抽奖人数大于参加人数时自动赋值为参加人数
+            $("#message").text("中奖人数大于参加人数");
+            $('#newPanel').show(1000);
             winnerNumber = list.length;
         }
         $("#class1").nextAll().remove();  // 删除旧数据
