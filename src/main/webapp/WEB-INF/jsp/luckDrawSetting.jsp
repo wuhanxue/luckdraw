@@ -27,7 +27,7 @@
             <p>
                 <select id='prizes' onchange="setPrize(this)" style="height: 30px"></select>
             </p>
-            <img id="img" style="height: 200px;width: 200px" src="../../image/jdlink.jpg">
+            <img id="img" style="height: 200px;width: 200px" src="../../image/logo.jpg">
         </td>
         <td class="text-center" style="width: 313px">
             <!--剩余名额，动态-->
@@ -37,6 +37,7 @@
                 <select id="numberMAX" title="" style="height: 40px;width: 80px;" onchange="setNumber(this)"></select>
             </p>
             <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px" href="luckDraw">抽奖</a>
+            <a class="btn btn-warning" style="width: 100px;height: 55px;font-size: 30px" href="/drawSetting">设置</a>
         </td>
     </tr>
 </table>

@@ -99,4 +99,6 @@ function saveWinner() {
             console.log("成功更新");
         }
     });
+   window.open("showWinnerList");   //跳转中奖名单页面
+ //  window.location.href="showWinnerList";
 }
