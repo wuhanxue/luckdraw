@@ -71,7 +71,7 @@ function save() {
             success: function (result) {
                 if (result != undefined && result.status == "success"){
                     alert(result.message)
-                    window.location.reload()
+                    window.location.href="drawSetting"
                 }
             },
             error: function (result) {
@@ -79,12 +79,14 @@ function save() {
             }
         });
         //添加图片路径
-            var imageFile = $(this).children('td').eq(3).find("input[name='file']")[0].files[0];
-            if(imageFile!=undefined){
-                $(this).children('td').eq(3).find('form').submit();
-            }
+        var imageFile = $(this).children('td').eq(3).find("input[name='file']")[0].files[0];
+        console.log("文件:"+imageFile)
+        if(imageFile!=undefined){
+            $(this).children('td').eq(3).find('form').submit();
+        }
+
     })
-    window.location.href="drawSetting"
+
 }
 
 
