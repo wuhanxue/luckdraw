@@ -126,6 +126,7 @@
     <div class="col-md-9 col-sm-9">
         <div style="margin-left: 10%">
             <a class="btn btn-primary" onclick="addData()">新增</a>
+            <a class="btn btn-danger" href="/luckDrawSetting">返回</a>
         </div>
         <div>
             <table class="table table-bordered">
