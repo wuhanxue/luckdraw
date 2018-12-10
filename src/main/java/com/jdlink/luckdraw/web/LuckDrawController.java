@@ -61,7 +61,7 @@ public class LuckDrawController {
     @GetMapping("/luckDraw")
     public String listEmployee(Model m) throws Exception {
         List<Seat> seatList = new ArrayList<>();
-        List<Seat> seatList1= seatDAO.findAll(); // 获取所有人
+        List<Seat> seatList1 = seatDAO.findAll(); // 获取所有人
         for(Seat seat : seatList1){              // 将不参加的人数过滤
             if(seat.isJoin())seatList.add(seat);
         }
@@ -109,8 +109,9 @@ public class LuckDrawController {
      * 更新中奖名单数据
      * @param
      */
-    @PutMapping("/updateWinner")
-    public String updateWinner(String seats)throws Exception{
+    @RequestMapping("updateWinner")
+    @ResponseBody
+    public void updateWinner(String seats)throws Exception{
         JSONArray ary = JSONArray.fromObject(seats);  // 字符串转化为array数组
         List<Seat> seatList = (List<Seat>) JSONArray.toCollection(ary, Seat.class);  // array转化为seat数组
         int maxNumber = winnerMapper.maxNumber() + 1;                 // 获取这是第几次抽奖
@@ -129,7 +130,7 @@ public class LuckDrawController {
             number = seat.getWinners().getPrize().getNumber();         // 更新奖品剩余数
         }
         prizeMapper.updateNumber(prizeId,number);                                // 更新奖品剩余数量
-        return "showWinnerList";
+      //  return "redirect:showWinnerList";
     }
 
     /**
