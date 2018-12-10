@@ -28,4 +28,9 @@ public interface SeatMapper {
     @Select("select * from main_seat where seat_table_id=#{tableId} and seat_location_id=#{locationId}")
     Seat getSeatByLocation(Seat seat);
 
+    /**
+     * 根据编号修改信息
+     */
+    @Update("update main_seat set seat_table_id=#{tableId},seat_location_id=#{locationId},employee_department=#{department},employee_name=#{name},gmt_modify_time=NOW() where id=#{id} ")
+    void  updateById(Seat seat);
 }
