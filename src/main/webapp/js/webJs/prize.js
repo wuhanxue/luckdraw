@@ -43,10 +43,10 @@ function delLine(e) {
 function save() {
     $('.myclass').each(function () {
         var mode;
-        if($(this).children('td').eq(3).find('label').children('input').eq(0).prop('checked')==true){
+        if($(this).children('td').eq(4).find('label').children('input').eq(0).prop('checked')==true){
             mode=1
         }
-        if($(this).children('td').eq(3).find('label').children('input').eq(1).prop('checked')==true){
+        if($(this).children('td').eq(4).find('label').children('input').eq(1).prop('checked')==true){
             mode=0
         }
         // if ($(this).children('td').eq(2).find('input').prop('type') != 'text') {
@@ -55,8 +55,9 @@ function save() {
         //     formFile.append("imageFile",imageFile);
         // }
         var data={
-            name:$(this).children('td').eq(0).find('input').val(),
-            number:$(this).children('td').eq(1).find('input').val(),
+            level:$(this).children('td').eq(0).find('input').val(),
+            name:$(this).children('td').eq(1).find('input').val(),
+            number:$(this).children('td').eq(2).find('input').val(),
             mode:mode,
         }
         console.log(data)
@@ -70,7 +71,7 @@ function save() {
             success: function (result) {
                 if (result != undefined && result.status == "success"){
                     alert(result.message)
-                    window.location.reload()
+                    window.location.href="drawSetting"
                 }
             },
             error: function (result) {
@@ -78,11 +79,14 @@ function save() {
             }
         });
         //添加图片路径
-            var imageFile = $(this).children('td').eq(2).find("input[name='file']")[0].files[0];
-            if(imageFile!=undefined){
-                $(this).children('td').eq(2).find('form').submit();
-            }
+        var imageFile = $(this).children('td').eq(3).find("input[name='file']")[0].files[0];
+        console.log("文件:"+imageFile)
+        if(imageFile!=undefined){
+            $(this).children('td').eq(3).find('form').submit();
+        }
+
     })
+
 }
 
 
@@ -176,17 +180,18 @@ function adjustConfirm() {
 
     $('.myclass').each(function () {
         var mode;
-        if($(this).children('td').eq(3).find('label').children('input').eq(0).prop('checked')==true){
+        if($(this).children('td').eq(4).find('label').children('input').eq(0).prop('checked')==true){
             mode=1
         }
-        if($(this).children('td').eq(3).find('label').children('input').eq(1).prop('checked')==true){
+        if($(this).children('td').eq(4).find('label').children('input').eq(1).prop('checked')==true){
             mode=0
         }
 
         var data={
-            id:$(this).children('td').eq(4).html(),
-            name:$(this).children('td').eq(0).find('input').val(),
-            number:$(this).children('td').eq(1).find('input').val(),
+            level:$(this).children('td').eq(0).find('input').val(),
+            id:$(this).children('td').eq(5).html(),
+            name:$(this).children('td').eq(1).find('input').val(),
+            number:$(this).children('td').eq(2).find('input').val(),
             mode:mode,
         }
         console.log(data)
@@ -200,7 +205,7 @@ function adjustConfirm() {
             success: function (result) {
                 if (result != undefined && result.status == "success"){
                     alert(result.message)
-                    window.location.reload()
+                    window.location.href="drawSetting"
                 }
             },
             error: function (result) {
@@ -208,9 +213,9 @@ function adjustConfirm() {
             }
         });
         //添加图片路径
-        var imageFile = $(this).children('td').eq(2).find("input[name='file']")[0].files[0];
+        var imageFile = $(this).children('td').eq(3).find("input[name='file']")[0].files[0];
         if(imageFile!=undefined){
-            $(this).children('td').eq(2).find('form').submit();
+            $(this).children('td').eq(3).find('form').submit();
         }
     })
 }

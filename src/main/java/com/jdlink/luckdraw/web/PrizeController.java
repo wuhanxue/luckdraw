@@ -51,8 +51,6 @@ public class PrizeController {
                   prizeList.get(i).setModeName("按桌抽取");
               }
           }
-
-
       }
         m.addAttribute("prizeList" ,prizeList);
         return "configPrize";  // 地址栏不会变
@@ -127,6 +125,8 @@ public class PrizeController {
         JSONObject res=new JSONObject();
         try{
            prizeMapper.updateById(prize);
+//           prize.setId(prize.getId());
+//           prizeDAO.save(prize);
             res.put("status", "success");
             res.put("message", "更新成功");
         }
@@ -144,7 +144,7 @@ public class PrizeController {
     /**
      * 保存图片方法
      */
-    @PostMapping(value = "/saveImg")
+    @PostMapping("saveImg")
     public String saveImg(HttpServletRequest req, @RequestParam("file")MultipartFile file,@RequestParam("prizeId")int prizeId, Model m) {
         JSONObject res=new JSONObject();
         try{
@@ -191,10 +191,11 @@ public class PrizeController {
      * 点击编辑按钮方法
      */
      @RequestMapping("/editPrize")
-     public String adjustPrize(int id, Model m){
+    public String adjustPrize(int id, Model m){
 
         try {
         Prize prize= prizeDAO.getOne(id);
+//        Prize prize1=prizeDAO.getById(id);
 
             m.addAttribute("data",prize);
         }
