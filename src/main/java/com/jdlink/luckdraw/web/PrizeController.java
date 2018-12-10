@@ -51,8 +51,6 @@ public class PrizeController {
                   prizeList.get(i).setModeName("按桌抽取");
               }
           }
-
-
       }
         m.addAttribute("prizeList" ,prizeList);
         return "configPrize";  // 地址栏不会变

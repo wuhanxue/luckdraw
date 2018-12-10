@@ -17,7 +17,8 @@ function beginRndNum(trigger) {
         $("#list").show();        // 名单按钮显示
         setTimeout(function(){     // 不点击名单3秒后自动跳转
             saveWinner();
-        },2000); // 抽奖结束不点击三秒后自动执行
+            window.location.href="showWinnerList"
+        },3000); // 抽奖结束不点击三秒后自动执行
     } else {
         running = true;
         $("span[id^='tableId']").css('color', 'black');
@@ -99,6 +100,12 @@ function saveWinner() {
             console.log("成功更新");
         }
     });
-   window.open("showWinnerList");   //跳转中奖名单页面
- //  window.location.href="showWinnerList";
+}
+
+/**
+ * 关闭面板
+ */
+function closed() {
+    // 新增编辑面板赢藏
+    $('#newPanel').hide(1000)
 }
