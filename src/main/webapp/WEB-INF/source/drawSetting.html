@@ -32,8 +32,8 @@
     }
 </style>
 <body onload="getCurrentSalesmanId();">
-    <div class="container-fluid">
-
+    <div class="container-fluid row">
+<div class="col-md-3">
         <div class="sidebar">
             <div>
                 <ol class="breadcrumb">
@@ -47,9 +47,10 @@
                 <li><a class="btn btn-primary" href="drawSetting3.html">中奖重置</a></li>
             </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-offset-2 col-md-9 col-md-offset-2 main">
+</div>
+        <div class="col-md-9">
             <div style="margin-left: 25%">
-                <a class="btn btn-primary new">新增</a>
+                <a class="btn btn-primary new" onclick="addData()">新增</a>
             </div>
             <div style="overflow-y: scroll;margin-left: 25%">
                 <table class="table table-bordered">
@@ -89,8 +90,5 @@
     </div>
     <div id="embed"></div>
 </body>
-<script>
-    $('#embed').load('embed/loginLogModal.html');
-    $("#name").get(0).selectedIndex = -1;
-</script>
+
 </html>

@@ -1,6 +1,7 @@
 package com.jdlink.luckdraw.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,6 +20,7 @@ public class Prize {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     /**
@@ -31,7 +33,13 @@ public class Prize {
      * 奖品数量
      */
     @Column(name = "prize_number")
-    int number;
+    private int number;
+
+    /**
+     * 奖品等级
+     */
+    @Column(name = "prize_level")
+    private String level;
 
     /**
      * 图片路径
@@ -46,6 +54,12 @@ public class Prize {
     private Boolean mode;
 
     /**
+     * 奖品-中奖者一对一绑定
+     */
+    @OneToOne(mappedBy = "prize",cascade = CascadeType.ALL)
+    private Winner winners;
+
+    /**
      *创建时间
      */
     @Column(name = "gmt_create_time")
@@ -57,6 +71,41 @@ public class Prize {
     @Column(name = "gmt_modify_time")
     private Date modifyTime;
 
+    /**
+     * 中奖方式==》用作显示
+     */
+    private String modeName;
+
+//    /**
+//     * 图片文件
+//     * @return
+//     */
+//    private MultipartFile imageFile;
+//
+//    public MultipartFile getImageFile() {
+//        return imageFile;
+//    }
+//
+//    public void setImageFile(MultipartFile imageFile) {
+//        this.imageFile = imageFile;
+//    }
+
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getModeName() {
+        return modeName;
+    }
+
+    public void setModeName(String modeName) {
+        this.modeName = modeName;
+    }
 
     public int getId() {
         return id;
@@ -112,6 +161,14 @@ public class Prize {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Winner getWinners() {
+        return winners;
+    }
+
+    public void setWinners(Winner winners) {
+        this.winners = winners;
     }
 
     @Override
