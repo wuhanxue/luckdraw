@@ -45,6 +45,7 @@
 <div id="add">
     <table class="table table-bordered">
         <thead>
+        <th class="text-center">奖项等级</th>
         <th class="text-center">奖项名称</th>
         <th class="text-center">中奖人数</th>
         <th class="text-center">奖品图片</th>
@@ -52,15 +53,18 @@
         </thead>-
         <tbody>
         <tr id="clone" class="myclass" >
+            <td><input type="text" value="${data.level}"></td>
             <td><input type="text" value="${data.name}"></td>
             <td><input type="number" value="${data.number}"></td>
-            <td>
+            <td style="width: 101px;height: 101px;">
                 <%--${data.imgUrl.length()}--%>
                 <div style="display: inline" id="img">
                 <c:if test="${data.imgUrl.length()>0}">
-                    <img src="/image/${data.imgUrl}" style="width: 50px;height: 50px;"  >
+                    <img src="/image/${data.imgUrl}" style="width: 100px;height: 100px;"  >
                 </c:if>
                 </div>
+                    <br>
+                    <br>
                     <div style="display: inline" id="adjustButton">
                         <button type="button" class="btn btn-primary" data-toggle="button"  onclick="adjustPic()" style="display: inline" > 修改图片</button>
                     </div>
@@ -78,25 +82,28 @@
                         <button type="button" class="btn btn-primary" data-toggle="button"  onclick="cancelPic()"  > 取消修改</button>
                     </div>
             </td>
-            <td>
                 <c:choose>
-                    <c:when test="${data.mode}==true">    <!--如果 -->
+                    <c:when test="${data.mode==true}">    <!--如果 -->
+            <td>
                         <label>
-                            <input type="checkbox" checked=checked > 随机抽取</label>
+                            <input type="radio" name="mode" checked=${data.mode}> 随机抽取</label>
                         <label>
-                            <input type="checkbox" >   按桌抽取
+                            <input type="radio"  name="mode" >   按桌抽取
                         </label>
+            </td>
                     </c:when>
                     <c:otherwise>  <!--否则 -->
+                     <td>
                         <label>
-                            <input type="checkbox" > 随机抽取</label>
+                            <input type="radio" name="mode"> 随机抽取</label>
                         <label>
-                            <input type="checkbox" checked="checked">   按桌抽取
+                            <input type="radio"  name="mode" checked=${data.mode}>   按桌抽取
                         </label>
+                     </td>
                     </c:otherwise>
                 </c:choose>
 
-            </td>
+
             <%--隐藏--%>
             <td class="hidden">${data.id}</td>
         </tr>
@@ -107,7 +114,7 @@
             修改
         </button>
         <button type="button" class="btn btn-danger" onclick="window.location.href='drawSetting'">
-            关闭
+            返回
         </button>
     </div>
 </div>

@@ -57,20 +57,13 @@
                 </thead>
                 <tbody>
                 <tr id="clone" class="myclass" >
-                    <td><select type="text">
-                        <option></option>
-                        <option></option>
-                        <option></option>
-                        <option></option>
-                        <option></option>
-                        <option></option>
-                        <option></option>
-                    </select></td>
+                    <td><input type="text"></td>
                     <td><input type="text"></td>
                     <td><input type="number"></td>
                     <td>
                         <form action="saveImg" method="post" enctype="multipart/form-data">
                             选择图片:<input type="file" name="file" accept="image/*" />
+                            <input type="text" value=0 name="prizeId" class="hidden" >
                             <br>
                             <input type="submit" value="上传" class="hidden" >
                         </form>
@@ -95,11 +88,11 @@
             </table>
         </div>
     </div>
-    <div class="panel-footer">
-        <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="save()">
+    <div class="center-block">
+        <button type="button" class="btn btn-primary " data-toggle="button" aria-pressed="false" autocomplete="off" onclick="save()">
             保存
         </button>
-        <button type="button" class="btn btn-danger" onclick="closed()">
+        <button type="button" class="btn btn-danger " onclick="closed()">
             关闭
         </button>
     </div>
@@ -131,6 +124,7 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
+                    <th class="text-center">奖项等级</th>
                     <th class="text-center">奖项名称</th>
                     <th class="text-center">中奖人数</th>
                     <th class="text-center">奖品图片</th>
@@ -139,10 +133,18 @@
                 </tr>
                 </thead>
                 <c:forEach items="${prizeList}" var="p" varStatus="st">
-                    <tr>
+                    <tr> <td>${p.level}</td>
                         <td>${p.name}</td>
                         <td>${p.number}</td>
-                        <td><img src="/image/${p.imgUrl}" style="width: 150px;height: 150px;"></td>
+                   <c:choose>
+                       <c:when test="${p.imgUrl.length()>0}">
+                           <td style="width: 151px;height: 151px"><img src="/image/${p.imgUrl}" style="width: 150px;height: 150px;"></td>
+                       </c:when>
+                       <c:otherwise >
+                           <td style="width: 151px;height: 151px">暂无图片</td>
+                       </c:otherwise>
+                   </c:choose>
+
                         <td>${p.modeName} </td>
                         <td class="hidden">${p.id} </td>
                         <td> <a  href="editPrize?id=${p.id}" title="编辑"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
