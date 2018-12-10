@@ -14,39 +14,35 @@
     <script type="text/javascript" src="../../js/jquery.min.js"></script>
     <link href="../../css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
     <script src="../../js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/webJs/luckDrawSetting.js"></script>
 </head>
-<body>
-<table style="width: 60%;height: 600px;border: 0" align="center">
+<body onload="loadPrize()">
+<table style="width: 80%;height: 350px;border: 0" align="center">
     <tr>
-        <td class="text-center" colspan="2" style="color: #ff5048">抽奖栏</td>
+        <td class="text-center" colspan="2" style="color: #ff5048;font-size: 30px">抽奖栏</td>
     </tr>
     <tr>
-        <td class="text-center" style="width: 30%">
+        <td class="text-center" style="width: 313px">
             <!--几等奖，动态-->
-            <p><span></span>等奖--TCL55寸彩电</p>
-            <img style="height: 200px;width: 200px" src="../../image/TV.jpg">
+            <p>
+                <select id='prizes' onchange="setPrize(this)" style="height: 30px"></select>
+            </p>
+            <img id="img" style="height: 200px;width: 200px" src="../../image/jdlink.jpg">
         </td>
-        <td class="text-center" style="width: 30%">
+        <td class="text-center" style="width: 313px">
             <!--剩余名额，动态-->
-            <p>五等奖剩余名额：<span></span></p>
+            <p><span id="level"></span>剩余名额：<span id="number"></span></p>
             <p>本次抽奖人数：
                 <!--select选项，动态-->
-                <select title="" style="height: 40px;width: 80px;">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
+                <select id="numberMAX" title="" style="height: 40px;width: 80px;" onchange="setNumber(this)"></select>
             </p>
-            <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px" href="luckDraw" target="_blank">抽奖</a>
+            <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px" href="luckDraw">抽奖</a>
         </td>
     </tr>
 </table>
 </body>
+<script>
+
+
+</script>
 </html>

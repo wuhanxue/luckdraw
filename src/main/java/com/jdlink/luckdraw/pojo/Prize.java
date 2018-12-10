@@ -36,6 +36,12 @@ public class Prize {
     private int number;
 
     /**
+     * 奖品等级
+     */
+    @Column(name = "prize_level")
+    private String level;
+
+    /**
      * 图片路径
      */
     @Column(name = "prize_image_url")
@@ -67,7 +73,6 @@ public class Prize {
 
     /**
      * 中奖方式==》用作显示
-     * @return
      */
     private String modeName;
 
@@ -84,6 +89,15 @@ public class Prize {
 //    public void setImageFile(MultipartFile imageFile) {
 //        this.imageFile = imageFile;
 //    }
+
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
 
     public String getModeName() {
         return modeName;
