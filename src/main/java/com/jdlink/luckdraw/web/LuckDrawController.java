@@ -24,6 +24,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+import net.sf.json.util.CycleDetectionStrategy;
+
 /**
  * 抽奖页面的后台方法
  */
@@ -75,7 +80,11 @@ public class LuckDrawController {
         try {
             List<Prize> prizes = prizeDAO.findAll();   // 获取所有奖品数据
             //新建一个对象并给它赋值
-            JSONArray data = JSONArray.fromObject(prizes.toArray(new Prize[prizes.size()]));
+           // JSONArray data = JSONArray.fromObject(prizes.toArray(new Prize[prizes.size()]));
+            JsonConfig jsonConfig = new JsonConfig();  //建立配置文件：防止因数据结构相互嵌套导致的死循环异常
+            jsonConfig.setIgnoreDefaultExcludes(false);  //设置默认忽略
+            jsonConfig.setExcludes(new String[]{"winners"}); // 将winners字段忽略，避免引起嵌套
+            JSONArray data = JSONArray.fromObject(prizes,jsonConfig);  //加载配置文件
             res.put("data", data);
             res.put("status", "success");
             res.put("message", "获取数据成功");
@@ -89,11 +98,10 @@ public class LuckDrawController {
 
     /**
      * 获取所有奖品数据
-     * @param m
      * @return
      */
     @GetMapping("/luckDrawSetting")
-    public String luckDrawSetting(Model m){
+    public String luckDrawSetting(){
         return "luckDrawSetting";
     }
 
