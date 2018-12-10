@@ -123,9 +123,11 @@
                         <td class="text-center">${seat.locationId}</td>
                         <td class="text-center">${seat.department}</td>
                         <td class="text-center">${seat.name}</td>
+                        <%--隐藏主键--%>
+                        <td class="text-center hidden">${seat.id}</td>
                         <td class="text-center">
-                            <a onclick="" href="#" title="编辑"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                            <a onclick="" href="#" title="作废"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            <a href="/editSeat?id=${seat.id}" title="编辑"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a onclick="deleteItem(this);" href="#" title="作废"><span class="glyphicon glyphicon-remove" aria-hidden="true" ></span></a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -221,5 +223,34 @@
                 }
             });
         });
+    }
+
+    /**
+     * 删除条目
+     */
+    function deleteItem(item) {
+        if(confirm("确认删除?")) {
+            var id = $(item).parent().prev().html();
+            console.log(id);
+            $.ajax({
+                type: "DELETE",                       // 方法类型
+                url: "seat", // url
+                data: {
+                    "id":id
+                },
+                async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
+                dataType: "json",
+                // contentType: 'application/json;charset=utf-8',
+                success: function (result) {
+                    if (result != undefined && result.status == "success") {
+                        alert(result.message);
+                        window.location.reload();
+                    }
+                },
+                error: function (result) {
+                    alert("服务器异常!")
+                }
+            })
+        }
     }
 </script>
