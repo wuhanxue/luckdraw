@@ -17,28 +17,24 @@
     <script type="text/javascript" src="../../js/webJs/luckDrawSetting.js"></script>
 </head>
 <body onload="loadPrize()">
-<table style="width: 60%;height: 600px;border: 0" align="center">
+<table style="width: 80%;height: 350px;border: 0" align="center">
     <tr>
-        <td class="text-center" colspan="2" style="color: #ff5048">抽奖栏</td>
+        <td class="text-center" colspan="2" style="color: #ff5048;font-size: 30px">抽奖栏</td>
     </tr>
     <tr>
-        <td class="text-center" style="width: 30%">
+        <td class="text-center" style="width: 313px">
             <!--几等奖，动态-->
             <p>
-                <select id='prizes' onchange="setPrize(this)">
-
-                </select>
+                <select id='prizes' onchange="setPrize(this)" style="height: 30px"></select>
             </p>
             <img id="img" style="height: 200px;width: 200px" src="../../image/jdlink.jpg">
         </td>
-        <td class="text-center" style="width: 30%">
+        <td class="text-center" style="width: 313px">
             <!--剩余名额，动态-->
             <p><span id="level"></span>剩余名额：<span id="number"></span></p>
             <p>本次抽奖人数：
                 <!--select选项，动态-->
-                <select id="numberMAX" title="" style="height: 40px;width: 80px;" onchange="setNumber(this)">
-
-                </select>
+                <select id="numberMAX" title="" style="height: 40px;width: 80px;" onchange="setNumber(this)"></select>
             </p>
             <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px" href="luckDraw">抽奖</a>
         </td>

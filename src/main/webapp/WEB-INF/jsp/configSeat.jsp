@@ -17,46 +17,47 @@
 </head>
 <style>
     body {
-        font-size: 40px;
+        font-size: 15px;
     }
     .setting > li > a {
-        width: 250px;
-        height: 80px;
-        font-size: 50px;
-        margin: 15px;
+        width: 100px;
+        height: 40px;
+        font-size: 20px;
+        margin: 10px;
     }
     ul li{
         list-style: none;
     }
     .new {
-        width: 200px;
-        height: 80px;
-        font-size: 50px;
-        margin: 15px;
+        width: 100px;
+        height: 40px;
+        font-size: 20px;
+        margin: 10px;
     }
 </style>
 <body>
-<div class="container-fluid">
-
-    <div class="sidebar">
-        <div>
-            <ol class="breadcrumb">
-                <li><a href="#">系统配置</a></li>
-                <li><a href="#">座位设置</a></li>
-            </ol>
+<div class="container-fluid row">
+    <div class="col-md-3 col-sm-3">
+        <div class="sidebar">
+            <div>
+                <ol class="breadcrumb">
+                    <li><a href="#">系统配置</a></li>
+                    <li><a href="#">座位设置</a></li>
+                </ol>
+            </div>
+            <ul class="setting">
+                <li><a class="btn btn-primary" href="#">奖项设置</a></li>
+                <li><a class="btn btn-primary" href="#">座位设置</a></li>
+                <li><a class="btn btn-primary" href="#">中奖重置</a></li>
+            </ul>
         </div>
-        <ul class="setting">
-            <li><a class="btn btn-primary" href="#">奖项设置</a></li>
-            <li><a class="btn btn-primary" href="#">座位设置</a></li>
-            <li><a class="btn btn-primary" href="#">中奖重置</a></li>
-        </ul>
     </div>
-    <div class="col-sm-9 col-sm-offset-3 col-md-offset-2 col-md-9 col-md-offset-2 main">
-        <div style="margin-left: 25%">
+    <div class="col-md-9 col-sm-9">
+        <div style="margin-left: 6%">
             <a class="btn btn-primary new">新增</a>
             <a class="btn btn-primary new">导入</a>
         </div>
-        <div style="overflow-y: scroll;margin-left: 25%">
+        <div style="overflow-y: scroll;margin-left: 6%">
             <table class="table table-bordered">
                 <thead>
                 <tr>

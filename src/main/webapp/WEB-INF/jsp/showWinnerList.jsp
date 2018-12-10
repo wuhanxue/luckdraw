@@ -17,11 +17,11 @@
     <script src="../../js/bootstrap/3.3.6/bootstrap.min.js"></script>
 </head>
 <body onload="loadWinnerList()">
-<table style="width: 60%;height: 600px;border: 0" cellpadding="0" cellspacing="0" align="center">
+<table style="width: 80%;height: 600px;border: 0" cellpadding="0" cellspacing="0" align="center">
     <thead>
     <!--几等奖，动态-->
     <tr>
-        <td class="text-center" colspan="2" style="height: 85px"><p style="font-size: 80px;color: #ff3f4b">
+        <td class="text-center" colspan="2" style="height: 85px"><p style="font-size: 40px;color: #ff3f4b">
             <span id="prize" style="color: #ff3f4b">一等奖</span><br>
             中奖名单</p></td>
     </tr>
@@ -50,7 +50,7 @@
                 "</tr>";
             $("#tBody").append(tr);
         }
-        var td = " <td style=\"height: 100px\">\n" +
+        var td = " <td style=\"height: 50px\">\n" +
             "            <p>               桌号【<span class=\"tableId\">${a.tableId}</span>\n" +
             "                    】&nbsp;&nbsp;座位号【<span class=\"locationId\">${a.locationId}</span>\n" +
             "                    】&nbsp;&nbsp;姓名【<span class=\"name\">${a.name}</span>】\n" +
