@@ -64,7 +64,6 @@
                         <form action="saveImg" method="post" enctype="multipart/form-data">
                             选择图片:<input type="file" name="file" accept="image/*" />
                             <input type="text" value=0 name="prizeId" class="hidden" >
-                            <br>
                             <input type="submit" value="上传" class="hidden" >
                         </form>
                     </td>
