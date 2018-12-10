@@ -1,7 +1,6 @@
 package com.jdlink.luckdraw.mapper;
 
 import com.jdlink.luckdraw.pojo.Prize;
-import com.jdlink.luckdraw.pojo.Winner;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -31,4 +30,16 @@ public interface PrizeMapper {
      */
     @Update("update config_prize set prize_number=prize_number - #{1} where id=#{0}")
     void updateNumber(int id, int number);
+
+    /**
+     * 根据编号找出信息
+     */
+    @Select("select * from config_prize where id=#{id}")
+    Prize getById(int id);
+
+    /**
+     * 根据编号修改信息
+     */
+    @Update("update config_prize set prize_name=#{name},prize_number=#{number},prize_mode=#{mode},gmt_modify_time=NOW() where id=#{id} ")
+    void  updateById(Prize prize);
 }
