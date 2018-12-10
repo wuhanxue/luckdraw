@@ -16,7 +16,7 @@
     <script src="../../js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/webJs/luckDrawSetting.js"></script>
 </head>
-<body onload="loadPrize()" background="../../image/timg.jpg">
+<body onload="loadPrize()" background="../../image/timg.jpg" style="background-size: cover">
 <div style="width: 100%;">
     <a class="btn btn-warning" style="background-color: transparent;color: transparent;border: 0;height: 20px" href="/drawSetting">设置</a>
 </div>
