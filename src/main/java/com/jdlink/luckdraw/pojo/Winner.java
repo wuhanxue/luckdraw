@@ -63,7 +63,7 @@ public class Winner {
     /**
      * 创建时间
      */
-    @Column(name = "gmt_creation_time")
+    @Column(name = "gmt_create_time")
     private Date creationTime;
 
     /**
