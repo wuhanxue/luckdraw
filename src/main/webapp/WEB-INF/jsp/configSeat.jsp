@@ -50,7 +50,7 @@
             <ul class="setting">
                 <li><a class="btn btn-danger" href="/luckDrawSetting">开始抽奖</a></li>
                 <li><a class="btn btn-primary" href="/drawSetting">奖项设置</a></li>
-                <li><a class="btn btn-primary" href="/seat">座位设置</a></li>
+                <li><a class="btn btn-warning" href="/seat">座位设置</a></li>
                 <li><a class="btn btn-primary" href="/winner">中奖名单</a></li>
                 <li><a class="btn btn-primary" href="#" onclick="resetSeat();">中奖重置</a></li>
             </ul>
