@@ -34,12 +34,11 @@
         </td>
         <td style="width: 313px">
             <!--剩余名额，动态-->
-            <p style="margin: 5%" class="text-left"><span id="level" class="hidden"></span>剩余名额：<span id="number"></span></p>
-            <p style="margin: 5%" class="text-left">本次抽奖人数：
+            <p style="margin: 5%" class="text-left"><span id="level"></span>剩余名额：<span id="number"></span></p>
+            <p style="margin: 5%" class="text-left" id="max" hidden>本次抽奖人数：
                 <!--select选项，动态-->
                 <select id="numberMAX" title="" style="height: 40px;width: 80px;" onchange="setNumber(this)"></select>
             </p>
-            <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px;margin: 5%" href="luckDraw">抽奖</a>
             <p id="table" hidden>每次抽取桌数：
                 <!--select选项，动态-->
                 <select id="tableNumber" title="" style="height: 40px;width: 80px;" onchange="setTableNumber(this)">
