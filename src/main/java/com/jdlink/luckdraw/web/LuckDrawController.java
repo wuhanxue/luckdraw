@@ -111,26 +111,30 @@ public class LuckDrawController {
      */
     @RequestMapping("updateWinner")
     @ResponseBody
-    public void updateWinner(String seats)throws Exception{
-        JSONArray ary = JSONArray.fromObject(seats);  // 字符串转化为array数组
-        List<Seat> seatList = (List<Seat>) JSONArray.toCollection(ary, Seat.class);  // array转化为seat数组
-        int maxNumber = winnerMapper.maxNumber() + 1;                 // 获取这是第几次抽奖
-        int prizeId = -1;
-        int number = 0;
-        for (Seat seat : seatList) {
-            seatMapper.updateIsJoin(seat);                             // 更新是否参加下一次抽奖状态为0
-            Winner winner = new Winner();
-            winner.setSeatId(seatMapper.getSeatByLocation(seat).getId()); // 设置位置表ID
-            prizeId = seat.getWinners().getPrizeId();
-            winner.setPrizeId(prizeId);           // 设置奖品表ID
-            winner.setReceive(false);                                     // 设置
-            winner.setNumber(maxNumber);
-            // winnerMapper.addWinner(winner);                                // 插入新中奖者
-            winnerDAO.save(winner);                                     // 插入新中奖者
-            number = seat.getWinners().getPrize().getNumber();         // 更新奖品剩余数
+    public void updateWinner(String seats){
+        try {
+            JSONArray ary = JSONArray.fromObject(seats);  // 字符串转化为array数组
+            List<Seat> seatList = (List<Seat>) JSONArray.toCollection(ary, Seat.class);  // array转化为seat数组
+            int maxNumber = winnerMapper.maxNumber() + 1;                 // 获取这是第几次抽奖
+            int prizeId = -1;
+            int number = 0;
+            for (Seat seat : seatList) {
+                seatMapper.updateIsJoin(seat);                             // 更新是否参加下一次抽奖状态为0
+                Winner winner = new Winner();
+                winner.setSeatId(seatMapper.getSeatByLocation(seat).getId()); // 设置位置表ID
+                prizeId = seat.getWinners().getPrizeId();
+                winner.setPrizeId(prizeId);           // 设置奖品表ID
+                winner.setReceive(false);                                     // 设置
+                winner.setNumber(maxNumber);
+                // winnerMapper.addWinner(winner);                                // 插入新中奖者
+                winnerDAO.save(winner);                                     // 插入新中奖者
+                number = seat.getWinners().getPrize().getNumber();         // 更新奖品剩余数
+            }
+            prizeMapper.updateNumber(prizeId, number);                                // 更新奖品剩余数量
+            //  return "redirect:showWinnerList";
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        prizeMapper.updateNumber(prizeId,number);                                // 更新奖品剩余数量
-      //  return "redirect:showWinnerList";
     }
 
     /**
