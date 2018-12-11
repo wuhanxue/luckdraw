@@ -38,7 +38,7 @@ public class PrizeController {
     @GetMapping("/drawSetting")
     public String listEmployee(Model m) throws Exception {
         List<Prize> prizeList= prizeDAO.findAll();
-      for (int i=0;i<prizeList.size();i++){
+        for (int i=0;i<prizeList.size();i++){
           if(prizeList.get(i).getMode()!=null){
               if(prizeList.get(i).getMode()==true){
                   prizeList.get(i).setModeName("随机抽取");
@@ -56,7 +56,7 @@ public class PrizeController {
      *
      * @param //模型
      * @param //奖品数据结构
-     * @return
+     * @return //字符串
      * @throws Exception
      * 奖项增加方法
      */
@@ -81,9 +81,9 @@ public class PrizeController {
 
     /**
      *
-     * @param m
-     * @param id
-     * @return
+     * @param //模型对象
+     * @param //id
+     * @return //字符串
      * @throws Exception
      * 奖项删除方法
      */
@@ -109,8 +109,8 @@ public class PrizeController {
 
     /**
      *
-     * @param
-     * @param
+     * @param//模型
+     * @param//奖品数据结构
      * @param m
      * @return
      * 奖项修改方法
@@ -120,9 +120,10 @@ public class PrizeController {
     public String savePrize(Model m,@RequestBody Prize prize) throws Exception{
         JSONObject res=new JSONObject();
         try{
-           prizeMapper.updateById(prize);
-//           prize.setId(prize.getId());
-//           prizeDAO.save(prize);
+
+         //  prizeMapper.updateById(prize);
+           prize.setId(prize.getId());//主键设置，用作更新
+           prizeDAO.save(prize);
             res.put("status", "success");
             res.put("message", "更新成功");
         }
@@ -181,8 +182,8 @@ public class PrizeController {
 
     /**
      *
-     * @param id
-     * @param m
+     * @param //奖品编号
+     * @param //模型对象
      * @return
      * 点击编辑按钮方法
      */

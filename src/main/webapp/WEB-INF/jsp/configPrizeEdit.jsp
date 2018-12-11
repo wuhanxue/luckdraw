@@ -106,6 +106,7 @@
 
             <%--隐藏--%>
             <td class="hidden">${data.id}</td>
+            <td class="hidden">${data.imgUrl}</td>
         </tr>
         </tbody>
     </table>
