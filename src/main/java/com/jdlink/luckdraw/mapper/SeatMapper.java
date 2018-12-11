@@ -32,5 +32,11 @@ public interface SeatMapper {
      * 根据编号修改信息
      */
     @Update("update main_seat set seat_table_id=#{tableId},seat_location_id=#{locationId},employee_department=#{department},employee_name=#{name},gmt_modify_time=NOW() where id=#{id} ")
-    void  updateById(Seat seat);
+    void updateById(Seat seat);
+
+    /**
+     * 重置中奖，令所有人参与抽奖
+     */
+    @Update("update main_seat set is_join=1, gmt_modify_time=NOW()")
+    void resetSeat();
 }

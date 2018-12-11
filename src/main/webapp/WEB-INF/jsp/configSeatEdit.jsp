@@ -16,6 +16,7 @@
     <script type="text/javascript" src="../../js/jquery.min.js"></script>
     <link href="../../css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
     <script src="../../js/bootstrap/3.3.6/bootstrap.min.js"></script>
+    <script src="../../js/webJs/seat.js"></script>
     <title>佳利达抽奖系统</title>
 </head>
 <style>
@@ -71,37 +72,3 @@
 
 </body>
 </html>
-
-<script>
-    /**
-     * 确认修改座位数据
-     */
-    function adjustConfirm() {
-        $('.myclass').each(function () {
-            var data={
-                tableId: $(this).children('td').eq(0).find('input').val(),
-                locationId: $(this).children('td').eq(1).find('input').val(),
-                department: $(this).children('td').eq(2).find('input').val(),
-                name: $(this).children('td').eq(3).find('input').val(),
-                id: $(this).children('td').eq(4).text()
-            };
-            $.ajax({
-                type: "PUT",                       // 方法类型
-                url: "seat", // url
-                data: JSON.stringify(data),
-                async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
-                dataType: "json",
-                contentType: 'application/json;charset=utf-8',
-                success: function (result) {
-                    if (result != undefined && result.status == "success") {
-                        alert(result.message);
-                        window.location.href = "/seat";
-                    }
-                },
-                error: function (result) {
-                    alert("服务器异常!")
-                }
-            });
-        });
-    }
-</script>

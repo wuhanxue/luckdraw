@@ -142,4 +142,27 @@ public class SeatController {
         }
         return res.toString();
     }
+
+    /**
+     * 中奖重置方法
+     * @param m 参数数据模型
+     * @return 成功与否
+     * @throws Exception 异常信息
+     */
+    @RequestMapping("/resetSeat")
+    @ResponseBody
+    public String resetSeat(Model m) throws Exception {
+        JSONObject res = new JSONObject();
+        try {
+            // 更新座位信息
+            seatMapper.resetSeat();
+            res.put("status", "success");
+            res.put("message", "重置成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            res.put("status", "fail");
+            res.put("message", "重置失败");
+        }
+        return res.toString();
+    }
 }
