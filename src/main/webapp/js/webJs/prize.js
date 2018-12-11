@@ -221,6 +221,7 @@ function adjustConfirm() {
             name:$(this).children('td').eq(1).find('input').val(),
             number:$(this).children('td').eq(2).find('input').val(),
             mode:mode,
+            imgUrl:$(this).children('td').eq(6).html(),
         }
         console.log(data)
         $.ajax({
@@ -242,6 +243,7 @@ function adjustConfirm() {
         });
         //添加图片路径
         var imageFile = $(this).children('td').eq(3).find("input[name='file']")[0].files[0];
+        console.log(imageFile)
         if(imageFile!=undefined){
             $(this).children('td').eq(3).find('form').submit();
         }
