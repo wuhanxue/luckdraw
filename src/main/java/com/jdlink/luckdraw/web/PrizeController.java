@@ -30,8 +30,8 @@ public class PrizeController {
 
     /**
      *
-     * @param m
-     * @return
+     * @param //模型
+     * @return 页面
      * @throws Exception
      * 奖项页面初始化
      */
@@ -54,8 +54,8 @@ public class PrizeController {
 
     /**
      *
-     * @param m
-     * @param prize
+     * @param //模型
+     * @param //奖品数据结构
      * @return
      * @throws Exception
      * 奖项增加方法

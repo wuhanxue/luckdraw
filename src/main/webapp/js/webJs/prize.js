@@ -3,11 +3,16 @@
  *
  * */
 
-
+/**
+ * 页面加载
+ */
 function loadPrizeLIst() {
     $('#newPanel').hide();//默认新增编辑面板隐藏
 }
 
+/**
+ * 新增按钮
+ */
 function addData() {
     //删除克隆行
     $('#clone').siblings().not($('#plusBtn')).remove();
@@ -15,10 +20,17 @@ function addData() {
    $('#newPanel').show(1000);//新增编辑面板显示
 }
 
+/**
+ * 关闭按钮
+ */
 function closed() {
-    $('#newPanel').hide(1000)//新增编辑面板赢藏
+    $('#newPanel').hide(1000)//新增编辑面板隐藏
 }
 
+/**
+ * 克隆行
+ * @param item
+ */
 function addNewLine(item) {
     var tr=$(item).parent().parent().prev();
     var cloneTr=tr.clone();
@@ -33,6 +45,10 @@ function addNewLine(item) {
 
 }
 
+/**
+ * 删除行
+ * @param e
+ */
 function delLine(e) {
     var tr = e.parentElement.parentElement;
     tr.parentNode.removeChild(tr);
@@ -40,6 +56,9 @@ function delLine(e) {
 
 }
 
+/**
+ * 保存方法
+ */
 function save() {
     $('.myclass').each(function () {
         var mode;
@@ -90,6 +109,10 @@ function save() {
 }
 
 
+/**
+ * 删除方法
+ * @param item
+ */
 function cutOff(item) {
 if(confirm("确认删除?")){
     var id=$(item).parent().prev().html();
@@ -115,6 +138,11 @@ if(confirm("确认删除?")){
 }
 }
 
+
+/**
+ * 修改跳转页面
+ * @param item
+ */
 function adjust(item) {
 
     $('#adjust').show()
