@@ -68,18 +68,4 @@ public class Seat {
     @Column(name = "gmt_modify_time")
     private Date modifyTime;
 
-    @Override
-    public String toString() {
-        return "Seat{" +
-                "id=" + id +
-                ", tableId=" + tableId +
-                ", locationId=" + locationId +
-                ", department='" + department + '\'' +
-                ", name='" + name + '\'' +
-                ", number='" + number + '\'' +
-                ", join=" + join +
-                ", creationTime=" + creationTime +
-                ", modifyTime=" + modifyTime +
-                '}';
-    }
 }
