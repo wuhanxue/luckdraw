@@ -17,6 +17,7 @@
     <link href="../../css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
     <script src="../../js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <script src="../../js/webJs/prize.js"></script>
+    <script src="../../js/webJs/common.js"></script>
 </head>
 <style>
     body {
@@ -107,19 +108,19 @@
                 </ol>
             </div>
             <ul class="setting">
+                <li><a class="btn btn-danger" href="/luckDrawSetting">开始抽奖</a></li>
                 <li><a class="btn btn-primary" href="/drawSetting">奖项设置</a></li>
                 <li><a class="btn btn-primary" href="/seat">座位设置</a></li>
-                <li><a class="btn btn-primary" href="#">中奖名单</a></li>
-                <li><a class="btn btn-primary" href="#">中奖重置</a></li>
+                <li><a class="btn btn-primary" href="#" onclick="alert('敬请期待');">中奖名单</a></li>
+                <li><a class="btn btn-primary" href="#" onclick="resetSeat();">中奖重置</a></li>
             </ul>
         </div>
     </div>
     <div class="panel panel-default" id="show"><%--显示的面板--%>
         <div class="panel-body">
     <div class="col-md-9 col-sm-9">
-        <div style="margin-left: 10%">
-            <a class="btn btn-primary" onclick="addData()">新增</a>
-            <a class="btn btn-danger" href="/luckDrawSetting">返回</a>
+        <div style="margin-left: 6%">
+            <a class="btn btn-primary new" onclick="addData()">新增</a>
         </div>
         <div>
             <table class="table table-bordered">

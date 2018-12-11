@@ -16,7 +16,7 @@
     <script src="../../js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/webJs/luckDrawSetting.js"></script>
 </head>
-<body onload="loadPrize()" background="../../image/timg.jpg">
+<body onload="loadPrize()" background="../../image/timg.jpg" style="background-size: cover">
 <div style="width: 100%;">
     <a class="btn btn-warning" style="background-color: transparent;color: transparent;border: 0;height: 20px" href="/drawSetting">设置</a>
 </div>
@@ -34,12 +34,11 @@
         </td>
         <td style="width: 313px">
             <!--剩余名额，动态-->
-            <p style="margin: 5%" class="text-left"><span id="level" class="hidden"></span>剩余名额：<span id="number"></span></p>
-            <p style="margin: 5%" class="text-left">本次抽奖人数：
+            <p style="margin: 5%" class="text-left"><span id="level"></span>剩余名额：<span id="number"></span></p>
+            <p style="margin: 5%" class="text-left" id="max" hidden>本次抽奖人数：
                 <!--select选项，动态-->
                 <select id="numberMAX" title="" style="height: 40px;width: 80px;" onchange="setNumber(this)"></select>
             </p>
-            <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px;margin: 5%" href="luckDraw">抽奖</a>
             <p id="table" hidden>每次抽取桌数：
                 <!--select选项，动态-->
                 <select id="tableNumber" title="" style="height: 40px;width: 80px;" onchange="setTableNumber(this)">
@@ -61,7 +60,7 @@
                 </select>
             </p>
             <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px" href="luckDraw">抽奖</a>
-            <a class="btn btn-warning" style="width: 100px;height: 55px;font-size: 30px" href="drawSetting">设置</a>
+            <%--<a class="btn btn-warning" style="width: 100px;height: 55px;font-size: 30px" href="drawSetting">设置</a>--%>
         </td>
     </tr>
 </table>
