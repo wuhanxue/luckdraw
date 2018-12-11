@@ -10,10 +10,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PrizeDAO extends JpaRepository<Prize,Integer> {
 
     /**
-     *
-     * @param id
-     * @return
      * 根据编号获取
+     * @param id 奖品编号
+     * @return 奖品对象
      */
     Prize getById(int id);
 

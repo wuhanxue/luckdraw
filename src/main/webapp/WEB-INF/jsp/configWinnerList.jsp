@@ -36,7 +36,7 @@
         margin: 10px;
     }
 </style>
-<body onload="loadSeatList();">
+<body>
 <div class="container-fluid row">
     <div class="col-md-3 col-sm-3">
         <div class="sidebar">
