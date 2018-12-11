@@ -32,21 +32,35 @@ function setPrize(item) {
     var number = 0; //奖品数量
     for(var i = 0; i < list.length; i++){
         if (list[i].id === id) {
+            console.log(list[i]);
+            console.log(list[i].level);
             number = list[i].number;  //剩余奖品数
-            $("#level").text(list[i].name);         // 设置奖品等级
+            $("#level").html(list[i].level);         // 设置奖品等级
+            $("#number").html(number);   // 设置奖品剩余名额
             $("#img").attr("src", "../../image/"+list[i].imgUrl);  // 设置奖品图片
             localStorage.prizeLevel = list[i].level;  // 奖品等级
             localStorage.prizeName = list[i].name;    // 奖品名字
             localStorage.prizeId = id;             // 奖品编号
+            localStorage.prizeMode = list[i].mode;   // 抽奖方式：true:随机抽取；false:按桌抽取
         }
     }
-    $("#numberMAX").children().remove(); //删除旧数据
-    for (var i = 1; i < number + 1; i++) { // 根据奖品数插入抽奖人数下拉框
-        var option = "<option value='" + i + "'>" + i + "</option>";
-        $("#numberMAX").append(option);
+    if(localStorage.prizeMode === "true"){ // 随机抽奖
+        $("#max").show();
+        $("#table").hide();
+        $("#everyTable").hide();
+        $("#numberMAX").children().remove(); //删除旧数据
+        for (var i = 1; i < number + 1; i++) { // 根据奖品数插入抽奖人数下拉框
+            var option = "<option value='" + i + "'>" + i + "</option>";
+            $("#numberMAX").append(option);
+        }
+        localStorage.winnerNumber = parseInt($("#numberMAX").find("option:selected").val());  // 将抽奖人数传递到下一页面
+    }else{
+        $("#max").hide();
+        $("#table").show();
+        $("#everyTable").show();
+
     }
-    $("#number").text(number);   // 设置奖品剩余名额
-    localStorage.winnerNumber = parseInt($("#numberMAX").find("option:selected").val());  // 将抽奖人数传递到下一页面
+
 }
 
 /**
@@ -55,4 +69,20 @@ function setPrize(item) {
  */
 function setNumber(item) {
     localStorage.winnerNumber = parseInt($(item).find("option:selected").val());  // 将抽奖人数传递到下一页面
+}
+
+/**
+ * 设置按桌抽奖的每次抽取桌数
+ * @param item
+ */
+function setTableNumber(item){
+    localStorage.tableNumber = parseInt($(item).find("option:selected").val());
+}
+
+/**
+ * 设置按桌抽奖的每桌抽取人数
+ * @param item
+ */
+function setEveryTableNumber(item){
+    localStorage.everyTableNumber = parseInt($(item).find("option:selected").val());
 }
