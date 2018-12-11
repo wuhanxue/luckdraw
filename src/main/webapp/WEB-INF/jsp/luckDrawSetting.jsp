@@ -59,8 +59,8 @@
                     <option value="5">5</option>
                 </select>
             </p>
-            <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px" href="luckDraw">抽奖</a>
-            <a class="btn btn-warning" style="width: 100px;height: 55px;font-size: 30px" href="drawSetting">设置</a>
+            <%--<a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px" href="luckDraw">抽奖</a>--%>
+            <%--<a class="btn btn-warning" style="width: 100px;height: 55px;font-size: 30px" href="drawSetting">设置</a>--%>
         </td>
     </tr>
 </table>
