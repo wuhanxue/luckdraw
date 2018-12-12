@@ -60,7 +60,7 @@ public class WinnerController {
      */
     @DeleteMapping("/winner")
     @ResponseBody
-    public String deleteSeat(Model m, int id) throws Exception {
+    public String deleteWinner(Model m, int id) throws Exception {
         JSONObject res = new JSONObject();
         try{
             winnerDAO.deleteById(id);
@@ -71,6 +71,23 @@ public class WinnerController {
             e.printStackTrace();
             res.put("status", "fail");
             res.put("message", "删除失败");
+        }
+        return res.toString();  // 地址栏不会变
+    }
+
+    @DeleteMapping("/allWinner")
+    @ResponseBody
+    public String deleteAllWinner(Model m) throws Exception {
+        JSONObject res = new JSONObject();
+        try{
+            winnerDAO.deleteAll();
+            res.put("status", "success");
+            res.put("message", "清空成功");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            res.put("status", "fail");
+            res.put("message", "清空失败");
         }
         return res.toString();  // 地址栏不会变
     }
