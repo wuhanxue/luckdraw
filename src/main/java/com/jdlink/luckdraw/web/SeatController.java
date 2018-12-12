@@ -99,6 +99,23 @@ public class SeatController {
         return res.toString();  // 地址栏不会变
     }
 
+    @DeleteMapping("/allSeat")
+    @ResponseBody
+    public String deleteAllSeat(Model m) throws Exception {
+        JSONObject res = new JSONObject();
+        try {
+            seatDAO.deleteAll();
+            res.put("status", "success");
+            res.put("message", "清空成功");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            res.put("status", "fail");
+            res.put("message", "清空失败");
+        }
+        return res.toString();  // 地址栏不会变
+    }
+
     /**
      * 根据编号获取座位信息并跳转到编辑界面
      * @param m 数据模型
