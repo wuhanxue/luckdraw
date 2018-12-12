@@ -141,6 +141,23 @@
      * 清空数据
      */
     function cleanAll() {
-        alert("待开发");
+        if(confirm("确认清空?")) {
+            $.ajax({
+                type: "DELETE",                       // 方法类型
+                url: "allWinner", // url
+                async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
+                dataType: "json",
+                success: function (result) {
+                    if (result != undefined && result.status == "success") {
+                        alert(result.message);
+                        window.location.reload();
+                    }
+                },
+                error: function (result) {
+                    alert("服务器异常!");
+                }
+            })
+        }
+
     }
 </script>
