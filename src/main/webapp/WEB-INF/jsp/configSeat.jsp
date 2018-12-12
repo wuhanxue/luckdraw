@@ -58,8 +58,8 @@
     </div>
     <div class="col-md-9 col-sm-9">
         <div style="margin-left: 6%">
-            <a class="btn btn-primary new" onclick="addData()">新增</a>
-            <a class="btn btn-primary new">导入</a>
+            <a class="btn btn-primary new" onclick="addData();">新增</a>
+            <a class="btn btn-primary new" onclick="cleanAll();">清空</a>
         </div>
         <%--新增修改面板--%>
         <div class="panel panel-default" id="newPanel">
@@ -108,10 +108,18 @@
                 </button>
             </div>
         </div>
+        <%--导入Excel--%>
+        <form action="importExcel" method="post" enctype="multipart/form-data">
+            选择Excel文件(仅支持xlsx格式文件，请先清空中奖名单后进行导入):
+            <input type="file" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+            <input type="submit" value="导入">
+        </form>
+
         <div style="overflow-y: scroll;margin-left: 6%">
             <table class="table table-bordered">
                 <thead>
                 <tr>
+                    <th class="text-center">序号</th>
                     <th class="text-center">桌号</th>
                     <th class="text-center">位置号</th>
                     <th class="text-center">部门</th>
@@ -123,6 +131,7 @@
                 <%--循环显示信息--%>
                 <c:forEach items="${seatList}" var="seat" varStatus="st">
                     <tr>
+                        <td class="text-center">${st.count}</td>
                         <td class="text-center">${seat.tableId}</td>
                         <td class="text-center">${seat.locationId}</td>
                         <td class="text-center">${seat.department}</td>

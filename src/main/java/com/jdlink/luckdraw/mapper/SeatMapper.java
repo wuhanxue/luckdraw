@@ -21,6 +21,12 @@ public interface SeatMapper {
     void updateIsJoin(Seat seat);
 
     /**
+     * 根据编号找出信息
+     */
+    @Select("select * from main_seat where id=#{id}")
+    Seat getById(int id);
+
+    /**
      * 根据桌号和座位号获取员工信息
      * @param seat
      * @return

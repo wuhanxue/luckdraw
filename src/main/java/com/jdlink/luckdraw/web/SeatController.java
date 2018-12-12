@@ -3,13 +3,16 @@ package com.jdlink.luckdraw.web;
 import com.jdlink.luckdraw.dao.SeatDAO;
 import com.jdlink.luckdraw.mapper.SeatMapper;
 import com.jdlink.luckdraw.pojo.Seat;
+import com.jdlink.luckdraw.util.CommonUtil;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.jws.WebParam;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -99,6 +102,23 @@ public class SeatController {
         return res.toString();  // 地址栏不会变
     }
 
+    @DeleteMapping("/allSeat")
+    @ResponseBody
+    public String deleteAllSeat(Model m) throws Exception {
+        JSONObject res = new JSONObject();
+        try {
+            seatDAO.deleteAll();
+            res.put("status", "success");
+            res.put("message", "清空成功");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            res.put("status", "fail");
+            res.put("message", "清空失败");
+        }
+        return res.toString();  // 地址栏不会变
+    }
+
     /**
      * 根据编号获取座位信息并跳转到编辑界面
      * @param m 数据模型
@@ -164,5 +184,63 @@ public class SeatController {
             res.put("message", "重置失败");
         }
         return res.toString();
+    }
+
+    /**
+     * 导入Excel方法
+     */
+    @PostMapping("importExcel")
+    public String importExcel(HttpServletRequest req, @RequestParam("file") MultipartFile file, Model m) {
+        try {
+            // 获取文件中的信息
+            List<Object[][]> fileData = CommonUtil.getInstance().getExcelFileData(file);
+            String preDept = "";
+            // 桌数计数器
+            int tableCount = 1;
+            // 位置计数器
+            int locationCount = 0;
+            List<Seat> seatList = new ArrayList<>();
+            // 设置第一张表的人员
+            Object[][] sheetOneData = fileData.get(0);
+            for (int i = 1; i < sheetOneData.length; i++) {
+                Seat seat = new Seat();
+                Object[] sheetOneItem = sheetOneData[i];
+                // 检查姓名是否空
+                if (sheetOneItem[1] != "null") {
+                    seat.setName(sheetOneItem[1].toString().trim());
+                    // 检查部门是否空
+                    if (sheetOneItem[0] != "null") {
+                        seat.setDepartment(sheetOneItem[0].toString().trim());
+                        // 赋值上一个员工所属部门的名称
+                        preDept = seat.getDepartment();
+                    } else {
+                        // 设置部门名称同上
+                        seat.setDepartment(preDept);
+                    }
+                } else {
+                    continue;
+                }
+
+                // 设置桌号和座号，座号为1-10，桌号满10加1
+                int locationId = ++locationCount;
+                seat.setLocationId(locationId);
+                seat.setTableId(tableCount);
+                if (locationCount == 10) {
+                    locationCount = 0;
+                    tableCount++;
+                }
+                // 设置数据
+                seat.setJoin(true);
+                seat.setCreationTime(new Date());
+                seat.setModifyTime(new Date());
+                seatList.add(seat);
+            }
+
+            // 插入所有数据
+            seatDAO.saveAll(seatList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:seat";
     }
 }

@@ -36,7 +36,7 @@
         margin: 10px;
     }
 </style>
-<body onload="loadSeatList();">
+<body>
 <div class="container-fluid row">
     <div class="col-md-3 col-sm-3">
         <div class="sidebar">
@@ -56,6 +56,9 @@
         </div>
     </div>
     <div class="col-md-9 col-sm-9">
+        <div style="margin-left: 6%">
+            <a class="btn btn-primary new" onclick="cleanAll();">清空</a>
+        </div>
         <div style="overflow-y: scroll;margin-left: 6%">
             <table class="table table-bordered">
                 <thead>
@@ -104,3 +107,57 @@
 </div>
 </body>
 </html>
+
+<script>
+    /**
+     * 删除当前条目
+     * @param item 条目
+     */
+    function deleteItem(item) {
+        if(confirm("确认删除?")) {
+            var id = $(item).parent().prev().html();
+            $.ajax({
+                type: "DELETE",                       // 方法类型
+                url: "winner", // url
+                data: {
+                    "id": id
+                },
+                async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
+                dataType: "json",
+                success: function (result) {
+                    if (result != undefined && result.status == "success") {
+                        alert(result.message);
+                        window.location.reload();
+                    }
+                },
+                error: function (result) {
+                    alert("服务器异常!");
+                }
+            })
+        }
+    }
+
+    /**
+     * 清空数据
+     */
+    function cleanAll() {
+        if(confirm("确认清空?")) {
+            $.ajax({
+                type: "DELETE",                       // 方法类型
+                url: "allWinner", // url
+                async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
+                dataType: "json",
+                success: function (result) {
+                    if (result != undefined && result.status == "success") {
+                        alert(result.message);
+                        window.location.reload();
+                    }
+                },
+                error: function (result) {
+                    alert("服务器异常!");
+                }
+            })
+        }
+
+    }
+</script>

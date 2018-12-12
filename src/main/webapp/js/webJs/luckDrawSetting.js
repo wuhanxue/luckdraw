@@ -58,7 +58,8 @@ function setPrize(item) {
         $("#max").hide();
         $("#table").show();
         $("#everyTable").show();
-
+        localStorage.tableNumber = parseInt($("#tableNumber").find("option:selected").val());
+        localStorage.everyTableNumber = parseInt($("#everyTableNumber").find("option:selected").val());
     }
 
 }
