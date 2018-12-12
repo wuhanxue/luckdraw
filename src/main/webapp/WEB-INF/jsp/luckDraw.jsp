@@ -105,9 +105,9 @@
                     $("#table").append(tr);
                 }
                 var td = "<td class=\"text-center\">\n" +
-                    "<div class=\"slot\"><span style='font-size: 25px;margin-right: 15px'>桌号：</span><span title=\"\" id='tableId" + i + "' style='display: inline-block;margin: 0;width: 45px;font-size: 25px'>--</span>\n" +
+                    "<span style='font-size: 25px;margin-right: 15px'>桌号：</span><span title=\"\" id='tableId" + i + "' style='display: inline-block;margin: 0;width: 45px;font-size: 25px'>--</span>\n" +
                     "<span style='font-size: 25px;margin-left: 15px'>座号：</span><span title=\"\" id='locationId" + i + "' style='display: inline-block;margin: 0;width: 45px;font-size: 25px'>--</span>\n" +
-                    "</div></td>";
+                    "</td>";
                 $("#table").find("tr:last").append(td);   // 将td 插入到最新的tr中
                 $("#list").text("名单");
             }
