@@ -54,9 +54,10 @@
         //     $("#tBody").append(tr);
         // }
         var td = "<tr class='text-center'> <td style=\"height: 50px\">\n" +
-            "            <p>               桌号【<span class=\"tableId\">${a.tableId}</span>\n" +
-            "                    】&nbsp;&nbsp;座位号【<span class=\"locationId\">${a.locationId}</span>\n" +
-            "                    】&nbsp;&nbsp;姓名【<span class=\"name\">${a.name}</span>】\n" +
+            "            <p>               桌号【<span class=\"tableId\">${a.tableId}</span>】\n" +
+            "                    &nbsp;&nbsp;座位号【<span class=\"locationId\">${a.locationId}</span>】\n" +
+            "                    &nbsp;&nbsp;姓名【<span class=\"name\">${a.name}</span>】\n" +
+            "                    &nbsp;&nbsp;部门【<span class=\"department\">${a.department}</span>】\n" +
             "            </p>\n" +
             "            </td></tr>";
         $("#tBody").append(td);   // 将td 插入到最新的tr中
