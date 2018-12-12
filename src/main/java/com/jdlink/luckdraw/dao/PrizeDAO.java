@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface PrizeDAO extends JpaRepository<Prize,Integer> {
 
     /**
-     *
-     * @param id 编号
-     * @return 奖品对象
      * 根据编号获取
+     * @param id 奖品编号
+     * @return 奖品对象
      */
     Prize getById(int id);
 
