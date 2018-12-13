@@ -28,13 +28,13 @@
         <td class="text-center" style="width: 313px">
             <!--几等奖，动态-->
             <p>
-                <select id='prizes' onchange="setPrize(this)" style="height: 30px"></select>
+                <select id='prizes' onchange="setPrize(this)" style="height: 30px;width: 200px"></select>
             </p>
-            <img id="img" style="height: 255px;width: 255px" src="../../image/logo.jpg">
+            <img id="img" style="height: 200px;width: 200px" src="../../image/logo.jpg">
         </td>
         <td style="width: 313px">
             <!--剩余名额，动态-->
-            <p style="margin: 5%" class="text-left"><span id="level"></span>剩余名额：<span id="number"></span></p>
+            <p class="text-left"><span id="level"></span>剩余名额：<span id="number"></span></p>
             <p style="margin: 5%" class="text-left" id="max" hidden>本次抽奖人数：
                 <!--select选项，动态-->
                 <select id="numberMAX" title="" style="height: 40px;width: 80px;" onchange="setNumber(this)"></select>
@@ -59,7 +59,7 @@
                     <option value="5">5</option>
                 </select>
             </p>
-            <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px" href="luckDraw">抽奖</a>
+            <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px;margin-left: 17%;margin-top: 5%" href="luckDraw">抽奖</a>
             <%--<a class="btn btn-warning" style="width: 100px;height: 55px;font-size: 30px" href="drawSetting">设置</a>--%>
         </td>
     </tr>
