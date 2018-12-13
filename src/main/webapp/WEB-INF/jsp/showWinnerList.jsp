@@ -17,33 +17,27 @@
     <link rel="stylesheet" href="../../css/style.css">
     <script src="../../js/bootstrap/3.3.6/bootstrap.min.js"></script>
 </head>
-<body onload="loadWinnerList()">
-<div class='luck-back'><!--背景图-->
-    <div class="luck-content ce-pack-end" style="width: 80%;margin-left: -5%;padding: 0"><!--透明框-->
-        <table style="width: 100%;height: 100%;border: 0">
-            <thead>
-            <!--几等奖，动态-->
-            <tr>
-                <td class="text-center" colspan="2" style="height: 85px">
-                    <span id="prize" style="color: #ff3f4b;font-size: 45px">一等奖</span>: 中奖名单
-                </td>
-            </tr>
-            </thead>
-        </table>
-        <div id="scroll" style="overflow-y:scroll;height: 313px; ">
-            <table style="width: 80%;height: 450px;border: 0" cellpadding="0" cellspacing="0" align="center">
-                <tbody id="tBody">
+<body onload="loadWinnerList()" background="../../image/timg.jpg" style="background-size: cover">
+<table style="width: 100%;height: 100%;border: 0">
+    <thead>
+    <!--几等奖，动态-->
+    <tr>
+        <td class="text-center" colspan="2" style="height: 85px;color: #ff3f4b;font-size: 45px">
+            <span id="prize">一等奖</span>: 中奖名单
+        </td>
+    </tr>
+    </thead>
+</table>
+<div id="scroll" style="overflow-y:scroll;height: 313px; ">
+    <table style="width: 80%;height: 450px;border: 0" cellpadding="0" cellspacing="0" align="center">
+        <tbody id="tBody">
 
-                </tbody>
-            </table>
-        </div>
-        <div class="text-center" style="margin-top: -60px">
-            <a class="btn btn-success" id="begin" style="width: 150px;height: 55px;font-size: 30px"
-               href="luckDraw">再抽一次</a>
-            <a class="btn btn-danger" id="next" href="luckDrawSetting"
-               style="width: 150px;height: 55px;font-size: 30px">下一奖项</a>
-        </div>
-    </div>
+        </tbody>
+    </table>
+</div>
+<div class="text-center">
+    <a class="btn btn-success" id="begin" style="width: 150px;height: 55px;font-size: 30px" href="luckDraw">再抽一次</a>
+    <a class="btn btn-danger" id="next" href="luckDrawSetting" style="width: 150px;height: 55px;font-size: 30px">下一奖项</a>
 </div>
 </body>
 <script>
