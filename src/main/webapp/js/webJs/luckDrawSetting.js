@@ -46,7 +46,7 @@ function setPrize(item) {
     }
     if(localStorage.prizeMode === "true"){ // 随机抽奖
         $("#max").show();
-        $("#table").hide();
+      //  $("#table").hide();
         $("#everyTable").hide();
         $("#numberMAX").children().remove(); //删除旧数据
         for (var i = 1; i < number + 1; i++) { // 根据奖品数插入抽奖人数下拉框
@@ -56,9 +56,9 @@ function setPrize(item) {
         localStorage.winnerNumber = parseInt($("#numberMAX").find("option:selected").val());  // 将抽奖人数传递到下一页面
     }else{
         $("#max").hide();
-        $("#table").show();
+      //  $("#table").show();
         $("#everyTable").show();
-        localStorage.tableNumber = parseInt($("#tableNumber").find("option:selected").val());
+      //  localStorage.tableNumber = parseInt($("#tableNumber").find("option:selected").val());
         localStorage.everyTableNumber = parseInt($("#everyTableNumber").find("option:selected").val());
     }
 
