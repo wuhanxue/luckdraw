@@ -13,6 +13,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script type="text/javascript" src="../../js/jquery.min.js"></script>
     <link href="../../css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
     <script src="../../js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/webJs/luckDraw.js"></script>
     <style>
@@ -22,29 +23,34 @@
     </style>
 </head>
 <body onload="loadNumber()">
-<table id="table" style="width: 80%;height: 450px;border: 0;" align="center">
-    <tr id="class1">
-        <!--几等奖，动态-->
-        <td class="text-center" colspan="4"><p style="font-size: 80px;color: #ff3f4b"><span id="prize">一等奖</span>
-        </p></td>
-    </tr>
-</table>
-<%--提示面板--%>
-<div class="panel panel-default" id="newPanel" hidden>
-    <div class="panel-body">
-        <span id="message" class="text-center"></span>
+<div class='luck-back'><!--背景图-->
+    <div class="luck-content ce-pack-end"><!--透明框-->
+            <table id="table" style="width: 80%;height: 450px;border: 0;" align="center">
+                <tr id="class1">
+                    <!--几等奖，动态-->
+                    <td class="text-center" colspan="4"><p style="font-size: 80px;color: #ff3f4b"><span
+                            id="prize">一等奖</span>
+                    </p></td>
+                </tr>
+            </table>
+        <%--提示面板--%>
+        <div class="panel panel-default" id="newPanel" hidden>
+            <div class="panel-body">
+                <span id="message" class="text-center"></span>
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-danger" onclick="closed()">
+                    关闭
+                </button>
+            </div>
+        </div>
+        <div class="text-center">
+            <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px"
+               onclick="beginRndNum(this)">开始</a>
+            <a class="btn btn-danger" id="list" onclick="save();"
+               style="display:none;width: 100px;height: 55px;font-size: 30px">名单</a>
+        </div>
     </div>
-    <div class="panel-footer">
-        <button type="button" class="btn btn-danger" onclick="closed()">
-            关闭
-        </button>
-    </div>
-</div>
-<div class="text-center">
-    <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px"
-       onclick="beginRndNum(this)">开始</a>
-    <a class="btn btn-danger" id="list" onclick="save();"
-       style="display:none;width: 100px;height: 55px;font-size: 30px">名单</a>
 </div>
 </body>
 <script>
@@ -62,12 +68,12 @@
         list.push([tableId, locationId]);
         var add1 = false;
         for (k1 in tableList) {  //检查桌号LIST中是否存在该桌号
-            if (tableList[k1][0] === ${a.tableId}){
+            if (tableList[k1][0] === ${a.tableId}) {
                 add1 = true;
                 break;
             }
         }
-        if(!add1){  // 如果不存在添加
+        if (!add1) {  // 如果不存在添加
             tableList.push([${a.tableId}, parseInt(localStorage.everyTableNumber)]);
         }
         </c:forEach>
@@ -94,7 +100,7 @@
             $("#class1").nextAll().remove();  // 删除旧数据
             for (var i = 0; i < winnerNumber; i++) { // 根据中奖人数插入抽奖框
                 if (i % 2 === 0) {
-                    var tr = "<tr>\n" +
+                    var tr = "<tr >\n" +
                         "</tr>";
                     $("#table").append(tr);
                 }
