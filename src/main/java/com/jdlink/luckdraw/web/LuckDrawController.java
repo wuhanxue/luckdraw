@@ -121,14 +121,17 @@ public class LuckDrawController {
             for (Seat seat : seatList) {
                 seatMapper.updateIsJoin(seat);                             // 更新是否参加下一次抽奖状态为0
                 Winner winner = new Winner();
-                winner.setSeatId(seatMapper.getSeatByLocation(seat).getId()); // 设置位置表ID
-                prizeId = seat.getWinners().getPrizeId();
-                winner.setPrizeId(prizeId);           // 设置奖品表ID
-                winner.setReceive(false);                                     // 设置
-                winner.setNumber(maxNumber);
-                // winnerMapper.addWinner(winner);                                // 插入新中奖者
-                winnerDAO.save(winner);                                     // 插入新中奖者
-                number = seat.getWinners().getPrize().getNumber();         // 更新奖品剩余数
+                Seat seat1 = seatMapper.getSeatByLocation(seat);  // 根据座位号桌号获取员工数据
+                if(seat1 != null){   // 如果该座位号上有人
+                    winner.setSeatId(seat1.getId()); // 设置位置表ID
+                    prizeId = seat.getWinners().getPrizeId();
+                    winner.setPrizeId(prizeId);           // 设置奖品表ID
+                    winner.setReceive(false);                                     // 设置
+                    winner.setNumber(maxNumber);
+                    // winnerMapper.addWinner(winner);                                // 插入新中奖者
+                    winnerDAO.save(winner);                                     // 插入新中奖者
+                    number = seat.getWinners().getPrize().getNumber();         // 更新奖品剩余数
+                }
             }
             prizeMapper.updateNumber(prizeId, number);                                // 更新奖品剩余数量
             //  return "redirect:showWinnerList";
