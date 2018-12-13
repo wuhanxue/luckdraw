@@ -19,27 +19,25 @@
 </head>
 <body onload="loadWinnerList()">
 <div class='luck-back'><!--背景图-->
-    <div class="luck-content ce-pack-end"><!--透明框-->
-
-        <table style="width: 80%;height: 450px;border: 0" cellpadding="0" cellspacing="0" align="center">
+    <div class="luck-content ce-pack-end" style="width: 80%;margin-left: -5%;padding: 0"><!--透明框-->
+        <table style="width: 100%;height: 100%;border: 0">
             <thead>
             <!--几等奖，动态-->
             <tr>
                 <td class="text-center" colspan="2" style="height: 85px">
-                <p style="font-size: 40px;color: #ff3f4b">
-                    <span id="prize" style="color: #ff3f4b">一等奖</span><br>
-                    中奖名单</p></td>
+                    <span id="prize" style="color: #ff3f4b;font-size: 45px">一等奖</span>: 中奖名单
+                </td>
             </tr>
             </thead>
         </table>
-        <div id="scroll" style="overflow-y:scroll;height: 400px; ">
+        <div id="scroll" style="overflow-y:scroll;height: 313px; ">
             <table style="width: 80%;height: 450px;border: 0" cellpadding="0" cellspacing="0" align="center">
                 <tbody id="tBody">
 
                 </tbody>
             </table>
         </div>
-        <div class="text-center">
+        <div class="text-center" style="margin-top: -60px">
             <a class="btn btn-success" id="begin" style="width: 150px;height: 55px;font-size: 30px"
                href="luckDraw">再抽一次</a>
             <a class="btn btn-danger" id="next" href="luckDrawSetting"
@@ -61,11 +59,11 @@
         //         "</tr>";
         //     $("#tBody").append(tr);
         // }
-        var td = "<tr class='text-center'> <td style=\"height: 50px\">\n" +
-            "            <p>               桌号【<span class=\"tableId\">${a.tableId}</span>】\n" +
-            "                    &nbsp;&nbsp;座位号【<span class=\"locationId\">${a.locationId}</span>】\n" +
-            "                    &nbsp;&nbsp;姓名【<span class=\"name\">${a.name}</span>】\n" +
-            "                    &nbsp;&nbsp;部门【<span class=\"department\">${a.department}</span>】\n" +
+        var td = "<tr class='text-center'> <td style=\"height: 50px;color: white'\">\n" +
+            "            <p>               <span style='color:white'>桌号</span>【<span style='color:red' class=\"tableId\">${a.tableId}</span>】\n" +
+            "                    &nbsp;&nbsp;<span style='color:white'>座位号</span>【<span style='color:red' class=\"locationId\">${a.locationId}</span>】\n" +
+            "                    &nbsp;&nbsp;<span style='color:white'>姓名</span>【<span style='color:red' class=\"name\">${a.name}</span>】\n" +
+            "                    &nbsp;&nbsp;<span style='color:white'>部门</span>【<span style='color:red' class=\"department\">${a.department}</span>】\n" +
             "            </p>\n" +
             "            </td></tr>";
         $("#tBody").append(td);   // 将td 插入到最新的tr中
