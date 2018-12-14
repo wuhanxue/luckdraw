@@ -25,7 +25,7 @@
 <body onload="loadNumber()" background="../../image/back.jpg" style="background-size: cover">
 <%--<div class="luck-content ce-pack-end" style="width: 80%;margin-left: -5%;padding: 0;margin-top: -50px"><!--透明框-->--%>
 <div style="overflow-y: scroll;height: 550px">
-    <table id="table" style="width: 100%;height: 550px;border: 2px solid white;" border="2" cellspacing="0"
+    <table id="table" style="width: 100%;height: 550px;border: 0;" border="0" cellspacing="0"
            cellpadding="0">
         <tr id="class1">
             <!--几等奖，动态-->
