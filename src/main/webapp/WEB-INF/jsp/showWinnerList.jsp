@@ -22,7 +22,7 @@
     <thead>
     <!--几等奖，动态-->
     <tr>
-        <td class="text-center" colspan="2" style="height: 85px;color: #ff3f4b;font-size: 45px">
+        <td class="text-center" colspan="2" style="height: 85px;color: #ff3f4b;font-size: 35px">
             <span id="prize">一等奖</span>: 中奖名单
         </td>
     </tr>
@@ -53,13 +53,13 @@
         //         "</tr>";
         //     $("#tBody").append(tr);
         // }
-        var td = "<tr class='text-center'> <td style=\"height: 50px;color: white'\">\n" +
-            "            <p>               <span style='color:white'>桌号</span>【<span style='color:red' class=\"tableId\">${a.tableId}</span>】\n" +
-            "                    &nbsp;&nbsp;<span style='color:white'>座位号</span>【<span style='color:red' class=\"locationId\">${a.locationId}</span>】\n" +
-            "                    &nbsp;&nbsp;<span style='color:white'>姓名</span>【<span style='color:red' class=\"name\">${a.name}</span>】\n" +
-            "                    &nbsp;&nbsp;<span style='color:white'>部门</span>【<span style='color:red' class=\"department\">${a.department}</span>】\n" +
-            "            </p>\n" +
-            "            </td></tr>";
+        var td = "<tr class='text-left'> <td style=\"height: 50px;color: white'\">\n" +
+            "<p><span style='color:white'>桌号</span>【<span style='color:red' class=\"tableId\">${a.tableId}</span>】\n" +
+            "&nbsp;&nbsp;<span style='color:white'>座位号</span>【<span style='color:red' class=\"locationId\">${a.locationId}</span>】\n" +
+            "&nbsp;&nbsp;<span style='color:white'>姓名</span>【<span style='color:red' class=\"name\">${a.name}</span>】\n" +
+            "&nbsp;&nbsp;<span style='color:white'>部门</span>【<span style='color:red' class=\"department\">${a.department}</span>】\n" +
+            "</p>\n" +
+            "</td></tr>";
         $("#tBody").append(td);   // 将td 插入到最新的tr中
         i++;
         </c:forEach>
