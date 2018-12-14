@@ -1,6 +1,7 @@
 package com.jdlink.luckdraw.web;
 
 import com.jdlink.luckdraw.dao.SeatDAO;
+import com.jdlink.luckdraw.dao.WinnerDAO;
 import com.jdlink.luckdraw.mapper.SeatMapper;
 import com.jdlink.luckdraw.pojo.Seat;
 import com.jdlink.luckdraw.util.CommonUtil;
@@ -27,6 +28,11 @@ public class SeatController {
      */
     @Autowired
     SeatDAO seatDAO;
+    /**
+     * 中奖者数据操作
+     */
+    @Autowired
+    WinnerDAO winnerDAO;
     /**
      * 座位数据对象映射器
      */
@@ -192,8 +198,14 @@ public class SeatController {
     @PostMapping("importExcel")
     public String importExcel(HttpServletRequest req, @RequestParam("file") MultipartFile file, Model m) {
         try {
+            // 清空数据
+            // 首先清空中奖名单
+            winnerDAO.deleteAll();
+            // 再清空人员名单
+            seatDAO.deleteAll();
             // 获取文件中的信息
             List<Object[][]> fileData = CommonUtil.getInstance().getExcelFileData(file);
+            if (fileData.size() == 0) return "redirect:seat";
             String preDept = "";
             // 桌数计数器
             int tableCount = 1;
@@ -235,7 +247,6 @@ public class SeatController {
                 seat.setModifyTime(new Date());
                 seatList.add(seat);
             }
-
             // 插入所有数据
             seatDAO.saveAll(seatList);
         } catch (Exception e) {
