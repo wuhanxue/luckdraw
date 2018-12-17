@@ -12,8 +12,10 @@ function loadPrize() {
             if(result != null && result.status === "success"){
                 list = result.data;
                 for(var i in list){ //设置奖品下拉框
-                    var option = "<option value='"+list[i].id+"'>"+list[i].level+":"+list[i].name+"</option>";
-                    $("#prizes").append(option);  // 插入
+                    if(list[i].number > 0){  // 奖品数小于零不显示
+                        var option = "<option value='"+list[i].id+"'>"+list[i].level+":"+list[i].name+"</option>";
+                        $("#prizes").append(option);  // 插入
+                    }
                 }
                 $("#prizes").get(0).selectedIndex = -1;  //默认选中空白框
             }
@@ -61,7 +63,7 @@ function setPrize(item) {
       //  localStorage.tableNumber = parseInt($("#tableNumber").find("option:selected").val());
         localStorage.everyTableNumber = parseInt($("#everyTableNumber").find("option:selected").val());
     }
-
+    localStorage.winnerDrawNumber = 0;  // 默认为只抽一次
 }
 
 /**

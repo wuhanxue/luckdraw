@@ -119,9 +119,12 @@ public class LuckDrawController {
             int prizeId = -1;
             int number = 0;
             for (Seat seat : seatList) {
+                if(seat.getWinners().getNumber() == 1){
+                    maxNumber--;     // 再抽一次设置为同一次抽奖
+                }
                 seatMapper.updateIsJoin(seat);                             // 更新是否参加下一次抽奖状态为0
                 Winner winner = new Winner();
-                Seat seat1 = seatMapper.getSeatByLocation(seat);  // 根据座位号桌号获取员工数据
+                Seat seat1 = seatMapper.getSeatByLocation(seat);  // 根据座位号桌号获取未中奖员工数据
                 if(seat1 != null){   // 如果该座位号上有人
                     winner.setSeatId(seat1.getId()); // 设置位置表ID
                     prizeId = seat.getWinners().getPrizeId();
