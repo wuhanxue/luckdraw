@@ -57,7 +57,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <!--  <scope>provided</scope>-->
+            <scope>provided</scope>
         </dependency>
         <!--热部署-->
         <dependency>
@@ -75,6 +75,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<artifactId>hibernate-entitymanager</artifactId>-->
+                    <!--<groupId>org.hibernate</groupId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>4.3.8.Final</version>
         </dependency>
         <!-- 对mybatis的支持 -->
         <dependency>

@@ -110,7 +110,7 @@
         </div>
         <%--导入Excel--%>
         <form action="importExcel" method="post" enctype="multipart/form-data">
-            选择Excel文件(仅支持xlsx格式文件，请先清空中奖名单后进行导入):
+            请选择模板文件(仅支持xlsx格式文件。注意：导入后会清空中奖名单及人员名单):<a class="btn btn-default" href="/downloadTemplate">下载模板</a>
             <input type="file" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
             <input type="submit" value="导入">
         </form>
