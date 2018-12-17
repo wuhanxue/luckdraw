@@ -22,7 +22,7 @@
         }
     </style>
 </head>
-<body onload="loadNumber()" background="../../image/back.jpg" style="background-size: cover">
+<body onload="loadNumber()" background="../../image/timg.jpg" style="background-size: cover">
 <%--<div class="luck-content ce-pack-end" style="width: 80%;margin-left: -5%;padding: 0;margin-top: -50px"><!--透明框-->--%>
 <div style="overflow-y: scroll;height: 550px">
     <table id="table" style="width: 100%;height: 550px;border: 0;" border="0" cellspacing="0"
