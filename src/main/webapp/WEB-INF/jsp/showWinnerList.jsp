@@ -28,7 +28,7 @@
     </tr>
     </thead>
 </table>
-<div id="scroll" style="overflow-y:scroll;height: 313px; ">
+<div id="scroll" style="overflow-y:scroll; height: 600px">
     <table style="width: 80%;height: 450px;border: 0" cellpadding="0" cellspacing="0" align="center">
         <tbody id="tBody">
 
@@ -53,11 +53,11 @@
         //         "</tr>";
         //     $("#tBody").append(tr);
         // }
-        var td = "<tr class='text-left'> <td style=\"height: 50px;color: white;font-size:20px'\">\n" +
-            "<p><span style='color:#22e6ff;font-size:20px'>桌号&nbsp;</span><span style='color:red;display:inline-block;width:75px;font-size:20px' class=\"tableId\">${a.tableId}</span>\n" +
-            "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:20px'>座位号&nbsp;</span><span style='color:red;display:inline-block;width:75px;font-size:20px' class=\"locationId\">${a.locationId}</span>\n" +
-            "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:20px'>姓名&nbsp;</span><span style='color:#8909ff;display:inline-block;width:75px;font-size:20px' class=\"name\">${a.name}</span>\n" +
-            "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:20px'>部门&nbsp;</span><span style='color:red;display:inline-block;width:150px;font-size:20px' class=\"department\">${a.department}</span>\n" +
+        var td = "<tr class='text-center'> <td style=\"height: 50px;color: white;font-size:20px'\">\n" +
+            "<p><span style='color:#22e6ff;font-size:40px'>桌号&nbsp;</span><span style='color:red;display:inline-block;width:120px;font-size:40px' class=\"tableId\">${a.tableId}</span>\n" +
+            "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>座位号&nbsp;</span><span style='color:red;display:inline-block;width:120px;font-size:40px' class=\"locationId\">${a.locationId}</span>\n" +
+            "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>姓名&nbsp;</span><span style='color:#8909ff;display:inline-block;width:120px;font-size:40px' class=\"name\">${a.name}</span>\n" +
+            "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>部门&nbsp;</span><span style='color:red;display:inline-block;width:250px;font-size:40px' class=\"department\">${a.department}</span>\n" +
             "</p>\n" +
             "</td></tr>";
         $("#tBody").append(td);   // 将td 插入到最新的tr中
