@@ -147,8 +147,15 @@ public class CommonUtil {
                                             }
 
                                         }
-                                    }
-                                    if (cat.equals("STRING")) {
+                                        // 如果是公式类型
+                                    } else if (cat.equals("FORMULA")) {
+                                        try {
+                                            obj[j] = String.valueOf(cellStyle.getNumericCellValue());
+                                        } catch (IllegalStateException e) {
+                                            obj[j] = String.valueOf(cellStyle.getRichStringCellValue());
+                                        }
+//                                        obj[j] = cellStyle.getStringCellValue();
+                                    } else if (cat.equals("STRING")) {
                                         obj[j] = cellStyle.getStringCellValue();
                                     }
                                 } else {
