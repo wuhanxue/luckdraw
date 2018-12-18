@@ -18,12 +18,12 @@
     <script src="../../js/bootstrap/3.3.6/bootstrap.min.js"></script>
 </head>
 <body onload="loadWinnerList()" background="../../image/timg.jpg" style="background-size: cover">
-<table style="width: 100%;height: 100%;border: 0">
+<table style="width: 100%;height: 100%;border: 0;margin-top: 10%">
     <thead>
     <!--几等奖，动态-->
     <tr>
-        <td class="text-center" colspan="2" style="height: 85px;color: #ff3f4b;font-size: 26px">
-            <span id="prize">一等奖</span>-中奖名单
+        <td class="text-center" colspan="2" style="height: 85px;color: #ff3f4b;font-size: 45px">
+            <span id="prize">一等奖</span>————中奖名单
         </td>
     </tr>
     </thead>
@@ -53,7 +53,7 @@
         //         "</tr>";
         //     $("#tBody").append(tr);
         // }
-        var td = "<tr class='text-center'> <td style=\"height: 50px;color: white;font-size:20px'\">\n" +
+        var td = "<tr class='text-center'> <td style=\"height: 50px;color: white;font-size:40px'\">\n" +
             "<p><span style='color:#22e6ff;font-size:40px'>桌号&nbsp;</span><span style='color:red;display:inline-block;width:120px;font-size:40px' class=\"tableId\">${a.tableId}</span>\n" +
             "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>座位号&nbsp;</span><span style='color:red;display:inline-block;width:120px;font-size:40px' class=\"locationId\">${a.locationId}</span>\n" +
             "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>姓名&nbsp;</span><span style='color:#8909ff;display:inline-block;width:120px;font-size:40px' class=\"name\">${a.name}</span>\n" +
