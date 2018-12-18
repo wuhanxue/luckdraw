@@ -36,8 +36,8 @@
     </table>
 </div>
 <div class="text-center" style="margin-top: 20px">
-    <a class="btn btn-success" id="begin" style="width: 110px;height: 45px;font-size: 20px" href="luckDraw">再抽一次</a>
-    <a class="btn btn-danger" id="next" href="luckDrawSetting" style="width: 110px;height: 45px;font-size: 20px">下一奖项</a>
+    <a class="btn btn-success" id="begin" style="width: 110px;height: 45px;font-size: 20px" onclick="oneMoreLuckDraw()">再抽一次</a>
+    <a class="btn btn-danger" id="next" onclick="next()" style="width: 110px;height: 45px;font-size: 20px">下一奖项</a>
 </div>
 </body>
 <script>
@@ -93,6 +93,19 @@
                 }
             }, 80);
         }, 2000)
+    }
+
+    /**
+     * 再抽一次
+     */
+    function oneMoreLuckDraw(){
+        localStorage.winnerDrawNumber = 1;
+        window.location.href = 'luckDraw';
+    }
+
+    function next(){
+        localStorage.winnerDrawNumber = 0;
+        window.location.href = 'luckDrawSetting';
     }
 
 </script>

@@ -99,6 +99,7 @@ function saveWinner() {
             seat.locationId = parseInt($("#locationId" + $i).text());
             var winners = {};
             winners.prizeId = localStorage.prizeId; // 保存奖品ID
+            winners.number = localStorage.winnerDrawNumber;
             var prize = {};
             prize.number = localStorage.winnerNumber; // 奖品数
             winners.prize = prize;
@@ -112,6 +113,7 @@ function saveWinner() {
             seat.locationId = listWinner[i][1];
             var winners = {};
             winners.prizeId = localStorage.prizeId; // 保存奖品ID
+            winners.number = localStorage.winnerDrawNumber;
             var prize = {};
             prize.number = localStorage.winnerNumber; // 奖品数
             winners.prize = prize;
