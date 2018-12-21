@@ -117,7 +117,7 @@ public class LuckDrawController {
             List<Seat> seatList = (List<Seat>) JSONArray.toCollection(ary, Seat.class);  // array转化为seat数组
             int maxNumber = winnerMapper.maxNumber() + 1;                 // 获取这是第几次抽奖
             int prizeId = -1;
-            int number = 0;
+            int number = seatList.size();   // 获取中奖人数
             for (Seat seat : seatList) {
                 if(seat.getWinners().getNumber() == 1){
                     maxNumber--;     // 再抽一次设置为同一次抽奖
@@ -133,7 +133,9 @@ public class LuckDrawController {
                     winner.setNumber(maxNumber);
                     // winnerMapper.addWinner(winner);                                // 插入新中奖者
                     winnerDAO.save(winner);                                     // 插入新中奖者
-                    number = seat.getWinners().getPrize().getNumber();         // 更新奖品剩余数
+                  //  number += seat.getWinners().getPrize().getNumber();         // 更新奖品剩余数
+                }else{   // 如果该座位号上没人则奖品不减少
+                    number--;
                 }
             }
             prizeMapper.updateNumber(prizeId, number);                                // 更新奖品剩余数量
