@@ -116,7 +116,7 @@
                     $("#table").append(tr);
                 }
                 var td = "<td class=\"text-center\">\n" +
-                    "<span style='font-size: 55px;margin-left: 15px;color: white'>座号：</span><span title=\"\" id='locationId" + j + "' style='display: inline-block;margin: 0;width: 45px;font-size: 55px'>--</span>\n" +
+                    "<span style='font-size: 55px;margin-left: 15px;color: black'>座号：</span><span title=\"\" id='locationId" + j + "' style='display: inline-block;margin: 0;width: 45px;font-size: 55px'>--</span>\n" +
                     "</td>";
                 $("#table").find("tr:last").append(td);   // 将td 插入到最新的tr中
             }
