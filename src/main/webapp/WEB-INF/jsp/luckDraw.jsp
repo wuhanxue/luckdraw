@@ -101,7 +101,7 @@
                         "</tr>";
                     $("#table").append(tr);
                 }
-                var td = "<td class=\"text-center\" style='color: #ff3f4b'>\n" +
+                var td = "<td class=\"text-center\" style='color: #030101'>\n" +
                     "<div class=\"slot\"><span style='font-size: 55px;margin-right: 15px;color: #030101'>桌号：</span><span title=\"\" id='tableId" + i + "' style='display: inline-block;margin: 0;width: 45px;font-size: 55px'>--</span>\n" +
                     "<span style='font-size: 55px;margin-left: 15px;color: #030101'>座号：</span><span title=\"\" id='locationId" + i + "' style='display: inline-block;margin: 0;width: 45px;font-size: 55px'>--</span>\n" +
                     "</div></td>";
