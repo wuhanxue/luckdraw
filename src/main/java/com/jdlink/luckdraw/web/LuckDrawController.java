@@ -117,11 +117,14 @@ public class LuckDrawController {
             List<Seat> seatList = (List<Seat>) JSONArray.toCollection(ary, Seat.class);  // array转化为seat数组
             int maxNumber = winnerMapper.maxNumber() + 1;                 // 获取这是第几次抽奖
             int prizeId = -1;
-            int number = 0;
+            int number = seatList.size();   // 获取中奖人数
             for (Seat seat : seatList) {
+                if(seat.getWinners().getNumber() == 1){
+                    maxNumber--;     // 再抽一次设置为同一次抽奖
+                }
                 seatMapper.updateIsJoin(seat);                             // 更新是否参加下一次抽奖状态为0
                 Winner winner = new Winner();
-                Seat seat1 = seatMapper.getSeatByLocation(seat);  // 根据座位号桌号获取员工数据
+                Seat seat1 = seatMapper.getSeatByLocation(seat);  // 根据座位号桌号获取未中奖员工数据
                 if(seat1 != null){   // 如果该座位号上有人
                     winner.setSeatId(seat1.getId()); // 设置位置表ID
                     prizeId = seat.getWinners().getPrizeId();
@@ -130,7 +133,9 @@ public class LuckDrawController {
                     winner.setNumber(maxNumber);
                     // winnerMapper.addWinner(winner);                                // 插入新中奖者
                     winnerDAO.save(winner);                                     // 插入新中奖者
-                    number = seat.getWinners().getPrize().getNumber();         // 更新奖品剩余数
+                  //  number += seat.getWinners().getPrize().getNumber();         // 更新奖品剩余数
+                }else{   // 如果该座位号上没人则奖品不减少
+                    number--;
                 }
             }
             prizeMapper.updateNumber(prizeId, number);                                // 更新奖品剩余数量

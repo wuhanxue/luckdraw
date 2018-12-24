@@ -50,7 +50,7 @@
         <th class="text-center">中奖人数</th>
         <th class="text-center">奖品图片</th>
         <th class="text-center">抽奖方式</th>
-        </thead>-
+        </thead>
         <tbody>
         <tr id="clone" class="myclass" >
             <td><input class="form-control" type="text" value="${data.level}"></td>
