@@ -59,6 +59,7 @@
         list = [];  // 清零
         tableList = [];
         listWinner = [];
+        $("#prize").text(localStorage.prizeLevel+"："+localStorage.prizeName);  // 设置奖品等级和名称
         <c:forEach items="${seatList}" var="a">
         var tableId = ${a.tableId};
         var locationId = ${a.locationId};

@@ -122,21 +122,34 @@ public class LuckDrawController {
                 if(seat.getWinners().getNumber() == 1){
                     maxNumber--;     // 再抽一次设置为同一次抽奖
                 }
-                seatMapper.updateIsJoin(seat);                             // 更新是否参加下一次抽奖状态为0
                 Winner winner = new Winner();
-                Seat seat1 = seatMapper.getSeatByLocation(seat);  // 根据座位号桌号获取未中奖员工数据
+                prizeId = seat.getWinners().getPrizeId();
+                winner.setPrizeId(prizeId);                                   // 设置奖品表ID
+                winner.setReceive(false);                                     // 设置
+                winner.setNumber(maxNumber);
+                Seat seat1 = seatDAO.getByLocationIdAndTableIdAndJoin(seat.getLocationId(),seat.getTableId(),true);  // 根据座位号桌号获取未中奖员工数据
                 if(seat1 != null){   // 如果该座位号上有人
                     winner.setSeatId(seat1.getId()); // 设置位置表ID
-                    prizeId = seat.getWinners().getPrizeId();
-                    winner.setPrizeId(prizeId);           // 设置奖品表ID
-                    winner.setReceive(false);                                     // 设置
-                    winner.setNumber(maxNumber);
-                    // winnerMapper.addWinner(winner);                                // 插入新中奖者
-                    winnerDAO.save(winner);                                     // 插入新中奖者
-                  //  number += seat.getWinners().getPrize().getNumber();         // 更新奖品剩余数
-                }else{   // 如果该座位号上没人则奖品不减少
-                    number--;
+                 //   Seat seat2 = seatDAO.getOne(seat1.getId());
+                    seatMapper.updateIsJoin(seat1);                             // 更新是否参加下一次抽奖状态为0,即中奖者不再参与下一次抽奖
+                    winnerDAO.save(winner);                                       // 插入新中奖者
+                }else{   // 如果该座位号上没人则重新在该桌其他位置上抽奖
+                    // 获取该桌号未中奖者list
+                    List<Seat> seatList1 = seatDAO.getByTableIdAndJoin(seat.getTableId(),true);
+                    if(seatList1.size() > 0) {
+                        int luckNumber = (int) (Math.random() * seatList1.size());  // 随机生成中奖者
+                        Seat seat2 = seatList1.get(luckNumber);
+                        if(seat2 != null){   // 如果该座位号上有人
+                            winner.setSeatId(seat2.getId()); // 设置位置表ID
+                            winnerDAO.save(winner);                                       // 插入新中奖者
+                          // Seat seat3= seatDAO.getOne(seat2.getId());
+                            seatMapper.updateIsJoin(seat2);                             // 更新是否参加下一次抽奖状态为0,即中奖者不再参与下一次抽奖
+                        }
+                    }else {  // 如果该桌所有人均中奖则奖品不减少
+                        number--;
+                    }
                 }
+
             }
             prizeMapper.updateNumber(prizeId, number);                                // 更新奖品剩余数量
             //  return "redirect:showWinnerList";
