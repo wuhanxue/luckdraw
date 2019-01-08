@@ -52,7 +52,7 @@
                 <thead>
                 <th class="text-center">奖项等级</th>
                 <th class="text-center">奖项名称</th>
-                <th class="text-center">中奖人数</th>
+                <th class="text-center">奖品数量</th>
                 <th class="text-center">奖品图片</th>
                 <th class="text-center">抽奖方式</th>
                 </thead>
@@ -70,9 +70,11 @@
                     </td>
                     <td>
                         <label>
+                            <input type="radio" name="mode"> 按桌抽取</label>
+                        <label>
                             <input type="radio" name="mode"> 随机抽取</label>
                         <label>
-                            <input type="radio" name="mode">  按桌抽取</label>
+                            <input type="radio" name="mode"> 桌位抽取</label>
                     </td>
                 </tr>
                 <tr id="plusBtn">
@@ -128,7 +130,7 @@
                 <tr>
                     <th class="text-center">奖项等级</th>
                     <th class="text-center">奖项名称</th>
-                    <th class="text-center">中奖人数</th>
+                    <th class="text-center">奖品数量</th>
                     <th class="text-center">奖品图片</th>
                     <th class="text-center">抽奖方式</th>
                     <th class="text-center">操作</th>
@@ -137,7 +139,7 @@
                 <c:forEach items="${prizeList}" var="p" varStatus="st">
                     <tr> <td>${p.level}</td>
                         <td>${p.name}</td>
-                        <td>${p.number}</td>
+                        <td>${p.allNumber}</td>
                    <c:choose>
                        <c:when test="${p.imgUrl.length()>0}">
                            <td style="width: 151px;height: 151px"><img src="/image/${p.imgUrl}" style="width: 150px;height: 150px;"></td>

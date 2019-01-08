@@ -23,6 +23,17 @@ public interface SeatMapper {
     void updateIsJoin(Seat seat);
 
     /**
+     * 根据桌号更新按桌抽奖状态
+     * @param seat
+     */
+    @Update("update main_seat set is_table_win=#{tableWin} where seat_table_id=#{tableId}")
+    void updateIsSeatWin(Seat seat);
+    /**
+     * 初始化按桌中奖状态
+     */
+    @Update("update main_seat set is_table_win=0")
+    void updateAllIsSeatWin();
+    /**
      * 根据编号找出信息
      */
     @Select("select * from main_seat where id=#{id}")
@@ -55,4 +66,32 @@ public interface SeatMapper {
      */
     @Update("update main_seat set is_join=1, gmt_modify_time=NOW()")
     void resetSeat();
+
+    /**
+     * 获取随机抽奖中奖的桌号数组
+     * @return
+     */
+    @Select("select seat_table_id from main_seat join main_winning join config_prize prize on main_winning.prize_id = prize.id and seat_id=main_seat.id where prize_mode != 0")
+    List<Integer> getWinTableList();
+
+    /**
+     * 获取所有桌号
+     * @return
+     */
+    @Select("select distinct seat_table_id from main_seat")
+    List<Integer> getTableList();
+
+    /**
+     * 获取所有随机抽奖中奖奖品总数
+     * @return
+     */
+    @Select("select SUM(prize_all_number) from config_prize where prize_mode != 0")
+    Integer getRandomPrizeTotal();
+
+    /**
+     * 获取所有按桌抽取未中奖的桌号
+     * @return
+     */
+    @Select("select distinct seat_table_id from main_seat where is_table_win=0;")
+    List<Integer> getNotWinTableList();
 }

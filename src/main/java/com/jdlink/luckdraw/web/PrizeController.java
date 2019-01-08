@@ -39,14 +39,13 @@ public class PrizeController {
     public String listEmployee(Model m) throws Exception {
         List<Prize> prizeList= prizeDAO.findAll();
         for (int i=0;i<prizeList.size();i++){
-          if(prizeList.get(i).getMode()!=null){
-              if(prizeList.get(i).getMode()==true){
-                  prizeList.get(i).setModeName("随机抽取");
-              }
-              else {
+              if(prizeList.get(i).getMode()==0){
                   prizeList.get(i).setModeName("按桌抽取");
+              }else if(prizeList.get(i).getMode()==1) {
+                  prizeList.get(i).setModeName("随机抽取");
+              }else {
+                  prizeList.get(i).setModeName("桌位抽取");
               }
-          }
       }
         m.addAttribute("prizeList" ,prizeList);
         return "configPrize";  // 地址栏不会变
