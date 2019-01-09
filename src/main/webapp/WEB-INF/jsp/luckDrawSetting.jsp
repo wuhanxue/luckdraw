@@ -28,16 +28,22 @@
         <td class="text-center" style="width: 768px">
             <!--几等奖，动态-->
             <p>
-                <select id='prizes' onchange="setPrize(this)" style="height: 40px;width: 350px"></select>
+                <select id='prizes' onchange="setPrize(this)" class="text-center" style="height: 40px;width: 350px"></select>
             </p>
             <img id="img" style="height: 350px;width: 350px" src="../../image/logo.jpg">
         </td>
         <td class="text-left" style="width: 768px">
             <!--剩余名额，动态-->
-            <p style="font-size: 40px"><span id="level"></span>剩余名额：<span id="number"></span></p>
+            <p style="font-size: 40px"><span id="level" ></span><span id="number" hidden></span></p>
             <p style="font-size: 40px" id="max" hidden>本次抽奖人数：
                 <!--select选项，动态-->
-                <select id="numberMAX" title="" style="height: 40px;width: 80px;" onchange="setNumber(this)"></select>
+                <select id="numberMAX" title="" style="height: 40px;width: 80px;" onchange="setNumber(this)">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
             </p>
             <%--<p id="table" hidden>每次抽取桌数：--%>
                 <%--<!--select选项，动态-->--%>
@@ -57,6 +63,17 @@
                     <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5">5</option>
+                </select>
+            </p>
+            <p style="font-size: 40px" id="table" hidden>每次抽取桌数：
+                <!--select选项，动态-->
+                <select id="tableNumber" title="" style="height: 40px;width: 80px;" onchange="setTableNumber(this)">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="-1">全部</option>
                 </select>
             </p>
             <a class="btn btn-success" style="width: 100px;height: 55px;font-size: 30px;margin-top: 5%" href="luckDraw">抽奖</a>

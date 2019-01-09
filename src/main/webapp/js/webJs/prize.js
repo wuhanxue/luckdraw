@@ -63,10 +63,13 @@ function save() {
     $('.myclass').each(function () {
         var mode;
         if($(this).children('td').eq(4).find('label').children('input').eq(0).prop('checked')==true){
-            mode=1
+            mode=0  // 按桌抽取
         }
         if($(this).children('td').eq(4).find('label').children('input').eq(1).prop('checked')==true){
-            mode=0
+            mode=1   // 随机抽取
+        }
+        if($(this).children('td').eq(4).find('label').children('input').eq(2).prop('checked')==true){
+            mode=2  //  桌位抽取
         }
         // if ($(this).children('td').eq(2).find('input').prop('type') != 'text') {
         //     var formFile = new FormData();
@@ -76,10 +79,10 @@ function save() {
         var data={
             level:$(this).children('td').eq(0).find('input').val(),
             name:$(this).children('td').eq(1).find('input').val(),
-            number:$(this).children('td').eq(2).find('input').val(),
+            allNumber:$(this).children('td').eq(2).find('input').val(),
             mode:mode,
         }
-        console.log(data)
+        console.log(data);
         $.ajax({
             type: "POST",                       // 方法类型
             url: "prize", // url
@@ -89,7 +92,7 @@ function save() {
             contentType: 'application/json;charset=utf-8',
             success: function (result) {
                 if (result != undefined && result.status == "success"){
-                    alert(result.message)
+                    alert(result.message);
                     window.location.href="drawSetting"
                 }
             },
@@ -127,7 +130,7 @@ if(confirm("确认删除?")){
         // contentType: 'application/json;charset=utf-8',
         success: function (result) {
             if (result != undefined && result.status == "success"){
-                alert(result.message)
+                alert(result.message);
                 window.location.reload()
             }
         },
@@ -209,21 +212,23 @@ function adjustConfirm() {
     $('.myclass').each(function () {
         var mode;
         if($(this).children('td').eq(4).find('label').children('input').eq(0).prop('checked')==true){
-            mode=1
+            mode=0;
         }
         if($(this).children('td').eq(4).find('label').children('input').eq(1).prop('checked')==true){
-            mode=0
+            mode=1;
         }
-
+        if($(this).children('td').eq(4).find('label').children('input').eq(2).prop('checked')==true){
+            mode=2;
+        }
         var data={
             level:$(this).children('td').eq(0).find('input').val(),
             id:$(this).children('td').eq(5).html(),
             name:$(this).children('td').eq(1).find('input').val(),
-            number:$(this).children('td').eq(2).find('input').val(),
+            allNumber:$(this).children('td').eq(2).find('input').val(),
             mode:mode,
             imgUrl:$(this).children('td').eq(6).html(),
-        }
-        console.log(data)
+        };
+        console.log(data);
         $.ajax({
             type: "PUT",                       // 方法类型
             url: "prize", // url

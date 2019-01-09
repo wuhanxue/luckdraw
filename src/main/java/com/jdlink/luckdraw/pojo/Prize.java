@@ -33,10 +33,16 @@ public class Prize {
     private String name;
 
     /**
-     * 奖品数量
+     * 奖品剩余数量
      */
     @Column(name = "prize_number")
     private int number;
+
+    /**
+     * 奖品数
+     */
+    @Column(name = "prize_all_number")
+    private int allNumber;
 
     /**
      * 奖品等级
@@ -54,7 +60,7 @@ public class Prize {
      * 中奖方式
      */
     @Column(name = "prize_mode")
-    private Boolean mode;
+    private int mode;
 
     /**
      * 奖品-中奖者一对一绑定

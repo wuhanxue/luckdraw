@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="text-center" style="margin-top: 5%">
-        <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px" onclick="beginRndNum(this)">开始</a>
+        <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px" onclick="beginRndNum()">开始</a>
         <a class="btn btn-danger" id="list" onclick="save();" style="width: 100px;height: 55px;font-size: 30px">名单</a>
     </div>
 <%--</div>--%>
@@ -59,6 +59,10 @@
         list = [];  // 清零
         tableList = [];
         listWinner = [];
+        winTableList = [];
+        localStorage.setItem('winTableList',JSON.stringify(winTableList));
+        tableNumber = parseInt(localStorage.tableNumber);   // 每次抽取桌数
+        $("#prize").text(localStorage.prizeLevel+"："+localStorage.prizeName);  // 设置奖品等级和名称
         <c:forEach items="${seatList}" var="a">
         var tableId = ${a.tableId};
         var locationId = ${a.locationId};
@@ -74,9 +78,7 @@
             tableList.push(tableId);
         }
         </c:forEach>
-        console.log("tableList");
-        console.log(tableList);
-        if (localStorage.prizeMode === "true") { // 随机抽奖
+        if (localStorage.prizeMode === "1" || localStorage.prizeMode === "2") { // 随机抽奖,桌位抽奖
             console.log("抽奖人数：");
             console.log(localStorage.winnerNumber);
             winnerNumber = localStorage.winnerNumber;  // 获取抽奖人数
@@ -103,12 +105,36 @@
                 }
                 var td = "<td class=\"text-center\" style='color: #030101'>\n" +
                     "<div class=\"slot\"><span style='font-size: 55px;margin-right: 15px;color: #030101'>桌号：</span><span title=\"\" id='tableId" + i + "' style='display: inline-block;margin: 0;width: 45px;font-size: 55px'>--</span>\n" +
-                    "<span style='font-size: 55px;margin-left: 15px;color: #030101'>座号：</span><span title=\"\" id='locationId" + i + "' style='display: inline-block;margin: 0;width: 45px;font-size: 55px'>--</span>\n" +
+                    "<span style='font-size: 55px;margin-left: 15px;color: #030101'>&nbsp;&nbsp;座号：</span><span title=\"\" id='locationId" + i + "' style='display: inline-block;margin: 0;width: 45px;font-size: 55px'>--</span>\n" +
                     "</div></td>";
                 $("#table").find("tr:last").append(td);   // 将td 插入到最新的tr中
                 $("#list").text("名单");
             }
+            $.ajax({   // 获取桌号数组为随机中奖不超过1次的桌号
+                type: "POST",
+                url: "getLessTwoWinTableList",
+                async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
+                dataType: "json",
+                success: function (result) {
+                    if(result != null && result.data != null && result.status === "success") {
+                        tableList = [];   // 清空
+                        tableList = result.data;    // 赋值
+                    }
+                }
+            });
         } else {  //按桌抽奖
+            $.ajax({   // 获取按桌抽取未中奖的桌号数组
+                type: "POST",
+                url: "getNotWinTableList",
+                async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
+                dataType: "json",
+                success: function (result) {
+                    if(result != null && result.data != null && result.status === "success") {
+                        tableList = [];   // 清空
+                        tableList = result.data;    // 赋值
+                    }
+                }
+            });
             for (var j = 0; j < localStorage.everyTableNumber; j++) { // 每桌抽取人数
                 if (j % 2 === 0) {
                     var tr = "<tr>\n" +

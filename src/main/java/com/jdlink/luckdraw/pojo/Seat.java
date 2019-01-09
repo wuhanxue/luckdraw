@@ -10,7 +10,6 @@ import java.util.Date;
 @Table(name = "main_seat")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 public class Seat {
-
     /**
      * 主键编号
      */
@@ -18,7 +17,6 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
     /**
      * 桌号
      */
@@ -50,13 +48,16 @@ public class Seat {
      */
     @Column(name = "is_join")
     private boolean join;
-
+    /**
+     * 按桌抽奖是否中奖
+     */
+    @Column(name="is_table_win")
+    private boolean tableWin;
     /**
      * 奖品-中奖者一对一绑定
      */
     @OneToOne(mappedBy = "seat",cascade = CascadeType.ALL)
     private Winner winners;
-
     /**
      * 创建时间
      */

@@ -28,7 +28,7 @@
     </tr>
     </thead>
 </table>
-<div id="scroll" style="overflow-y:scroll; height: 600px">
+<div id="scroll" style="overflow-y:scroll; height: 500px">
     <table style="width: 80%;height: 450px;border: 0" cellpadding="0" cellspacing="0" align="center">
         <tbody id="tBody">
 
@@ -66,7 +66,6 @@
         setScrollAuto();   // 滚动条自动滚动
     }
 
-
     function setScrollAuto() {
         setTimeout(function () {   // 延时滚动中奖者名单
             //鼠标点击结束
@@ -94,6 +93,15 @@
             }, 80);
         }, 2000)
     }
+
+    /**
+     * 空格键按下事件
+     */
+    $(document).keydown(function (event) {
+        if (event.keyCode === 32) {  // 空格键、回车抽奖
+            oneMoreLuckDraw();
+        }
+    });
 
     /**
      * 再抽一次

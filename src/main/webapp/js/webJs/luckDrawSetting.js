@@ -13,7 +13,7 @@ function loadPrize() {
                 list = result.data;
                 for(var i in list){ //设置奖品下拉框
                     if(list[i].number > 0){  // 奖品数小于零不显示
-                        var option = "<option value='"+list[i].id+"'>"+list[i].level+":"+list[i].name+"</option>";
+                        var option = "<option value='"+list[i].id+"' class='text-center'>"+list[i].level+"</option>";
                         $("#prizes").append(option);  // 插入
                     }
                 }
@@ -34,10 +34,8 @@ function setPrize(item) {
     var number = 0; //奖品数量
     for(var i = 0; i < list.length; i++){
         if (list[i].id === id) {
-            console.log(list[i]);
-            console.log(list[i].level);
             number = list[i].number;  //剩余奖品数
-            $("#level").html(list[i].level);         // 设置奖品等级
+            $("#level").html(list[i].name);         // 设置奖品等级
             $("#number").html(number);   // 设置奖品剩余名额
             $("#img").attr("src", "../../image/"+list[i].imgUrl);  // 设置奖品图片
             localStorage.prizeLevel = list[i].level;  // 奖品等级
@@ -46,21 +44,21 @@ function setPrize(item) {
             localStorage.prizeMode = list[i].mode;   // 抽奖方式：true:随机抽取；false:按桌抽取
         }
     }
-    if(localStorage.prizeMode === "true"){ // 随机抽奖
+    if(localStorage.prizeMode === 1 || localStorage.prizeMode === 2 || localStorage.prizeMode === "1" ||localStorage.prizeMode === "2"){ // 随机抽奖,桌位抽奖
         $("#max").show();
-      //  $("#table").hide();
         $("#everyTable").hide();
-        $("#numberMAX").children().remove(); //删除旧数据
-        for (var i = 1; i < number + 1; i++) { // 根据奖品数插入抽奖人数下拉框
-            var option = "<option value='" + i + "'>" + i + "</option>";
-            $("#numberMAX").append(option);
-        }
+        $("#table").hide();
+        // $("#numberMAX").children().remove(); //删除旧数据
+        // for (var i = 1; i < number + 1; i++) { // 根据奖品数插入抽奖人数下拉框
+        //     var option = "<option value='" + i + "'>" + i + "</option>";
+        //     $("#numberMAX").append(option);
+        // }
         localStorage.winnerNumber = parseInt($("#numberMAX").find("option:selected").val());  // 将抽奖人数传递到下一页面
-    }else{
+    }else { // 按桌抽奖
         $("#max").hide();
-      //  $("#table").show();
         $("#everyTable").show();
-      //  localStorage.tableNumber = parseInt($("#tableNumber").find("option:selected").val());
+        $("#table").show();
+        localStorage.tableNumber = parseInt($("#tableNumber").find("option:selected").val());
         localStorage.everyTableNumber = parseInt($("#everyTableNumber").find("option:selected").val());
     }
     localStorage.winnerDrawNumber = 0;  // 默认为只抽一次
