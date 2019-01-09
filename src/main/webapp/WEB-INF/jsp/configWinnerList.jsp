@@ -58,6 +58,7 @@
     <div class="col-md-9 col-sm-9">
         <div style="margin-left: 6%">
             <a class="btn btn-primary new" onclick="cleanAll();">清空</a>
+            <a class="btn btn-primary new" onclick="exportExcel();">导出</a>
         </div>
         <div style="overflow-y: scroll;margin-left: 6%">
             <table class="table table-bordered">
@@ -159,5 +160,17 @@
             })
         }
 
+    }
+
+    /**
+     * 导出excel
+     * @param e
+     */
+    function exportExcel() {
+        var name = 'winnerList';
+        // 获取勾选项
+        var sqlWords = "select c.id,a.employee_name,a.seat_table_id,a.seat_location_id,b.prize_level,b.prize_name from main_seat a join config_prize b join main_winning c on b.id = c.prize_id and a.id=c.seat_id;";
+        console.log("sql:" + sqlWords);
+        window.open('exportExcel?name=' + name + '&sqlWords=' + sqlWords);
     }
 </script>

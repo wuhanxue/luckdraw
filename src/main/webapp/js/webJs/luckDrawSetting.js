@@ -1,8 +1,10 @@
-var list = [];
+var list = [];   // 承装奖品
+
 /**
  * 页面初始化设置
  * */
 function loadPrize() {
+    var num = 0;
     $.ajax({   // 获取奖品信息
         type: "POST",
         url: "luckDrawSetting1",
@@ -13,8 +15,16 @@ function loadPrize() {
                 list = result.data;
                 for(var i in list){ //设置奖品下拉框
                     if(list[i].number > 0){  // 奖品数小于零不显示
-                        var option = "<option value='"+list[i].id+"' class='text-center'>"+list[i].level+"</option>";
-                        $("#prizes").append(option);  // 插入
+                        if(list[i].mode === 2){
+                            if(num === 0){   // 桌位抽奖的物品只显示第一个
+                                var option = "<option value='"+list[i].id+"' class='text-center'>"+list[i].level+"</option>";
+                                $("#prizes").append(option);  // 插入
+                                num++;
+                            }
+                        }else{
+                            var option = "<option value='"+list[i].id+"' class='text-center'>"+list[i].level+"</option>";
+                            $("#prizes").append(option);  // 插入
+                        }
                     }
                 }
                 $("#prizes").get(0).selectedIndex = -1;  //默认选中空白框
@@ -35,13 +45,17 @@ function setPrize(item) {
     for(var i = 0; i < list.length; i++){
         if (list[i].id === id) {
             number = list[i].number;  //剩余奖品数
-            $("#level").html(list[i].name);         // 设置奖品等级
+            if(list[i].mode === 2){  // 桌位抽奖物品隐藏数字
+                $("#level").html(list[i].name.replace(/[0-9]/ig,""));         // 设置奖品等级
+            }else {
+                $("#level").html(list[i].name);         // 设置奖品等级
+            }
             $("#number").html(number);   // 设置奖品剩余名额
             $("#img").attr("src", "../../image/"+list[i].imgUrl);  // 设置奖品图片
             localStorage.prizeLevel = list[i].level;  // 奖品等级
             localStorage.prizeName = list[i].name;    // 奖品名字
             localStorage.prizeId = id;             // 奖品编号
-            localStorage.prizeMode = list[i].mode;   // 抽奖方式：true:随机抽取；false:按桌抽取
+            localStorage.prizeMode = list[i].mode;   // 抽奖方式：1:随机抽取；0:按桌抽取;2:桌位抽取
         }
     }
     if(localStorage.prizeMode === 1 || localStorage.prizeMode === 2 || localStorage.prizeMode === "1" ||localStorage.prizeMode === "2"){ // 随机抽奖,桌位抽奖

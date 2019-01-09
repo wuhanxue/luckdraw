@@ -1,4 +1,4 @@
-var g_Interval = 50;     // 数字跳转延迟速度(毫秒)
+var g_Interval = 20;     // 数字跳转延迟速度(毫秒)
 var g_Timer;           // 延迟执行代码块
 var running = false; // 是否抽奖
 var list = [[1, 2], [2, 1], [1, 3], [1, 4], [1, 1], [2, 2]];  // 参与抽奖的桌号和座位号
@@ -10,16 +10,21 @@ var isEnd = 1;  // 用于计数：桌位抽奖是否结束,为偶数时抽取桌
 var winTableList = [];  // 中奖桌号
 var listWinner = [];  // 中奖的人的桌号和座位号数据
 var tableNumber = 0;   // 按桌抽奖每次抽取桌数
+
 /**
  * 空格键按下事件
  */
 $(document).keydown(function (event) {
     if (event.keyCode === 32 ) {  // 空格键抽奖
-        beginRndNum();
+        if($("#begin").get(0).style.display !== "none" ){   // 如果开始按钮显示时则空格键为抽奖开始或暂停，如果开始键隐藏后空格键为保存键
+            beginRndNum();
+        }else{
+            save();
+        }
     }
-    if(event.keyCode === 13) {  // 回车保存
-        save();
-    }
+    // if(event.keyCode === 13) {  // 回车保存
+    //     save();
+    // }
 });
 
 /**
@@ -39,9 +44,11 @@ function beginRndNum() {
             if (isEnd % 2 === 1) {
                 $("#begin").hide();
                 $("#list").show();  // 按钮显示
+
             } else {  // 抽桌
                 $("#begin").show(); // 按钮显示
                 $("#list").hide();
+
             }
         } else {
             $("#begin").hide();
@@ -216,4 +223,31 @@ function saveWinner() {
 function closed() {
     // 新增编辑面板赢藏
     $('#newPanel').hide(1000);
+}
+
+/**
+ * 随机获取按桌抽奖奖品
+ */
+function randomSetModeTwoPrize() {
+    $.ajax({   // 获取桌位抽奖的且剩余量大于0的奖品数组
+        type: "POST",
+        url: "getPrizeListByMode",
+        async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
+        data:{
+          mode:2
+        },
+        dataType: "json",
+        success: function (result) {
+            if(result != null && result.status === "success") {
+                var prizeList = result.data;
+                console.log(prizeList);
+                // for(var i = 0;i < prizeList.length; i++) {
+                //
+                // }
+                var num = Math.floor(Math.random() * prizeList.length);  // 序号()
+                console.log("num+"+num);
+                $("#prize").text(prizeList[num].level + "：" + prizeList[num].name); // 设置奖品等级和名称
+            }
+        }
+    });
 }

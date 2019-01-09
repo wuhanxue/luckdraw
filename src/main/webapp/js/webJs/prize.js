@@ -80,6 +80,7 @@ function save() {
             level:$(this).children('td').eq(0).find('input').val(),
             name:$(this).children('td').eq(1).find('input').val(),
             allNumber:$(this).children('td').eq(2).find('input').val(),
+            number:$(this).children('td').eq(2).find('input').val(),
             mode:mode,
         }
         console.log(data);
@@ -225,6 +226,7 @@ function adjustConfirm() {
             id:$(this).children('td').eq(5).html(),
             name:$(this).children('td').eq(1).find('input').val(),
             allNumber:$(this).children('td').eq(2).find('input').val(),
+            number:$(this).children('td').eq(2).find('input').val(),
             mode:mode,
             imgUrl:$(this).children('td').eq(6).html(),
         };

@@ -62,7 +62,6 @@
         winTableList = [];
         localStorage.setItem('winTableList',JSON.stringify(winTableList));
         tableNumber = parseInt(localStorage.tableNumber);   // 每次抽取桌数
-        $("#prize").text(localStorage.prizeLevel+"："+localStorage.prizeName);  // 设置奖品等级和名称
         <c:forEach items="${seatList}" var="a">
         var tableId = ${a.tableId};
         var locationId = ${a.locationId};
@@ -82,7 +81,11 @@
             console.log("抽奖人数：");
             console.log(localStorage.winnerNumber);
             winnerNumber = localStorage.winnerNumber;  // 获取抽奖人数
-            $("#prize").text(localStorage.prizeLevel + "：" + localStorage.prizeName); // 设置奖品等级和名称
+           if(localStorage.prizeMode === "1"){
+               $("#prize").text(localStorage.prizeLevel + "：" + localStorage.prizeName); // 设置奖品等级和名称
+           }else {
+               randomSetModeTwoPrize();  // 随机设置奖品
+           }
             add = false;  // 将新增状态设置为未新增
             // 获取所有参与抽奖的员工数据
             if (list.length === 0) {
@@ -123,6 +126,7 @@
                 }
             });
         } else {  //按桌抽奖
+            $("#prize").text(localStorage.prizeLevel+"："+localStorage.prizeName);  // 设置奖品等级和名称
             $.ajax({   // 获取按桌抽取未中奖的桌号数组
                 type: "POST",
                 url: "getNotWinTableList",

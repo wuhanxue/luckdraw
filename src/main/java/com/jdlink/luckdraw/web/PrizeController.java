@@ -3,6 +3,7 @@ package com.jdlink.luckdraw.web;
 import com.jdlink.luckdraw.dao.PrizeDAO;
 import com.jdlink.luckdraw.mapper.PrizeMapper;
 import com.jdlink.luckdraw.pojo.Prize;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -202,4 +204,33 @@ public class PrizeController {
         return "configPrizeEdit";
 
    }
+
+    /**
+     * 根据抽奖方式获取奖品数组s
+     * @param
+     */
+    @RequestMapping("getPrizeListByMode")
+    @ResponseBody
+    public String getPrizeListByMode(int mode){
+        JSONObject res = new JSONObject();
+        try {
+            List<Prize> prizeList = prizeDAO.getByMode(2);   // 获取所有桌号
+            List<Prize> prizeList1 = new ArrayList<>();
+            for(Prize p: prizeList) {
+                if(p.getNumber() > 0){
+                    prizeList1.add(p);
+                }
+            }
+            //新建一个对象并给它赋值
+            JSONArray data = JSONArray.fromObject(prizeList1);  //加载配置文件
+            res.put("data", data);
+            res.put("status", "success");
+            res.put("message", "获取数据成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            res.put("status", "fail");
+            res.put("message", "获取数据失败");
+        }
+        return res.toString();
+    }
 }
