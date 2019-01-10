@@ -56,11 +56,10 @@
      * 根据抽奖人数加载抽奖框
      */
     function loadNumber() {
+        $("#list").hide();  // 按钮隐藏
         list = [];  // 清零
         tableList = [];
         listWinner = [];
-        winTableList = [];
-        localStorage.setItem('winTableList',JSON.stringify(winTableList));
         tableNumber = parseInt(localStorage.tableNumber);   // 每次抽取桌数
         <c:forEach items="${seatList}" var="a">
         var tableId = ${a.tableId};
@@ -81,11 +80,16 @@
             console.log("抽奖人数：");
             console.log(localStorage.winnerNumber);
             winnerNumber = localStorage.winnerNumber;  // 获取抽奖人数
-           if(localStorage.prizeMode === "1"){
+          // if(localStorage.prizeMode === "1"){
                $("#prize").text(localStorage.prizeLevel + "：" + localStorage.prizeName); // 设置奖品等级和名称
-           }else {
-               randomSetModeTwoPrize();  // 随机设置奖品
-           }
+           // }else {
+           //     randomSetModeTwoPrize();  // 获取随机奖品
+           //     beginRndNum1();
+           //     setTimeout(function () {     // 随机奖品
+           //         beginRndNum1();
+           //     }, 3000); //
+           //
+           // }
             add = false;  // 将新增状态设置为未新增
             // 获取所有参与抽奖的员工数据
             if (list.length === 0) {

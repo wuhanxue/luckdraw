@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../../css/style.css">
     <script src="../../js/bootstrap/3.3.6/bootstrap.min.js"></script>
 </head>
-<body onload="loadWinnerList()" background="../../image/timg.jpg" style="background-size: cover">
+<body onload="loadWinnerList();" background="../../image/timg.jpg" style="background-size: cover">
 <table style="width: 100%;height: 100%;border: 0;margin-top: 10%">
     <thead>
     <!--几等奖，动态-->
@@ -45,6 +45,9 @@
      * 显示中奖者名单
      */
     function loadWinnerList() {
+        //if(localStorage.prizeMode !== "2"){
+        console.log("winTableList:");
+        console.log(JSON.parse(localStorage.getItem('winTableList')));
         $("#prize").text(localStorage.prizeLevel + "：" + localStorage.prizeName);  // 设置奖品
         var i = 0;
         <c:forEach items="${seatList}" var="a">
@@ -54,18 +57,45 @@
         //     $("#tBody").append(tr);
         // }
         var td = "<tr class='text-center'> <td style=\"height: 50px;color: white;font-size:40px'\">\n" +
-            "<p><span style='color:#22e6ff;font-size:40px'>桌号&nbsp;</span><span style='color:red;display:inline-block;width:120px;font-size:40px' class=\"tableId\">${a.tableId}</span>\n" +
-            "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>座位号&nbsp;</span><span style='color:red;display:inline-block;width:120px;font-size:40px' class=\"locationId\">${a.locationId}</span>\n" +
-            "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>姓名&nbsp;</span><span style='color:#8909ff;display:inline-block;width:120px;font-size:40px' class=\"name\">${a.name}</span>\n" +
-            "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>部门&nbsp;</span><span style='color:red;display:inline-block;width:250px;font-size:40px' class=\"department\">${a.department}</span>\n" +
-            "</p>\n" +
-            "</td></tr>";
+        "<p><span style='color:#22e6ff;font-size:40px'>桌号&nbsp;</span><span style='color:red;display:inline-block;width:120px;font-size:40px' class=\"tableId\">${a.tableId}</span>\n" +
+        "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>座位号&nbsp;</span><span style='color:red;display:inline-block;width:120px;font-size:40px' class=\"locationId\">${a.locationId}</span>\n" +
+        "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>姓名&nbsp;</span><span style='color:#8909ff;display:inline-block;width:120px;font-size:40px' class=\"name\">${a.name}</span>\n" +
+        "&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>部门&nbsp;</span><span style='color:red;display:inline-block;width:250px;font-size:40px' class=\"department\">${a.department}</span>\n" +
+        "</p>\n" +
+        "</td></tr>";
         $("#tBody").append(td);   // 将td 插入到最新的tr中
         i++;
         </c:forEach>
+        <%--}else {--%>
+        <%--$("#prize").text(localStorage.prizeLevel);  // 设置奖品--%>
+        <%--var i = 0;--%>
+        <%--<c:forEach items="${seatList}" var="a">--%>
+        <%--// if (i % 2 === 0) {--%>
+        <%--//     var tr = "<tr>\n" +--%>
+        <%--//         "</tr>";--%>
+        <%--//     $("#tBody").append(tr);--%>
+        <%--// }--%>
+        <%--${a.winners.prize.name}.--%>
+        <%--replace(/[^0-9]/ig, "");   // 截取数字--%>
+        <%--var td = "<tr class='text-center'> <td style=\"height: 50px;color: white;font-size:40px'\">\n" +--%>
+            <%--"<p><span style='color:#22e6ff;font-size:40px'>桌号&nbsp;</span><span style='color:red;display:inline-block;width:120px;font-size:40px' class=\"tableId\">${a.tableId}</span>\n" +--%>
+            <%--"&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>座位号&nbsp;</span><span style='color:red;display:inline-block;width:120px;font-size:40px' class=\"locationId\">${a.locationId}</span>\n" +--%>
+            <%--"&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>姓名&nbsp;</span><span style='color:#8909ff;display:inline-block;width:120px;font-size:40px' class=\"name\">${a.name}</span>\n" +--%>
+            <%--"&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>奖品&nbsp;</span><span style='color:#8909ff;display:inline-block;width:120px;font-size:40px' class=\"prizeName\">" + prizeName + "</span>\n" +--%>
+            <%--"&nbsp;&nbsp;<span style='color:#22e6ff;font-size:40px'>部门&nbsp;</span><span style='color:red;display:inline-block;width:250px;font-size:40px' class=\"department\">${a.department}</span>\n" +--%>
+            <%--"</p>\n" +--%>
+            <%--"</td></tr>";--%>
+        <%--$("#tBody").append(td);   // 将td 插入到最新的tr中--%>
+        <%--i++;--%>
+        <%--</c:forEach>--%>
+        <%--// }--%>
         setScrollAuto();   // 滚动条自动滚动
+
     }
 
+    /**
+     * 滚动条自动滚动事件
+     * */
     function setScrollAuto() {
         setTimeout(function () {   // 延时滚动中奖者名单
             //鼠标点击结束
@@ -99,19 +129,31 @@
      */
     $(document).keydown(function (event) {
         if (event.keyCode === 32) {  // 空格键、回车抽奖
-            oneMoreLuckDraw();
+            if(localStorage.prizeMode === "0"){  // 按桌抽奖
+                if(parseInt(localStorage.tableLength) < 1){  // 如果所有桌数均抽完则返回下一奖项页面
+                    next();
+                } else {
+                    oneMoreLuckDraw();
+                }
+            }else{
+                oneMoreLuckDraw();
+            }
+
+
         }
     });
 
     /**
      * 再抽一次
      */
-    function oneMoreLuckDraw(){
+    function oneMoreLuckDraw() {
         localStorage.winnerDrawNumber = 1;
+        var tList = JSON.parse(localStorage.getItem('winTableList'));
+        localStorage.setItem('winTableList', JSON.stringify(tList));
         window.location.href = 'luckDraw';
     }
 
-    function next(){
+    function next() {
         localStorage.winnerDrawNumber = 0;
         window.location.href = 'luckDrawSetting';
     }

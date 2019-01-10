@@ -93,7 +93,7 @@ public class PrizeController {
     public String deletePrize(Model m,int id) throws Exception {
         JSONObject res=new JSONObject();
         try{
-            prizeDAO.deleteById(id);
+            prizeMapper.deleteById(id);
             res.put("status", "success");
             res.put("message", "删除成功");
         }
@@ -206,7 +206,7 @@ public class PrizeController {
    }
 
     /**
-     * 根据抽奖方式获取奖品数组s
+     * 根据抽奖方式获取奖品数组
      * @param
      */
     @RequestMapping("getPrizeListByMode")

@@ -1,6 +1,9 @@
 var g_Interval = 20;     // 数字跳转延迟速度(毫秒)
 var g_Timer;           // 延迟执行代码块
+var t_Interval = 60;  // 桌位抽奖奖品跳转延迟速度
+var t_Timer;           // 延迟执行代码块
 var running = false; // 是否抽奖
+var runningTable = false;
 var list = [[1, 2], [2, 1], [1, 3], [1, 4], [1, 1], [2, 2]];  // 参与抽奖的桌号和座位号
 var winnerNumber = 1;  // 设置中奖人数
 var add = false;   // 新增是否成功
@@ -10,15 +13,17 @@ var isEnd = 1;  // 用于计数：桌位抽奖是否结束,为偶数时抽取桌
 var winTableList = [];  // 中奖桌号
 var listWinner = [];  // 中奖的人的桌号和座位号数据
 var tableNumber = 0;   // 按桌抽奖每次抽取桌数
-
+var prizeList = [];    // 桌位抽奖奖品
+var randomPrizeNumberList = [];   // 桌位抽奖随机数组
+var tableNum = 0;           // 随机桌号
 /**
  * 空格键按下事件
  */
 $(document).keydown(function (event) {
-    if (event.keyCode === 32 ) {  // 空格键抽奖
-        if($("#begin").get(0).style.display !== "none" ){   // 如果开始按钮显示时则空格键为抽奖开始或暂停，如果开始键隐藏后空格键为保存键
+    if (event.keyCode === 32) {  // 空格键抽奖
+        if ($("#begin").get(0).style.display !== "none") {   // 如果开始按钮显示时则空格键为抽奖开始或暂停，如果开始键隐藏后空格键为保存键
             beginRndNum();
-        }else{
+        } else {
             save();
         }
     }
@@ -39,12 +44,13 @@ function beginRndNum() {
         $("span[id^='tableId']").css('color', 'red');
         $("span[id^='locationId']").css('color', 'red');
         updateRndNum();  // 设置最终的中奖号码(保证不存在重复)
+        console.log("tableLength:"+tableList.length);
+        console.log("winTableList:");
         console.log(JSON.parse(localStorage.getItem('winTableList')));
         if (localStorage.prizeMode === "2") {  // 桌位抽奖需要分为两次抽取
             if (isEnd % 2 === 1) {
                 $("#begin").hide();
                 $("#list").show();  // 按钮显示
-
             } else {  // 抽桌
                 $("#begin").show(); // 按钮显示
                 $("#list").hide();
@@ -65,7 +71,7 @@ function beginRndNum() {
         //$("#begin").show();
         $("#begin").text("停止");
         beginTimer();
-        $("#list").hide();  // 按钮显示
+        $("#list").hide();  // 按钮隐藏
         listWinner = [];   // 中奖人清空
     }
 }
@@ -79,27 +85,33 @@ function updateRndNum() {
             var $i = i;
             var num = Math.floor(Math.random() * list.length);  // 序号
             if (tableList.length > 0)
-            while ($.inArray(list[num][0], JSON.parse(localStorage.getItem('winTableList'))) > 0 || $.inArray(list[num][0], tableList) === -1) {  // 该桌号本次抽奖已经获奖过了或者不在未中奖桌号中则不能再获奖
-                num = Math.floor(Math.random() * list.length);
-            }
+                while ($.inArray(list[num][0], JSON.parse(localStorage.getItem('winTableList'))) > 0 || $.inArray(list[num][0], tableList) === -1) {  // 该桌号本次抽奖已经获奖过了或者不在未中奖桌号中则不能再获奖
+                    num = Math.floor(Math.random() * list.length);
+                }
             $("#tableId" + $i).html(list[num][0]);
             $("#locationId" + $i).html(list[num][1]);
             if (!running) { // 停止随机后
                 listWinner.push(list[num]);
-                winTableList.push(list[num][0]);
-                localStorage.setItem('winTableList', JSON.stringify(winTableList));
+                var tList = JSON.parse(localStorage.getItem('winTableList'));
+                tList.push(list[num][0]);
+                localStorage.setItem('winTableList', JSON.stringify(tList));
+                console.log("tableList：");
+                console.log(tableList);
                 for (var j = 0; j < tableList.length; j++) { // 将获奖桌号从未中奖桌号中删除
                     if (tableList[j] === list[num][0]) {
                         tableList.splice(j, 1);
                     }
-
                 }
+                console.log(tableList);
+                console.log("list：");
+                console.log(list);
                 list.splice(num, 1);   // 将中奖者从数组中删除
+                console.log(list);
+
             }
         }
     } else if (localStorage.prizeMode === "2") {  // 桌位抽奖
         for (var i = 0; i < winnerNumber; i++) {
-            var tableNum = 0;
             var $i = i;
             if (running) {
                 if (isEnd % 2 === 1) { // 先抽桌号
@@ -111,18 +123,25 @@ function updateRndNum() {
                     $("#tableId" + $i).html(tableList[tableNum]);
                 } else {
                     num = Math.floor(Math.random() * list.length);  // 座位号序号
-                    if(list.length > 0)
-                    while (list[num][0] !== parseInt($("#tableId" + $i).text())) {  // 如果不是该桌则继续抽
-                        num = Math.floor(Math.random() * list.length);  // 座位号序号
-                    }
+                    if (list.length > 0)
+                        while (list[num][0] !== parseInt($("#tableId" + $i).text())) {  // 如果不是该桌则继续抽
+                            num = Math.floor(Math.random() * list.length);  // 座位号序号
+                        }
                     $("#locationId" + $i).html(list[num][1]);
                 }
-            } else {// 停止随机后
-                if (isEnd % 2 === 0) {  // 座位号抽取结束之后
-                } else {
-                    winTableList.push(parseInt($("#tableId" + $i).text()));   // 将获奖桌号保存
-                    localStorage.setItem('winTableList', JSON.stringify(winTableList));
+            }
+            if (!running) {// 停止随机后
+                if (isEnd % 2 === 0) {
+                    var tList = JSON.parse(localStorage.getItem('winTableList'));
+                    tList.push(parseInt($("#tableId" + $i).text()));
+                    localStorage.setItem('winTableList', JSON.stringify(tList));
+                    console.log("tableList:");
+                    console.log(tableList);
+                    console.log("tableNum:" + tableNum);
+                    console.log("tableId:" + tableList[tableNum]);
                     tableList.splice(tableNum, 1);   // 将中奖者桌号从数组中删除
+                    console.log(tableList);
+                } else {// 座位号抽取结束之后
                 }
             }
         }
@@ -132,7 +151,7 @@ function updateRndNum() {
             var num = Math.floor(Math.random() * everyTableNum.length);  // 序号(默认每桌10人)
             $("#locationId" + $i).html(everyTableNum[num]);  // 座位号
             if (!running) { // 停止随机后
-                if(tableNumber > tableList.length || tableNumber == -1) {  // 如果抽取桌数大于剩余桌数或者抽取桌数为-1则设置抽取桌数为剩余桌数
+                if (tableNumber > tableList.length || tableNumber == -1) {  // 如果抽取桌数大于剩余桌数或者抽取桌数为-1则设置抽取桌数为剩余桌数
                     tableNumber = tableList.length;
                 }
                 for (var k = 0; k < tableNumber; k++) {
@@ -160,10 +179,26 @@ function beat() {
 }
 
 /**
+ * 设置时间延迟
+ * */
+function beginTimer1() {
+    t_Timer = setTimeout(beat1, t_Interval);
+}
+
+/**
+ * 时间延迟时间，并执行数字滚动
+ * */
+function beat1() {
+    t_Timer = setTimeout(beat1, t_Interval);
+    updateRndNum1();
+}
+
+/**
  * 下一轮或者保存数据并跳转中奖名单页面
  */
 function save() {
     saveWinner();
+    localStorage.tableLength = tableList.length - parseInt(localStorage.tableNumber);
     window.location.href = 'showWinnerList';
 }
 
@@ -225,6 +260,7 @@ function closed() {
     $('#newPanel').hide(1000);
 }
 
+
 /**
  * 随机获取按桌抽奖奖品
  */
@@ -233,21 +269,48 @@ function randomSetModeTwoPrize() {
         type: "POST",
         url: "getPrizeListByMode",
         async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
-        data:{
-          mode:2
+        data: {
+            mode: 2
         },
         dataType: "json",
         success: function (result) {
-            if(result != null && result.status === "success") {
-                var prizeList = result.data;
-                console.log(prizeList);
-                // for(var i = 0;i < prizeList.length; i++) {
-                //
-                // }
-                var num = Math.floor(Math.random() * prizeList.length);  // 序号()
-                console.log("num+"+num);
-                $("#prize").text(prizeList[num].level + "：" + prizeList[num].name); // 设置奖品等级和名称
+            if (result != null && result.status === "success") {
+                prizeList = result.data;
+                for (var i = 0; i < prizeList.length; i++) {
+                    for (var j = 0; j < prizeList[i].number; j++) {
+                        randomPrizeNumberList.push(i);
+                    }
+                }
+                // console.log(prizeList);
+                // console.log(randomPrizeNumberList);
             }
         }
     });
+}
+
+/**
+ * 随机设置桌位抽奖奖品
+ */
+function updateRndNum1() {
+    var num = Math.floor(Math.random() * randomPrizeNumberList.length);  // 序号()
+    $("#prize").text(prizeList[randomPrizeNumberList[num]].level + "：" + prizeList[randomPrizeNumberList[num]].name); // 设置奖品等级和名称
+    if (!runningTable) {  // 停止抽奖后
+        localStorage.prizeLevel = prizeList[randomPrizeNumberList[num]].level;  // 奖品等级
+        localStorage.prizeName = prizeList[randomPrizeNumberList[num]].name;    // 奖品名字
+        localStorage.prizeId = prizeList[randomPrizeNumberList[num]].id;         // 奖品编号
+    }
+}
+
+/**
+ * 开始抽取随机奖品
+ */
+function beginRndNum1() {
+    if (runningTable) {  // 停止抽奖
+        runningTable = false;
+        clearTimeout(t_Timer); //取消延时
+        updateRndNum1();  // 设置最终的中奖号码(保证不存在重复)
+    } else {   // 开始抽奖
+        runningTable = true;
+        beginTimer1();
+    }
 }

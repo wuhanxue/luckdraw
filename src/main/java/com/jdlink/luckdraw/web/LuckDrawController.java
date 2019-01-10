@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -185,7 +186,19 @@ public class LuckDrawController {
     @GetMapping("/showWinnerList")
     public String loadWinnerList(Model m) throws Exception {
         List<Integer> winnerSeatIdList= winnerMapper.findLastWinnerSeatIdList();   //获取最近一次中奖者的seatID
-        List<Seat> seatList1 = seatDAO.findAllById(winnerSeatIdList);    // 根据seatId获取seat数据
+        List<Integer> winnerPrizeIdList= winnerMapper.findLastWinnerPrizeIdList();   //获取最近一次中奖者的prizeID
+        List<Seat> seatList1 = new ArrayList<>();
+        for(Integer id : winnerSeatIdList){   // 按顺序查询中奖者名单
+            Seat seat = seatDAO.getOne(id);    // 根据seatId获取seat数据
+            seatList1.add(seat);
+        }
+        if(seatList1.size() == winnerPrizeIdList.size() && seatList1.size() == winnerSeatIdList.size())
+        for(int i = 0; i < winnerSeatIdList.size(); i++) {   // 设置每个桌位号对应的奖品
+           Prize prize = prizeDAO.getById(winnerPrizeIdList.get(i));
+           Winner winner = new Winner();
+           winner.setPrize(prize);
+           seatList1.get(i).setWinners(winner);
+        }
         m.addAttribute("seatList" ,seatList1);
         return "showWinnerList";  // 地址栏不会变
     }

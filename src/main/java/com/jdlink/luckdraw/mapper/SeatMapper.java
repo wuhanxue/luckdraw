@@ -94,4 +94,5 @@ public interface SeatMapper {
      */
     @Select("select distinct seat_table_id from main_seat where is_table_win=0;")
     List<Integer> getNotWinTableList();
+
 }

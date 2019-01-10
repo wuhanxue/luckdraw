@@ -1,6 +1,7 @@
 package com.jdlink.luckdraw.mapper;
 
 import com.jdlink.luckdraw.pojo.Prize;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -42,4 +43,7 @@ public interface PrizeMapper {
      */
     @Update("update config_prize set prize_name=#{name},prize_number=#{number},prize_mode=#{mode},gmt_modify_time=NOW(),prize_level=#{level} where id=#{id} ")
     void  updateById(Prize prize);
+
+    @Delete("delete from config_prize where id=#{0};")
+    void deleteById(int id);
 }

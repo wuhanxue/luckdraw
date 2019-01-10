@@ -38,7 +38,13 @@ public interface WinnerMapper {
      * 获取最近一次进行的中奖者的seatID
      * @return
      */
-    @Select("select seat_id from main_winning where win_number = (select COUNT(DISTINCT(win_number)) from main_winning) ORDER BY gmt_create_time DESC")
+    @Select("select seat_id from main_winning where win_number = (select COUNT(DISTINCT(win_number)) from main_winning) ORDER BY gmt_create_time DESC,id DESC")
     List<Integer> findLastWinnerSeatIdList();
 
+    /**
+     * 获取最近一次进行的中奖者的prizeID
+     * @return
+     */
+    @Select("select prize_id from main_winning where win_number = (select COUNT(DISTINCT(win_number)) from main_winning) ORDER BY gmt_create_time DESC,id DESC")
+    List<Integer> findLastWinnerPrizeIdList();
 }
