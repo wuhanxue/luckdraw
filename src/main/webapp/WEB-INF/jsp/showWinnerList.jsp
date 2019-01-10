@@ -48,6 +48,9 @@
         //if(localStorage.prizeMode !== "2"){
         console.log("winTableList:");
         console.log(JSON.parse(localStorage.getItem('winTableList')));
+        if(parseInt(localStorage.tableLength) < 1){
+            $("#begin").hide();
+        }
         $("#prize").text(localStorage.prizeLevel + "：" + localStorage.prizeName);  // 设置奖品
         var i = 0;
         <c:forEach items="${seatList}" var="a">
@@ -129,17 +132,7 @@
      */
     $(document).keydown(function (event) {
         if (event.keyCode === 32) {  // 空格键、回车抽奖
-            if(localStorage.prizeMode === "0"){  // 按桌抽奖
-                if(parseInt(localStorage.tableLength) < 1){  // 如果所有桌数均抽完则返回下一奖项页面
-                    next();
-                } else {
-                    oneMoreLuckDraw();
-                }
-            }else{
-                oneMoreLuckDraw();
-            }
-
-
+           oneMoreLuckDraw();
         }
     });
 
@@ -147,10 +140,22 @@
      * 再抽一次
      */
     function oneMoreLuckDraw() {
-        localStorage.winnerDrawNumber = 1;
-        var tList = JSON.parse(localStorage.getItem('winTableList'));
-        localStorage.setItem('winTableList', JSON.stringify(tList));
-        window.location.href = 'luckDraw';
+        if(localStorage.prizeMode === "0"){  // 按桌抽奖
+            if(parseInt(localStorage.tableLength) < 1){  // 如果所有桌数均抽完则返回下一奖项页面
+                next();
+            } else {
+                localStorage.winnerDrawNumber = 1;
+                var tList = JSON.parse(localStorage.getItem('winTableList'));
+                localStorage.setItem('winTableList', JSON.stringify(tList));
+                window.location.href = 'luckDraw';
+            }
+        }else{
+            localStorage.winnerDrawNumber = 1;
+            var tList = JSON.parse(localStorage.getItem('winTableList'));
+            localStorage.setItem('winTableList', JSON.stringify(tList));
+            window.location.href = 'luckDraw';
+        }
+
     }
 
     function next() {
