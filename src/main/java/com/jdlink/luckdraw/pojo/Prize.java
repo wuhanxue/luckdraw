@@ -65,7 +65,8 @@ public class Prize {
     /**
      * 奖品-中奖者一对一绑定
      */
-    @OneToOne(mappedBy = "prize",cascade = CascadeType.ALL)
+   // @OneToOne(mappedBy = "prize",cascade = CascadeType.ALL)
+    @Transient//字段不映射为列
     private Winner winners;
 
     /**

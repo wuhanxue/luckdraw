@@ -32,8 +32,9 @@ public class Winner {
     /**
      * 一对一绑定seat
      */
-    @OneToOne
-    @JoinColumn(name = "id")
+//    @OneToOne
+//    @JoinColumn(name = "id")
+    @Transient//字段不映射为列
     private Seat seat;
 
     /**
@@ -45,8 +46,9 @@ public class Winner {
     /**
      * 一对一绑定奖品
      */
-    @OneToOne
-    @JoinColumn(name = "id")
+//    @OneToOne
+//    @JoinColumn(name = "id")
+    @Transient//字段不映射为列
     private Prize prize;
     /**
      * 是否领奖

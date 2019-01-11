@@ -65,6 +65,10 @@ public class LuckDrawController {
     public String listEmployee(Model m) throws Exception {
         List<Seat> seatList = new ArrayList<>();
         List<Seat> seatList1 = seatDAO.findAll(); // 获取所有人
+//        JsonConfig jsonConfig = new JsonConfig();  //建立配置文件：防止因数据结构相互嵌套导致的死循环异常
+//        jsonConfig.setIgnoreDefaultExcludes(false);  //设置默认忽略
+//        jsonConfig.setExcludes(new String[]{"winners"}); // 将winners字段忽略，避免引起嵌套
+//        JSONArray data = JSONArray.fromObject(seatList1,jsonConfig);  //加载配置文件
         for(Seat seat : seatList1){              // 将不参加的人数过滤
             if(seat.isJoin())seatList.add(seat);
         }
@@ -145,6 +149,7 @@ public class LuckDrawController {
                  //   Seat seat2 = seatDAO.getOne(seat1.getId());
                     seatMapper.updateIsJoin(seat1);                             // 更新是否参加下一次抽奖状态为0,即中奖者不再参与下一次抽奖
                     if(prize != null && prize.getMode() == 0) {  // 如果奖品是按桌抽奖
+
                         seat1.setTableWin(true);
                         seatMapper.updateIsSeatWin(seat1);
                     }

@@ -56,7 +56,8 @@ public class Seat {
     /**
      * 奖品-中奖者一对一绑定
      */
-    @OneToOne(mappedBy = "seat",cascade = CascadeType.ALL)
+//    @OneToOne(mappedBy = "seat",cascade = CascadeType.ALL)
+    @Transient//字段不映射为列
     private Winner winners;
     /**
      * 创建时间

@@ -134,6 +134,9 @@
         if (event.keyCode === 32) {  // 空格键、回车抽奖
            oneMoreLuckDraw();
         }
+        if(event.keyCode === 13) {
+            next();
+        }
     });
 
     /**
@@ -158,6 +161,10 @@
 
     }
 
+    /**
+     *
+     * 下一次抽奖
+     */
     function next() {
         localStorage.winnerDrawNumber = 0;
         window.location.href = 'luckDrawSetting';

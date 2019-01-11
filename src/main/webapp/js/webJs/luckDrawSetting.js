@@ -6,6 +6,8 @@ var list = [];   // 承装奖品
 function loadPrize() {
     var num = 0;
     localStorage.setItem('winTableList', JSON.stringify([]));   // 初始化获奖桌号
+    localStorage.setItem('winLocationList', JSON.stringify([]));   // 初始化按桌抽取中奖座位号
+    localStorage.setItem('winLocationList', JSON.stringify([]));   // 初始化按桌抽取中奖座位号
     $.ajax({   // 获取奖品信息
         type: "POST",
         url: "luckDrawSetting1",
@@ -115,3 +117,15 @@ function setTableNumber(item) {
 function setEveryTableNumber(item) {
     localStorage.everyTableNumber = parseInt($(item).find("option:selected").val());
 }
+
+/**
+ * 键盘按下事件
+ */
+$(document).keydown(function (event) {
+    if (event.keyCode === 32) {  // 空格键抽奖
+        window.location.href = 'luckDraw';
+    }
+    // if(event.keyCode === 13) {  // 回车保存
+    //     save();
+    // }
+});

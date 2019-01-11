@@ -44,8 +44,6 @@ function beginRndNum() {
         $("span[id^='tableId']").css('color', 'red');
         $("span[id^='locationId']").css('color', 'red');
         updateRndNum();  // 设置最终的中奖号码(保证不存在重复)
-        console.log("tableLength:"+tableList.length);
-        console.log("winTableList:");
         console.log(JSON.parse(localStorage.getItem('winTableList')));
         if (localStorage.prizeMode === "2") {  // 桌位抽奖需要分为两次抽取
             if (isEnd % 2 === 1) {
@@ -54,7 +52,6 @@ function beginRndNum() {
             } else {  // 抽桌
                 $("#begin").show(); // 按钮显示
                 $("#list").hide();
-
             }
         } else {
             $("#begin").hide();
@@ -63,7 +60,6 @@ function beginRndNum() {
         // setTimeout(function () {     // 不点击名单3秒后自动跳转
         //     save();
         // }, 3000); // 抽奖结束不点击三秒后自动执行
-
     } else {   // 开始抽奖
         running = true;
         $("span[id^='tableId']").css('color', 'black');
@@ -149,15 +145,21 @@ function updateRndNum() {
         for (var p = 0; p < localStorage.everyTableNumber; p++) { // 每桌抽取人数
             var $i = p;
             var num = Math.floor(Math.random() * everyTableNum.length);  // 序号(默认每桌10人)
+            while($.inArray(everyTableNum[num], JSON.parse(localStorage.getItem('winLocationList'))) > 0) {  // 如果该座位号已经中过将则不能再中
+                num = Math.floor(Math.random() * everyTableNum.length);
+            }
             $("#locationId" + $i).html(everyTableNum[num]);  // 座位号
             if (!running) { // 停止随机后
-                if (tableNumber > tableList.length || tableNumber == -1) {  // 如果抽取桌数大于剩余桌数或者抽取桌数为-1则设置抽取桌数为剩余桌数
+                if (tableNumber > tableList.length || tableNumber === -1) {  // 如果抽取桌数大于剩余桌数或者抽取桌数为-1则设置抽取桌数为剩余桌数
                     tableNumber = tableList.length;
                 }
                 for (var k = 0; k < tableNumber; k++) {
                     listWinner.push([tableList[k], everyTableNum[num]]);   // 添加中奖者
                 }
                 everyTableNum.splice(num, 1);   // 将中奖者从数组中删除
+                var lList = JSON.parse(localStorage.getItem('winLocationList'));
+                lList.push(everyTableNum[num]);
+                localStorage.setItem('winLocationList', JSON.stringify(lList));
             }
         }
     }
@@ -198,7 +200,11 @@ function beat1() {
  */
 function save() {
     saveWinner();
-    localStorage.tableLength = tableList.length - parseInt(localStorage.tableNumber);
+    if(parseInt(localStorage.tableNumber) > -1){
+        localStorage.tableLength = tableList.length - parseInt(localStorage.tableNumber);
+    }else {   // 全部抽取
+        localStorage.tableLength = tableList.length;
+    }
     window.location.href = 'showWinnerList';
 }
 

@@ -25,33 +25,33 @@
 <body onload="loadNumber()" background="../../image/timg.jpg" style="background-size: cover">
 <%--<div class="luck-content ce-pack-end" style="width: 80%;margin-left: -5%;padding: 0;margin-top: -50px"><!--透明框-->--%>
 <%--<div style="overflow-y: scroll;height: 500px">--%>
-    <table id="table" style="width: 100%;height: 55%;border: 0;margin-top: 10%" border="0" cellspacing="0"
-           cellpadding="0">
-        <tr id="class1">
-            <!--几等奖，动态-->
-            <td class="text-center" colspan="2">
-                <span id="prize" style="color: #ff3f4b;font-size: 45px">一等奖</span>
-            </td>
-        </tr>
-    </table>
-    <%--提示面板--%>
-    <div class="panel panel-default" id="newPanel" hidden>
-        <div class="panel-body">
-            <span id="message" class="text-center"></span>
-        </div>
-        <div class="panel-footer">
-            <button type="button" class="btn btn-danger" onclick="closed()">关闭</button>
-        </div>
+<table id="table" style="width: 100%;height: 55%;border: 0;margin-top: 10%" border="0" cellspacing="0"
+       cellpadding="0">
+    <tr id="class1">
+        <!--几等奖，动态-->
+        <td class="text-center" colspan="2">
+            <span id="prize" style="color: #ff3f4b;font-size: 45px">一等奖</span>
+        </td>
+    </tr>
+</table>
+<%--提示面板--%>
+<div class="panel panel-default" id="newPanel" hidden>
+    <div class="panel-body">
+        <span id="message" class="text-center"></span>
     </div>
-    <div class="text-center" style="margin-top: 5%">
-        <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px" onclick="beginRndNum()">开始</a>
-        <a class="btn btn-danger" id="list" onclick="save();" style="width: 100px;height: 55px;font-size: 30px">名单</a>
+    <div class="panel-footer">
+        <button type="button" class="btn btn-danger" onclick="closed()">关闭</button>
     </div>
+</div>
+<div class="text-center" style="margin-top: 5%">
+    <a class="btn btn-success" id="begin" style="width: 100px;height: 55px;font-size: 30px"
+       onclick="beginRndNum()">开始</a>
+    <a class="btn btn-danger" id="list" onclick="save();" style="width: 100px;height: 55px;font-size: 30px">名单</a>
+</div>
 <%--</div>--%>
 <%--</div>--%>
 </body>
 <script>
-
     /**
      * 根据抽奖人数加载抽奖框
      */
@@ -64,7 +64,13 @@
         <c:forEach items="${seatList}" var="a">
         var tableId = ${a.tableId};
         var locationId = ${a.locationId};
-        list.push([tableId, locationId]);
+        if(localStorage.prizeLevel !== "五等奖" ) {
+            if(tableId !== 1 && tableId !== 2 && tableId !== "1" && tableId !== "2") {
+                list.push([tableId, locationId]);
+            }
+        }else{
+            list.push([tableId, locationId]);
+        }
         var add1 = false;
         for (k1 in tableList) {  //检查桌号LIST中是否存在该桌号
             if (tableList[k1] === tableId) {
@@ -76,20 +82,23 @@
             tableList.push(tableId);
         }
         </c:forEach>
+        console.log("等级："+localStorage.prizeLevel);
+        console.log("list:");
+        console.log(list);
         if (localStorage.prizeMode === "1" || localStorage.prizeMode === "2") { // 随机抽奖,桌位抽奖
             console.log("抽奖人数：");
             console.log(localStorage.winnerNumber);
             winnerNumber = localStorage.winnerNumber;  // 获取抽奖人数
-          // if(localStorage.prizeMode === "1"){
-               $("#prize").text(localStorage.prizeLevel + "：" + localStorage.prizeName); // 设置奖品等级和名称
-           // }else {
-           //     randomSetModeTwoPrize();  // 获取随机奖品
-           //     beginRndNum1();
-           //     setTimeout(function () {     // 随机奖品
-           //         beginRndNum1();
-           //     }, 3000); //
-           //
-           // }
+            // if(localStorage.prizeMode === "1"){
+            $("#prize").text(localStorage.prizeLevel + "：" + localStorage.prizeName); // 设置奖品等级和名称
+            // }else {
+            //     randomSetModeTwoPrize();  // 获取随机奖品
+            //     beginRndNum1();
+            //     setTimeout(function () {     // 随机奖品
+            //         beginRndNum1();
+            //     }, 3000); //
+            //
+            // }
             add = false;  // 将新增状态设置为未新增
             // 获取所有参与抽奖的员工数据
             if (list.length === 0) {
@@ -123,26 +132,28 @@
                 async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
                 dataType: "json",
                 success: function (result) {
-                    if(result != null && result.data != null && result.status === "success") {
+                    if (result != null && result.data != null && result.status === "success") {
                         tableList = [];   // 清空
                         tableList = result.data;    // 赋值
                     }
                 }
             });
         } else {  //按桌抽奖
-            $("#prize").text(localStorage.prizeLevel+"："+localStorage.prizeName);  // 设置奖品等级和名称
-            $.ajax({   // 获取按桌抽取未中奖的桌号数组
-                type: "POST",
-                url: "getNotWinTableList",
-                async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
-                dataType: "json",
-                success: function (result) {
-                    if(result != null && result.data != null && result.status === "success") {
-                        tableList = [];   // 清空
-                        tableList = result.data;    // 赋值
+            $("#prize").text(localStorage.prizeLevel + "：" + localStorage.prizeName);  // 设置奖品等级和名称
+            if(parseInt(localStorage.tableNumber) > -1) { // 如果不是全部抽奖
+                $.ajax({   // 获取按桌抽取未中奖的桌号数组
+                    type: "POST",
+                    url: "getNotWinTableList",
+                    async: false,                      // 同步：意思是当有返回值以后才会进行后面的js程序
+                    dataType: "json",
+                    success: function (result) {
+                        if (result != null && result.data != null && result.status === "success") {
+                            tableList = [];   // 清空
+                            tableList = result.data;    // 赋值
+                        }
                     }
-                }
-            });
+                });
+            }
             for (var j = 0; j < localStorage.everyTableNumber; j++) { // 每桌抽取人数
                 if (j % 2 === 0) {
                     var tr = "<tr>\n" +
@@ -154,6 +165,12 @@
                     "</td>";
                 $("#table").find("tr:last").append(td);   // 将td 插入到最新的tr中
             }
+        }
+        if(localStorage.prizeLevel !== "五等奖" ) {
+            var index1 = tableList.indexOf(1);
+            tableList.splice(index1,1);
+            var index2 = tableList.indexOf(2);
+            tableList.splice(index2,1);
         }
     }
 </script>
